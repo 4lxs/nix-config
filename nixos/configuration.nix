@@ -6,12 +6,8 @@
   ];
 
   nixpkgs = {
-    overlays = [ # You can add overlays here
-     ];
-    
-    config = { # Configure nixpkgs instance
-      allowUnfree = true; # allow propriatary software
-    };
+    overlays = [ ]; # You can add overlays here
+    config.allowUnfree = true; # allow propriatary software
   };
 
   nix = { # no clue
@@ -26,13 +22,75 @@
   boot.loader.grub = { # setup bootloader
     enable = true;
     device = "/dev/vda";
+    useOSProber = true;
   };
 
+  networking = {
+    hostName = "nixos"; # net
+    networkmanager.enable = true;
+  };
+
+  # localization
+  time.timeZone = "Europe/Ljubljana";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "sl_SI.UTF-8";
+    LC_IDENTIFICATION = "sl_SI.UTF-8";
+    LC_MEASUREMENT = "sl_SI.UTF-8";
+    LC_MONETARY = "sl_SI.UTF-8";
+    LC_NAME = "sl_SI.UTF-8";
+    LC_NUMERIC = "sl_SI.UTF-8";
+    LC_PAPER = "sl_SI.UTF-8";
+    LC_TELEPHONE = "sl_SI.UTF-8";
+    LC_TIME = "sl_SI.UTF-8";
+  };
+
+  users.users.svl = { # user
+    initialPassword = "00000"; # you can pass --no-root-passwd to nixos-install
+    isNormalUser = true;
+    extraGroups = [ # add groups here
+      "wheel"
+      "docker"
+      "libvirtd"
+      "networkmanager"
+    ]; /*
+    pamMount = {
+      fstype="crypt";
+      path="/dev/disk/by-partuuid/partition_uuid";
+      mountpoint="~/.local/crypt";
+      options="crypto_name=crypt,allow_discard,fstype=ext4,compress=zstd";
+    }; */
+  };
+
+  # default shell
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
+  environment.shells = with pkgs; [ zsh ];
+  environment.binsh = "${pkgs.zsh}/bin/zsh";
+
   # gnome
-  environment.gnome.excludePackages = pkgs.gnome.optionalPackages;
+  environment.gnome.excludePackages = (with pkgs; [
+    gnome-photos
+    gnome-tour
+  ]) ++ (with pkgs.gnome; [
+    cheese # webcam tool
+    gnome-music
+    gnome-terminal
+    gedit # text editor
+    epiphany # web browser
+    geary # email reader
+    evince # document viewer
+    gnome-characters
+    totem # video player
+    tali # poker game
+    iagno # go game
+    hitori # sudoku game
+    atomix # puzzle game
+  ]);
+
   programs.dconf.enable = true;
   programs.gnome-documents.enable = false;
-  programs.gnome-terminal-server.enable = false;
+  programs.gnome-terminal.enable = false;
 
   services = {
     xserver = { # x11 / gnome
@@ -42,7 +100,7 @@
       desktopManager.gnome.enable = true;
       excludePackages = [ # don't install nano
         pkgs.xterm
-      ]
+      ];
 
       layout = "myx"; # keymap
       xkbOptions = "caps:escape_shifted_capslock,ctrl:swap_lalt_lctl";
@@ -52,19 +110,13 @@
         symbolsFile = ./symbols/myx;
       };
     };
+    openssh = { # ssh
+      enable = true;
+      permitRootLogin = "no";
+      passwordAuthentication = false;
+    };
   };
   console.useXkbConfig = true; # console use same layout as xkb
-  networking.hostName = "nixos"; # net
-
-  users.users.svl = { # user
-    initialPassword = "00000"; # you can pass --no-root-passwd to nixos-install
-    isNormalUser = true;
-    extraGroups = [ # add groups here
-      "wheel"
-      "docker"
-      "libvirtd"
-    ];
-  };
 
   environment.systemPackages = with pkgs; [
     neovim
@@ -72,19 +124,18 @@
     # virt-manager
     alacritty
     gnome.gnome-tweaks
+    home-manager
+    pam_mount
   ];
+
+  # crypt
+  security.pam.mount.enable = true;
 
   # virtualisation.docker.enable = true;
 
   # virtualisation.libvirtd = { # virt-manager
   #   enable = true;
   # };
-
-  services.openssh = { # ssh
-    # enable = true;
-    permitRootLogin = "no";
-    passwordAuthentication = false;
-  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "22.11";

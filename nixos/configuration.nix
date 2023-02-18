@@ -29,38 +29,24 @@
   };
 
   # gnome
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-  ]) ++ (with pkgs.gnome; [
-    cheese
-    gnome-music
-    gnome-terminal
-    gedit
-    epiphany
-    geary
-    evince
-    gnome-characters
-    totem
-    tali
-    iagno
-    hitori
-    atomix
-  ]);
-
+  environment.gnome.excludePackages = pkgs.gnome.optionalPackages;
   programs.dconf.enable = true;
+  programs.gnome-documents.enable = false;
+  programs.gnome-terminal-server.enable = false;
 
   services = {
-    libinput = true;
-
     xserver = { # x11 / gnome
       enable = true;
+      libinput.enable = true;
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
+      excludePackages = [ # don't install nano
+        pkgs.xterm
+      ]
 
       layout = "myx"; # keymap
       xkbOptions = "caps:escape_shifted_capslock,ctrl:swap_lalt_lctl";
-      extraLayouts.custom = { # define keymap
+      extraLayouts.myx = { # define keymap
         description = "svl's custom layout";
         languages = [ "si" ];
         symbolsFile = ./symbols/myx;
@@ -84,8 +70,8 @@
     neovim
     # zathura
     # virt-manager
-    # alacritty
-    # gnome.gnome-tweaks
+    alacritty
+    gnome.gnome-tweaks
   ];
 
   # virtualisation.docker.enable = true;

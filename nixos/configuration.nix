@@ -1,12 +1,20 @@
-{ inputs, lib, config, pkgs, ... }: { # replaces /etc/nixos/configuration.nix
+{ inputs, lib, config, pkgs, ... }:
+let
+  python-packages = p: with p; [
+    numpy
+  ];
+in { # replaces /etc/nixos/configuration.nix
   imports = [ # You can import other NixOS modules here
     # ./users.nix # TODO split up config
+    ./vm.nix
 
     ./hardware-configuration.nix # this should be generated config
   ];
 
   nixpkgs = {
-    overlays = [ ]; # You can add overlays here
+    overlays = [ # You can add overlays here
+      inputs.neovim-nightly-overlay.overlay
+    ];
     config.allowUnfree = true; # allow propriatary software
   };
 
@@ -19,10 +27,18 @@
     };
   };
 
-  boot.loader.grub = { # setup bootloader
-    enable = true;
-    device = "/dev/vda";
-    useOSProber = true;
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+    };
+    # systemd-boot.enable = true;
+    grub = { # setup bootloader
+      enable = true;
+      efiSupport = true;
+      device = "nodev";
+      useOSProber = true;
+    };
   };
 
   networking = {
@@ -51,15 +67,12 @@
     extraGroups = [ # add groups here
       "wheel"
       "docker"
-      "libvirtd"
       "networkmanager"
-    ]; /*
-    pamMount = {
-      fstype="crypt";
-      path="/dev/disk/by-partuuid/partition_uuid";
-      mountpoint="~/.local/crypt";
-      options="crypto_name=crypt,allow_discard,fstype=ext4,compress=zstd";
-    }; */
+    ];
+  };
+
+  environment.variables = {
+    EDITOR = "nvim";
   };
 
   # default shell
@@ -119,23 +132,32 @@
   console.useXkbConfig = true; # console use same layout as xkb
 
   environment.systemPackages = with pkgs; [
-    neovim
-    # zathura
-    # virt-manager
+    neovim-nightly
+    python3
+    (pkgs.python3.withPackages python-packages)
+    zathura
     alacritty
-    gnome.gnome-tweaks
     home-manager
     pam_mount
+    nerdfonts
+    ghidra
+    mpv
+    zip
+    unzip
   ];
 
-  # crypt
-  security.pam.mount.enable = true;
+  hardware.pulseaudio.enable = false;
+  services.pipewire = {
+      enable = true;
+      alsa = {
+        enable = true;
+        support32Bit = true;
+      };
+      pulse.enable = true;
+      # jack.enable = true;
+    };
 
-  # virtualisation.docker.enable = true;
-
-  # virtualisation.libvirtd = { # virt-manager
-  #   enable = true;
-  # };
+  virtualisation.docker.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "22.11";

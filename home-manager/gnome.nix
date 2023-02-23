@@ -1,4 +1,26 @@
-{ inputs, lib, config, pkgs, ... }: { # gnome configuration
+{ inputs, lib, config, pkgs, ... }: # gnome configuration
+let
+  material-gtk-theme = with pkgs; stdenv.mkDerivation rec {
+    name = "Material-GTK-Themes";
+
+    buildInputs = [
+      gnome.gnome-themes-extra
+      gtk-engine-murrine
+    ];
+
+    src = fetchFromGitHub {
+      owner = "Fausto-Korpsvart";
+      repo = name;
+      rev = "4d828d5d85bff3307a228c837b9f4fa165a7c30a";
+      sha256 = "2E+ZRnvqzzS986J0ckrV73J1YqMUodj8bVXVStxcfUg=";
+    };
+
+    installPhase = ''
+      mkdir -p $out/share/themes
+      mv themes/* $out/share/themes
+    '';
+  };
+in {
   gtk = {
     enable = true;
 
@@ -8,7 +30,7 @@
     };
 
     theme = {
-      name = "palenight";
+      name = "Material-Palenight-BL";
       package = pkgs.palenight-theme;
     };
 
@@ -30,7 +52,7 @@
     };
   };
 
-  home.sessionVariables.GTK_THEME = "palenight";
+  home.sessionVariables.GTK_THEME = "Material-Palenight-BL";
 
   dconf.settings = {
     "org/gnome/shell" = {
@@ -41,33 +63,42 @@
         "virt-manager.desktop"
       ];
     };
-    "org/gnome/desktop/interface" = {
+    "org/gnome/desktop/peripherals/touchpad" = { # touchpad
+      tap-to-click = true;
+      natural-scroll = false;
+    };
+    "org/gnome/desktop/interface" = { # theme
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
     };
-    "org/gnome/desktop/wm/preferences" = {
+    "org/gnome/desktop/wm/preferences" = { # workspaces
       workspace-names = [ "Main" ];
     };
-    "org/gnome/desktop/background" = {
-      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-l.png";
-      picture-uri-dark = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-d.png";
+    "org/gnome/desktop/background" = { # FIXME
+      picture-uri = "file:///home/svl/Pictures/wallpapers/background";
+      picture-uri-dark = "file:///home/svl/Pictures/wallpapers/background";
     };
-    "org/gnome/desktop/screensaver" = {
-      picture-uri = "file:///run/current-system/sw/share/backgrounds/gnome/vnc-d.png";
+    "org/gnome/desktop/screensaver" = { # FIXME
+      picture-uri = "file:///home/svl/Pictures/wallpapers/screensaver";
       primary-color = "#3465a4";
       secondary-color = "#000000";
     };
-    "org/gnome/shell" = {
+    "org/gnome/shell" = { # extensions
       disable-user-extensions = false;
 
-      # `gnome-extensions list` for a list
-      enabled-extensions = [
+      enabled-extensions = [ # `gnome-extensions list` for a list
         "user-theme@gnome-shell-extensions.gcampax.github.com"
         "trayIconsReloaded@selfmade.pl"
         "Vitals@CoreCoding.com"
         "sound-output-device-chooser@kgshank.net"
         "space-bar@luchrioh"
+        "noannoyance@daase.net"
       ];
+    };
+    "org/gnome/desktop/input-sources" = { # keyboard layout
+      show-all-sources = true;
+      # sources = [ ( [ "xkb" "myx" ] ) ];
+      xkb-options = [ "caps:escape_shifted_capslock" "ctrl:swap_lalt_lctl" ];
     };
   };
 
@@ -75,17 +106,10 @@
     gnomeExtensions.user-themes
     gnomeExtensions.tray-icons-reloaded
     gnomeExtensions.vitals
-    gnomeExtensions.dash-to-panel
-    gnomeExtensions.sound-output-device-chooser
     gnomeExtensions.space-bar
-    palenight-theme
+    gnomeExtensions.noannoyance-2
+    gnomeExtensions.tiling-assistant
+    gnome.gnome-tweaks
+    material-gtk-theme
   ];
-
-  dconf.settings = {
-    "org/gnome/desktop/input-sources" = {
-      show-all-sources = true;
-      # sources = [ ( [ "xkb" "myx" ] ) ];
-      xkb-options = [ "caps:escape_shifted_capslock" "ctrl:swap_lalt_lctl" ];
-    };
-  };
 }

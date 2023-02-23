@@ -35,6 +35,9 @@
       apt-get = "man nix-env";
     };
 
+    localVariables = {
+      VI_MODE_SET_CURSOR = "true";
+    };
 
     oh-my-zsh = {
       enable = true;
@@ -43,6 +46,7 @@
         "command-not-found"
         "git"
         "sudo"
+        "vi-mode"
       ];
     };
 

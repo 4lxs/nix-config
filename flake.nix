@@ -12,6 +12,11 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    # for neovim config
+    nixvim.url = github:pta2002/nixvim;
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
     nix-colors.url = "github:misterio77/nix-colors";
   };
 

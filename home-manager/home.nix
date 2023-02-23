@@ -2,6 +2,9 @@
   imports = [ # home-manager modules from other flakes
     ./gnome.nix
     ./zsh.nix
+    ./tmux.nix
+    ./alacritty.nix
+    ./neovim.nix
 
     inputs.nur.nixosModules.nur
     inputs.nix-colors.homeManagerModule
@@ -18,11 +21,17 @@
     };
   };
 
+  xdg.configFile.zathura.source = ./zathura;
+
   home = {
     username = "svl";
     homeDirectory = "/home/svl";
 
     packages = with pkgs; [ # extra programs
+    ];
+
+    sessionPath = [
+      "$HOME/.local/bin"
     ];
   };
 
@@ -52,10 +61,10 @@
     };
     git = { # version control
       enable = true;
-      # mercurial = { # creds
-      #   userEmail = "svensek.luka@pm.me";
-      #   userName = "Svl";
-      # };
+      extraConfig = {
+        user.email = "svensek.luka@pm.me";
+        user.name = "Svl";
+      };
     };
   };
 

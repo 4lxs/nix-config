@@ -87,12 +87,12 @@ in {
       disable-user-extensions = false;
 
       enabled-extensions = [ # `gnome-extensions list` for a list
-        "user-theme@gnome-shell-extensions.gcampax.github.com"
+        # "user-theme@gnome-shell-extensions.gcampax.github.com"
         "trayIconsReloaded@selfmade.pl"
         "Vitals@CoreCoding.com"
-        "sound-output-device-chooser@kgshank.net"
-        "space-bar@luchrioh"
         "noannoyance@daase.net"
+        "tiling-assistant@leleat-on-github"
+        "workspace-indicator@gnome-shell-extensions.gcampax.github.com"
       ];
     };
     "org/gnome/desktop/input-sources" = { # keyboard layout
@@ -103,12 +103,12 @@ in {
   };
 
   home.packages = with pkgs; [
-    gnomeExtensions.user-themes
+    # gnomeExtensions.user-themes
     gnomeExtensions.tray-icons-reloaded
     gnomeExtensions.vitals
-    gnomeExtensions.space-bar
     gnomeExtensions.noannoyance-2
     gnomeExtensions.tiling-assistant
+    gnomeExtensions.gsconnect
     gnome.gnome-tweaks
     material-gtk-theme
   ];

@@ -1,9 +1,4 @@
-{ inputs, lib, config, pkgs, ... }:
-let
-  python-packages = p: with p; [
-    numpy
-  ];
-in { # replaces /etc/nixos/configuration.nix
+{ inputs, lib, config, pkgs, ... }: { # replaces /etc/nixos/configuration.nix
   imports = [ # You can import other NixOS modules here
     # ./users.nix # TODO split up config
     ./vm.nix
@@ -13,7 +8,6 @@ in { # replaces /etc/nixos/configuration.nix
 
   nixpkgs = {
     overlays = [ # You can add overlays here
-      inputs.neovim-nightly-overlay.overlay
     ];
     config.allowUnfree = true; # allow propriatary software
   };
@@ -40,6 +34,8 @@ in { # replaces /etc/nixos/configuration.nix
       useOSProber = true;
     };
   };
+
+  boot.supportedFilesystems = [ "ntfs" ];
 
   networking = {
     hostName = "nixos"; # net
@@ -80,6 +76,13 @@ in { # replaces /etc/nixos/configuration.nix
   users.defaultUserShell = pkgs.zsh;
   environment.shells = with pkgs; [ zsh ];
   environment.binsh = "${pkgs.zsh}/bin/zsh";
+
+  # steam
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  };
 
   # gnome
   environment.gnome.excludePackages = (with pkgs; [
@@ -131,11 +134,12 @@ in { # replaces /etc/nixos/configuration.nix
   };
   console.useXkbConfig = true; # console use same layout as xkb
 
+  # auto upgrade system
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.allowReboot = true;
+
   environment.systemPackages = with pkgs; [
-    neovim-nightly
-    python3
-    (pkgs.python3.withPackages python-packages)
-    zathura
+    neovim
     alacritty
     home-manager
     pam_mount
@@ -144,6 +148,19 @@ in { # replaces /etc/nixos/configuration.nix
     mpv
     zip
     unzip
+    qbittorrent
+    file
+    wget
+    curl
+    gnumake
+    gcc
+    gdb
+    pwndbg
+    cmake
+    conda
+    prismlauncher-qt5
+    jetbrains.idea-community
+    vscode-fhs
   ];
 
   hardware.pulseaudio.enable = false;

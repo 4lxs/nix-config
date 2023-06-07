@@ -1,183 +1,110 @@
-{ inputs, lib, config, pkgs, ... }: { # replaces /etc/nixos/configuration.nix
-  imports = [ # You can import other NixOS modules here
-    # ./users.nix # TODO split up config
-    ./vm.nix
+# This is your system's configuration file.
+# Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
 
-    ./hardware-configuration.nix # this should be generated config
+{ inputs, outputs, lib, config, pkgs, ... }: {
+  # You can import other NixOS modules here
+  imports = [
+    # If you want to use modules your own flake exports (from modules/nixos):
+    # outputs.nixosModules.example
+
+    # Or modules from other flakes (such as nixos-hardware):
+    # inputs.hardware.nixosModules.common-cpu-amd
+    # inputs.hardware.nixosModules.common-ssd
+
+    # You can also split up your configuration and import pieces of it here:
+    # ./users.nix
+
+    # Import your generated (nixos-generate-config) hardware configuration
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.home-manager
   ];
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      # Import your home-manager configuration
+      svl = import ../home-manager;
+    };
+  };
 
   nixpkgs = {
-    overlays = [ # You can add overlays here
+    # You can add overlays here
+    overlays = [
+      # Add overlays your own flake exports (from overlays and pkgs dir):
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.unstable-packages
+
+      # You can also add overlays exported from other flakes:
+      # neovim-nightly-overlay.overlays.default
+
+      # Or define it inline, for example:
+      # (final: prev: {
+      #   hi = final.hello.overrideAttrs (oldAttrs: {
+      #     patches = [ ./change-hello-to-hi.patch ];
+      #   });
+      # })
     ];
-    config.allowUnfree = true; # allow propriatary software
+    # Configure your nixpkgs instance
+    config = {
+      # Disable if you don't want unfree packages
+      allowUnfree = true;
+    };
   };
 
-  nix = { # no clue
+  nix = {
+    # This will add each flake input as a registry
+    # To make nix3 commands consistent with your flake
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
+
+    # This will additionally add your inputs to the system's legacy channels
+    # Making legacy nix commands consistent as well, awesome!
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
+
     settings = {
-      experimental-features = "nix-command flakes"; # Enable flakes and new 'nix' command
-      auto-optimise-store = true; # Deduplicate and optimize nix store
+      # Enable flakes and new 'nix' command
+      experimental-features = "nix-command flakes";
+      # Deduplicate and optimize nix store
+      auto-optimise-store = true;
     };
   };
 
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
-    };
-    # systemd-boot.enable = true;
-    grub = { # setup bootloader
-      enable = true;
-      efiSupport = true;
-      device = "nodev";
-      useOSProber = true;
-    };
-  };
+  # FIXME: Add the rest of your current configuration
 
-  boot.supportedFilesystems = [ "ntfs" ];
+  # TODO: Set your hostname
+  networking.hostName = "nixos";
 
-  networking = {
-    hostName = "nixos"; # net
-    networkmanager.enable = true;
-  };
+  # TODO: This is just an example, be sure to use whatever bootloader you prefer
+  boot.loader.systemd-boot.enable = true;
 
-  # localization
-  time.timeZone = "Europe/Ljubljana";
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "sl_SI.UTF-8";
-    LC_IDENTIFICATION = "sl_SI.UTF-8";
-    LC_MEASUREMENT = "sl_SI.UTF-8";
-    LC_MONETARY = "sl_SI.UTF-8";
-    LC_NAME = "sl_SI.UTF-8";
-    LC_NUMERIC = "sl_SI.UTF-8";
-    LC_PAPER = "sl_SI.UTF-8";
-    LC_TELEPHONE = "sl_SI.UTF-8";
-    LC_TIME = "sl_SI.UTF-8";
-  };
-
-  users.users.svl = { # user
-    initialPassword = "00000"; # you can pass --no-root-passwd to nixos-install
-    isNormalUser = true;
-    extraGroups = [ # add groups here
-      "wheel"
-      "docker"
-      "networkmanager"
-    ];
-  };
-
-  environment.variables = {
-    EDITOR = "nvim";
-  };
-
-  # default shell
-  programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
-  environment.shells = with pkgs; [ zsh ];
-  environment.binsh = "${pkgs.zsh}/bin/zsh";
-
-  # steam
-#  programs.steam = {
-#    enable = true;
-#    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-#    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-#  };
-
-  # gnome
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-  ]) ++ (with pkgs.gnome; [
-    cheese # webcam tool
-    gnome-music
-    gnome-terminal
-    gedit # text editor
-    epiphany # web browser
-    geary # email reader
-    evince # document viewer
-    gnome-characters
-    totem # video player
-    tali # poker game
-    iagno # go game
-    hitori # sudoku game
-    atomix # puzzle game
-  ]);
-
-  programs.dconf.enable = true;
-  programs.gnome-documents.enable = false;
-  programs.gnome-terminal.enable = false;
-
-  services = {
-    xserver = { # x11 / gnome
-      enable = true;
-      libinput.enable = true;
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
-      excludePackages = [ # don't install nano
-        pkgs.xterm
+  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
+  users.users = {
+    # FIXME: Replace with your username
+    svl = {
+      # TODO: You can set an initial password for your user.
+      # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
+      # Be sure to change it (using passwd) after rebooting!
+      initialPassword = "00000";
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [
+        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnVuvpmyzQUSbALOxH0t9AmUJWQCOIfyWoYEcPLymcQ6hzleGqx3GAekAnsQmZ0j7r+oPlMnlbgKlpmbrXLaomC+C2V1V1BpobKjLqmXKtsiY5+Jdrn1Fa6vVjzHSrqKfSCWsqOT1aMbFRbWiqoM84usTXA6jH9tiKKnLOnKS6mzpqkjSwr0Rx1QKSS9QeWunzCHdAq0M1aDCbj74nT1F/CBqOgDTQBAbTq3t+nFc083uuwH+dwtxSMkM0ZTD+4yuz8sPar3mC2QDOrG+W90AYP98sJr0uJIqmglrYRs2S/3icX2oMscz8+cjJyeHdd7fnQsr2/EEynh/7nn6av+nLpi8PLquNtgjz4JIz99ONRUShKeUZqALQnGJdHv71rVJ3BE0B4SaKY3wPwFtMcqo9Mns1EEAwEtwKS1RXWIlbJ/fSZPlL5kafc4Ay3se1wN/gQQe7KSQQUB35HsNzbfEdb1+XLSkfsZFDUii/bO2Rup8ME7wroeORA6StIq+zS1U= svl@nixos"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNjrgWpwJQ7oZjH/jtYa69gntOeswlNCegJg9w4u++b svensek.luka@pm.me"
       ];
-
-      layout = "myx"; # keymap
-      xkbOptions = "caps:escape_shifted_capslock,ctrl:swap_lalt_lctl";
-      extraLayouts.myx = { # define keymap
-        description = "svl's custom layout";
-        languages = [ "si" ];
-        symbolsFile = ./symbols/myx;
-      };
-    };
-    openssh = { # ssh
-      enable = true;
-      permitRootLogin = "no";
-      passwordAuthentication = false;
+      # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
+      extraGroups = [ "wheel" ];
     };
   };
-  console.useXkbConfig = true; # console use same layout as xkb
 
-  # auto upgrade system
-  system.autoUpgrade.enable = true;
-  system.autoUpgrade.allowReboot = true;
-
-  environment.systemPackages = with pkgs; [
-    neovim
-    alacritty
-    home-manager
-    pam_mount
-    nerdfonts
-    ghidra
-    mpv
-    zip
-    unzip
-    qbittorrent
-    file
-    wget
-    curl
-    gnumake
-    gcc
-    gdb
-    pwndbg
-    cmake
-    conda
-#    prismlauncher-qt5
-#    jetbrains.idea-community
-    vscode-fhs
-    clang-tools
-    androidStudioPackages.canary
-#    godot_4
-  ];
-
-  hardware.pulseaudio.enable = false;
-  services.pipewire = {
-      enable = true;
-      alsa = {
-        enable = true;
-        support32Bit = true;
-      };
-      pulse.enable = true;
-      # jack.enable = true;
-    };
-
-  virtualisation.docker.enable = true;
+  # This setups a SSH server. Very important if you're setting up a headless system.
+  # Feel free to remove if you don't need it.
+  services.openssh = {
+    enable = false;
+    # Forbid root login through SSH.
+    permitRootLogin = "no";
+    # Use keys only. Remove if you want to SSH using password (not recommended)
+    passwordAuthentication = false;
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "22.11";

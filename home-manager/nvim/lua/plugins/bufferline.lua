@@ -1,7 +1,0 @@
-require('bufferline').setup()
-vim.api.nvim_set_keymap('n', '<A-k>', ':BufferLineCyclePrev<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-j>', ':BufferLineCycleNext<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-K>', ':BufferLineMovePrev<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-J>', ':BufferLineMoveNext<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-x>', ':bd<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<A-s>', ':BufferLinePick<CR>', {noremap = true, silent = true})

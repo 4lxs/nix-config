@@ -78,11 +78,11 @@
   environment.binsh = "${pkgs.zsh}/bin/zsh";
 
   # steam
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  };
+#  programs.steam = {
+#    enable = true;
+#    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+#    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+#  };
 
   # gnome
   environment.gnome.excludePackages = (with pkgs; [
@@ -158,9 +158,12 @@
     pwndbg
     cmake
     conda
-    prismlauncher-qt5
-    jetbrains.idea-community
+#    prismlauncher-qt5
+#    jetbrains.idea-community
     vscode-fhs
+    clang-tools
+    androidStudioPackages.canary
+#    godot_4
   ];
 
   hardware.pulseaudio.enable = false;

@@ -20,12 +20,16 @@
   ];
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs outputs; };
     users = {
       # Import your home-manager configuration
-      svl = import ../home-manager;
+      svl = import ../home-manager/home.nix;
     };
   };
+
+  programs.dconf.enable = true;
+  programs.zsh.enable = true;
+  programs.kdeconnect.enable = true;
 
   nixpkgs = {
     # You can add overlays here
@@ -33,7 +37,7 @@
       # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.unstable-packages
+      outputs.overlays.stable-packages
 
       # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
@@ -67,15 +71,52 @@
       # Deduplicate and optimize nix store
       auto-optimise-store = true;
     };
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 7d";
+    };
   };
 
-  # FIXME: Add the rest of your current configuration
+  boot.supportedFilesystems = [ "ntfs" ];
+  networking = {
+    hostName = "nixos"; # net
+    networkmanager.enable = true;
+  };
+  programs.nm-applet.enable = true;
 
-  # TODO: Set your hostname
-  networking.hostName = "nixos";
+  # localization
+  time.timeZone = "Europe/Ljubljana";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "sl_SI.UTF-8";
+    LC_IDENTIFICATION = "sl_SI.UTF-8";
+    LC_MEASUREMENT = "sl_SI.UTF-8";
+    LC_MONETARY = "sl_SI.UTF-8";
+    LC_NAME = "sl_SI.UTF-8";
+    LC_NUMERIC = "sl_SI.UTF-8";
+    LC_PAPER = "sl_SI.UTF-8";
+    LC_TELEPHONE = "sl_SI.UTF-8";
+    LC_TIME = "sl_SI.UTF-8";
+  };
 
   # TODO: This is just an example, be sure to use whatever bootloader you prefer
-  boot.loader.systemd-boot.enable = true;
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+    };
+    # systemd-boot.enable = true;
+    grub = { # setup bootloader
+      enable = true;
+      efiSupport = true;
+      device = "nodev";
+      useOSProber = true;
+    };
+  };
+
+  users.defaultUserShell = pkgs.zsh;
+  environment.shells = [ pkgs.zsh ];
+  environment.binsh = "${pkgs.dash}/bin/dash";
 
   # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
@@ -86,24 +127,44 @@
       # Be sure to change it (using passwd) after rebooting!
       initialPassword = "00000";
       isNormalUser = true;
-      openssh.authorizedKeys.keys = [
-        # TODO: Add your SSH public key(s) here, if you plan on using SSH to connect
-        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCnVuvpmyzQUSbALOxH0t9AmUJWQCOIfyWoYEcPLymcQ6hzleGqx3GAekAnsQmZ0j7r+oPlMnlbgKlpmbrXLaomC+C2V1V1BpobKjLqmXKtsiY5+Jdrn1Fa6vVjzHSrqKfSCWsqOT1aMbFRbWiqoM84usTXA6jH9tiKKnLOnKS6mzpqkjSwr0Rx1QKSS9QeWunzCHdAq0M1aDCbj74nT1F/CBqOgDTQBAbTq3t+nFc083uuwH+dwtxSMkM0ZTD+4yuz8sPar3mC2QDOrG+W90AYP98sJr0uJIqmglrYRs2S/3icX2oMscz8+cjJyeHdd7fnQsr2/EEynh/7nn6av+nLpi8PLquNtgjz4JIz99ONRUShKeUZqALQnGJdHv71rVJ3BE0B4SaKY3wPwFtMcqo9Mns1EEAwEtwKS1RXWIlbJ/fSZPlL5kafc4Ay3se1wN/gQQe7KSQQUB35HsNzbfEdb1+XLSkfsZFDUii/bO2Rup8ME7wroeORA6StIq+zS1U= svl@nixos"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNjrgWpwJQ7oZjH/jtYa69gntOeswlNCegJg9w4u++b svensek.luka@pm.me"
-      ];
       # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "docker" "networkmanager" "audio" ];
     };
   };
+
+  console.useXkbConfig = true; # console use same layout as xkb
+  # auto upgrade system
+  system.autoUpgrade.enable = true;
+  system.autoUpgrade.allowReboot = true;
+
+  hardware.opengl.enable = true;
+
+  security.polkit.enable = true;
+  security.rtkit.enable = true;
+  services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # jack.enable = true;
+    };
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  environment.systemPackages = with pkgs; [
+    pavucontrol
+  ];
+  services.transmission.enable = true;
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
   services.openssh = {
     enable = false;
-    # Forbid root login through SSH.
-    permitRootLogin = "no";
-    # Use keys only. Remove if you want to SSH using password (not recommended)
-    passwordAuthentication = false;
+    settings = {
+      # Forbid root login through SSH.
+      permitRootLogin = "no";
+      # Use keys only. Remove if you want to SSH using password (not recommended)
+      passwordAuthentication = false;
+    };
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

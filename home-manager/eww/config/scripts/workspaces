@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+declare -A o=([1]=0 [2]=0 [3]=0 [4]=0 [5]=0 [6]=0 [7]=0 [8]=0 [9]=0 [10]=0)
+declare focusedws
+isactivews=$1
+
+getworkspaces() {
+  o=([1]=0 [2]=0 [3]=0 [4]=0 [5]=0 [6]=0 [7]=0 [8]=0 [9]=0 [10]=0)
+
+  # add workspaces
+  while read -r id; do o[$id]=1; done < <(hyprctl -j workspaces | jq -r '.[]|"\(.id)"')
+}
+
+# generate the json for eww
+generate() {
+  echo -n '['
+
+  for i in {1..10}; do
+    [ "${o[$i]}" -eq 1 ] || continue
+    [ "$i" -eq 1 ] || echo -n ,
+    echo -n "{\"num\":\"$i\"}"
+  done
+
+  echo ']'
+}
+
+activews() {
+  focusedws=$(hyprctl monitors -j | jq '.[] | select(.focused) | .activeWorkspace.id')
+  if [ "$focusedws" = 'null' ]; then
+    echo 1
+  fi
+
+  nbefore=0
+  for ws in {1..9}; do
+    nbefore=$((nbefore + ${o[$ws]}))
+    [ "$ws" = "$focusedws"  ] && echo "$nbefore" && break
+  done
+}
+
+runcorrect() {
+  if [ "$isactivews" = "activews" ];
+  then activews
+  else generate
+  fi
+}
+
+getworkspaces
+runcorrect
+
+socat -u UNIX-CONNECT:/tmp/hypr/"$HYPRLAND_INSTANCE_SIGNATURE"/.socket2.sock - | while read -r line; do
+  case ${line%>>*} in
+    "createworkspace")
+      getworkspaces
+      runcorrect
+      ;;
+    # "movewindow")
+    #   [ "$isactivews" = "activews" ] && generate
+    #   ;;
+    "destroyworkspace")
+      getworkspaces
+      runcorrect
+      ;;
+    "workspace")
+      [ "$isactivews" != "activews" ] && continue
+      getworkspaces
+      activews
+      ;;
+  esac
+done

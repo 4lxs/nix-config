@@ -1,0 +1,159 @@
+* {
+    font-family: FiraCode Nerd Font;
+    font-size: 15px;
+}
+
+window#waybar {
+    background-color: transparent;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+#workspaces {
+    background: #1f1f1f;
+    border-radius: 20px;
+    padding: 0 1rem;
+    color: white;
+}
+
+#workspaces button {
+    color: white;
+    border-radius: 0;
+    border-bottom: 1px solid #ffffff;
+}
+
+#workspaces button:hover {
+    background: lightblue;
+    color: black;
+}
+
+#workspaces button.active {
+    color: #2BD2FF;
+    border-bottom: 1px solid #2BD2FF;
+}
+
+#workspaces button.urgent {
+    background-color: #eb4d4b;
+}
+
+#mpris {
+    background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+    border-radius: 20px;
+}
+
+#tray {
+    background: #1f1f1f;
+    border-radius: 20px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+#mpris,
+#tray,
+#clock,
+#battery,
+#backlight,
+#network,
+#pulseaudio,
+#custom-launcher,
+#idle_inhibitor,
+#custom-power,
+#mpd {
+    padding: 0 10px 0 15px;
+    background-color: #2BD2FF;
+    margin: 0;
+    color: black;
+}
+
+#clock {
+    background-image: linear-gradient(-45deg, #FA8BFF 0%, #2BD2FF 52%, #2BD2FF 90%);
+    border-radius: 0px 20px 20px 0px;
+}
+
+#battery.charging, #battery.plugged {
+    background-color: #26A65B;
+}
+
+#battery.warning {
+    background-color: #FF8F00;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#network.disconnected {
+    color: red;
+}
+
+#pulseaudio.muted {
+    color: red;
+}
+
+#custom-launcher,
+#custom-power {
+    padding-right: 20px;
+    background-color: #FA8BFF;
+    background-image: linear-gradient(-45deg, #FA8BFF 0%, #2BD2FF 52%, #2BD2FF 90%);
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+#idle_inhibitor {
+    background-image: linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BD2FF 90%);
+    border-radius: 20px 0px 0px 20px;
+
+}
+
+#idle_inhibitor.activated {
+    color: #ff2b80;
+
+}
+
+#language {
+    background-color: #FA8BFF;
+    background-image: linear-gradient(45deg, #2BD2FF 0%, #2BD2FF 52%, #2BD2FF 90%);
+    color: black;
+    min-width: 16px;
+}
+
+#keyboard-state {
+    background: #97e1ad;
+    color: #000000;
+    min-width: 16px;
+}
+
+#keyboard-state > label {
+    padding: 0px 5px;
+}
+
+#keyboard-state > label.locked {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#custom-power,
+#custom-launcher,
+#tray {
+    margin: 0 10px;
+}

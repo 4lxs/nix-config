@@ -1,0 +1,141 @@
+(defvar eww "eww")
+
+(defwidget launcher []
+    (box :orientation "h"
+         :space-evenly "false"
+        (button :class "launcher_icon"
+                :onclick "scripts/popup launcher"  "")))
+
+(defwidget bat []
+    (box	:orientation "h"
+            :space-evenly "false"
+    (label	:class "bat"
+            :halign "end"
+            :text battery
+            :tooltip "Battery: ${battery-cappacity}%")))
+(defpoll battery			:interval "1s"	"scripts/battery icon")
+(defpoll battery-cappacity	:interval "1s"	"scripts/battery percent")
+
+(defwidget wifi []
+    (box    :orientation "h"
+			:tooltip wifi-name
+        (button	:onclick "scripts/popup wifi"
+                :class "wifi-icon" wifi-icon)))
+(defpoll wifi-icon :interval "1s" "scripts/wifi icon")
+(defpoll wifi-name :interval "1s" "scripts/wifi name")
+
+(defwidget redshift []
+    (box    :orientation "h"
+			:tooltip "Toggle Redshift"
+        (button	:onclick "scripts/toggleredshift"
+                :class "redshift-icon" "")))
+
+
+(defpoll current-brightness :interval "1s" "brightnessctl -m | awk -F, '{print substr($4, 0, length($4)-1)}' | tr -d '%'")
+(defvar bright false)
+(defwidget bright []
+    (box    :orientation "h"
+            :space-evenly "false"
+            :tooltip "Brightness: ${current-brightness}%"
+            :spacing "10"
+        (label  :class "brightness-icon"
+                :text "")
+        (scale  :class "bribar"
+                :value current-brightness
+                :onchange "brightnessctl set {}%"
+                :orientation "h"
+                :max 101
+                :min 1)))
+
+(defpoll current-volume :interval "1s" "wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr -d 'Volume: .'")
+(defwidget volum []
+    (box    :orientation "h"
+            :space-evenly "false"
+            :tooltip "Volume: ${current-volume}%"
+            :spacing "10"
+        (button :onclick "scripts/popup audio"
+                :class "volume-icon" "")
+        (scale  :class "volbar"
+                :value current-volume
+                :orientation "h"
+                :max 101
+                :min 0
+                :onchange "wpctl set-volume @DEFAULT_AUDIO_SINK@ {}%" )))
+
+(defwidget time []
+    (box	:orientation "h"
+            :class "time"
+            :halign "end"
+        (button	:onclick "scripts/popup calendar"
+                :class "time-min" time)))
+(defpoll time :interval "1s" "date '+%H:%M'")
+
+(defwidget power []
+    (button :class "button-off"
+            :tooltip "Shutdown"
+            :onclick "shutdown now"	""))
+
+(defvar ws-icons '["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]')
+(deflisten workspace "scripts/workspaces")
+(deflisten activews :initial 1 "scripts/workspaces activews")
+(defwidget workspaces []
+    (overlay
+      (box  :class "workspaces"
+            :spacing 0
+            :space-evenly false
+        (for i in workspace
+            (button :onclick "hyprctl dispatch workspace ${i.num}"
+                    :class "ws"
+                "${ws-icons[i.num - 1]}")))
+    (button :class "ws-indicator-selected ws-indicator"
+            :style "margin-left:  ${31 * (activews - 1)}px; margin-right: ${31 * (arraylength(workspace) - activews)}px;"
+            :valign "end"
+            :halign "center"
+            :height 3)))
+
+;; Bar Widget ;;
+(defwidget left []
+    (box    :orientation "h"
+            :space-evenly "false"
+            :halign "start"
+            :class "eww-left"
+            :spacing "10"
+    (launcher)
+    (workspaces)))
+
+(defwidget right []
+    (box    :orientation "h"
+            :space-evenly "false"
+            :halign "end"
+            :spacing 10
+            :class "eww-right"
+        (bright)
+        (volum)
+        (bat)
+        (redshift)
+        (wifi)
+        (power)))
+
+(defwidget center []
+    (box    :halign "center"
+            :class "eww-center"
+        (time)))
+
+(defwidget bar []
+    (box    :class "eww_bar"
+            :orientation "h"
+        (left)
+        (center)
+        (right)))
+
+;; Windows ;;
+(defwindow bar
+    :geometry (geometry :x "0"
+                        :y "0"
+                        :height "2%"
+                        :width "100%"
+                        :anchor "top center")
+    :monitor 0
+    :stacking "fg"
+    :exclusive true
+    (bar))

@@ -1,0 +1,2 @@
+#!/bin/sh
+pkill -SIGUSR1 gammastep

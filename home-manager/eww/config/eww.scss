@@ -1,0 +1,124 @@
+*{
+  all: unset;
+  font-family: 'Fira Code Nerd Font';
+}
+
+// Variable Color's
+$background: #1A1B26;
+$foreground: #A9B1D6;
+
+$black: #24283B;
+$gray: #565F89;
+$red: #F7768E;
+$redorange: #FF5349;
+$green: #73DACA;
+$yellow: #E0AF68;
+$blue: #7AA2F7;
+$magenta: #BB9AF7;
+$cyan: #7DCFFF;
+$white: $foreground;
+
+.eww_bar{
+  padding: .3rem 1rem .3rem 1rem;
+	background: linear-gradient(to right, #121212,#181818,#050505,#181818,#121212);
+}
+
+.eww-left
+.eww-right
+.eww-center {
+  padding: 0 1rem 0 1rem;
+  background-color: $black;
+  border-radius: 20px;
+}
+
+.ws-indicator {
+  // transition: 80ms cubic-bezier(0.05, 0.9, 0.1, 1); //Hyprland, no overshot
+  transition: 400ms cubic-bezier(0.2, 0.0, 0, 1.0); //Material 3
+  min-width: 20px;
+  border-radius: 20%;
+}
+
+.ws {
+  border-radius: 100%;
+  min-width: 27px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.ws-indicator-selected {
+  background-color: $magenta;
+}
+
+.ws:hover {
+  background-color: $black;
+}
+
+.ws-active {
+  background-color: $white;
+}
+
+.eww-right {
+  font-size: 1.4em;
+  border-radius: 5px;
+}
+
+.bat{
+  color: $blue;
+}
+
+.wifi-icon {
+  margin: 0 1rem 0 .5rem;
+  color: $magenta;
+}
+
+.redshift-icon {
+  color: $redorange;
+  padding-left: .3em;
+}
+
+.brightness-icon {
+  color: $yellow;
+  padding-right: .3em;
+}
+
+.volume-icon {
+  color: $green;
+  padding-right: .4em;
+}
+
+.launcher_icon {
+    color: $cyan;
+    font-size: 1.5em;
+}
+
+scale trough {
+  background-color: #323232;
+  border-radius: 5px;
+  min-width: 7rem;
+  min-height: .5rem;
+  margin: .3rem 0 .3rem 0;
+}
+
+.bribar trough highlight {
+  background-color: $yellow;
+  border-radius: 5px;
+}
+
+.volbar trough highlight {
+  background-color: $green;
+  border-radius: 5px;
+}
+
+
+.time {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: $white;
+  border-radius: 5px;
+}
+
+.button-off{
+  color: $red;
+  padding-left: .3rem;
+  padding-right: .3rem;
+}

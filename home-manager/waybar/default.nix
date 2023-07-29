@@ -37,7 +37,7 @@
                         "2" = "";
                         "3" = "";
                         "4" = "";
-                        "5" = "";
+                        "5" = "󰈹";
                     };
                     persistent_workspaces = {
                         "1" = []; "2" = []; "3" = []; "4" = []; "5" = [];
@@ -54,8 +54,8 @@
                         spotify = " ";
                     };
                     status-icons = {
-                        paused = "⏸";
-                        playing = "󰐊";
+                        paused = "󰐊";
+                        playing = "⏸";
                     };
                 };
                 tray = {

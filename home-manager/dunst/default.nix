@@ -28,7 +28,7 @@
 
                 sort = "yes";
                 idle_threshold = 120;
-                font = "monospace 10";
+                font = "FiraCode Nerd Font 12";
                 line_height = 0;
                 markup = "full";
                 alignment = "left";
@@ -43,7 +43,7 @@
                 min_icon_size = 0;
                 max_icon_size = 64;
 
-                dmenu = "/usr/bin/wofi -p dunst:";
+                dmenu = "${pkgs.rofi-wayland}/bin/rofi -dmenu";
                 browser = "/usr/bin/firefox --new-tab";
 
                 title = "Dunst";

@@ -1,8 +1,4 @@
-# This is your system's configuration file.
-# Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
-
 { inputs, outputs, lib, config, pkgs, ... }: {
-  # You can import other NixOS modules here
   imports = [
     # If you want to use modules your own flake exports (from modules/nixos):
     # outputs.nixosModules.example
@@ -77,7 +73,6 @@
     };
   };
 
-  boot.supportedFilesystems = [ "ntfs" ];
   networking = {
     hostName = "nixos"; # net
     networkmanager.enable = true;
@@ -99,35 +94,34 @@
     LC_TIME = "sl_SI.UTF-8";
   };
 
-  # TODO: This is just an example, be sure to use whatever bootloader you prefer
-  boot.loader = {
-    efi = {
-      canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
-    };
-    # systemd-boot.enable = true;
-    grub = { # setup bootloader
-      enable = true;
-      efiSupport = true;
-      device = "nodev";
-      useOSProber = true;
+  boot = {
+    supportedFilesystems = [ "ntfs" ];
+    kernelPackages = pkgs.stable.linuxPackages_latest;
+    loader = {
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
+      };
+      # systemd-boot.enable = true;
+      grub = { # setup bootloader
+        enable = true;
+        efiSupport = true;
+        device = "nodev";
+        useOSProber = true;
+      };
     };
   };
 
   users.defaultUserShell = pkgs.zsh;
   environment.shells = [ pkgs.zsh ];
-  environment.binsh = "${pkgs.dash}/bin/dash";
+  # environment.binsh = "${pkgs.dash}/bin/dash";
 
-  # TODO: Configure your system-wide user settings (groups, etc), add more users as needed.
   users.users = {
-    # FIXME: Replace with your username
     svl = {
-      # TODO: You can set an initial password for your user.
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
       # Be sure to change it (using passwd) after rebooting!
       initialPassword = "00000";
       isNormalUser = true;
-      # TODO: Be sure to add any other groups you need (such as networkmanager, audio, docker, etc)
       extraGroups = [ "wheel" "docker" "networkmanager" "audio" ];
     };
   };
@@ -154,6 +148,9 @@
     pavucontrol
   ];
   services.transmission.enable = true;
+  services.tlp = {
+    enable = true;
+  };
 
   # This setups a SSH server. Very important if you're setting up a headless system.
   # Feel free to remove if you don't need it.
@@ -166,6 +163,8 @@
       passwordAuthentication = false;
     };
   };
+
+  virtualisation.docker.enable = true;
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "22.11";

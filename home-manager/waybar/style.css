@@ -78,8 +78,12 @@ window#waybar.hidden {
     border-radius: 0px 20px 20px 0px;
 }
 
-#battery.charging, #battery.plugged {
+#battery.charging {
     background-color: #26A65B;
+}
+
+#battery.critical {
+    background-color: #f53c3c;
 }
 
 #battery.warning {
@@ -93,8 +97,7 @@ window#waybar.hidden {
     }
 }
 
-#battery.critical:not(.charging) {
-    background-color: #f53c3c;
+#battery.critical:not(.charging):not(.plugged) {
     color: #ffffff;
     animation-name: blink;
     animation-duration: 0.5s;

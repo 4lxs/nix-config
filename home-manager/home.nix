@@ -13,6 +13,7 @@
     ./fonts
     ./nvim
     ./python
+    ./rust
   ];
 
   nixpkgs = {
@@ -52,6 +53,7 @@
       mpv
       stig
       qbittorrent
+      androidStudioPackages.canary
     ];
     sessionPath = [
       "$HOME/.local/bin"
@@ -141,12 +143,15 @@
     style.name = "adwaita-dark";
   };
 
-  services.playerctld.enable = true;
-  services.blueman-applet.enable = true;
-  services.mpris-proxy.enable = true;
-  services.kdeconnect = {
-    enable = true;
-    indicator = true;
+  services = {
+    udiskie.enable = true;
+    playerctld.enable = true;
+    blueman-applet.enable = true;
+    mpris-proxy.enable = true;
+    kdeconnect = {
+      enable = true;
+      indicator = true;
+    };
   };
 
   # Nicely reload system units when changing configs

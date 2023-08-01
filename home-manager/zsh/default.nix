@@ -31,9 +31,14 @@
       "....." = "cd ../../../..";
       "......" = "cd ../../../../..";
 
-      apt = "man nix-env";
-      apt-get = "man nix-env";
+      # apt = "man nix-env";
+      # apt-get = "man nix-env";
     };
+
+    initExtra = ''
+      [ -f ~/.aliasrc ] && source ~/.aliasrc
+      [ -x "$(command -v kubectl)" ] && source <(kubectl completion zsh)
+    '';
 
     localVariables = {
       VI_MODE_SET_CURSOR = "true";

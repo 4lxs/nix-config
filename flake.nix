@@ -41,7 +41,15 @@
       nixos = lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
         modules = [
-          # > Our main nixos configuration file <
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.svl.home = {
+              username = "svl";
+              homeDirectory = "/home/svl";
+            };
+          }
           ./nixos/configuration.nix
         ];
       };

@@ -6,14 +6,15 @@
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
 
-    ./hyprland
-    ./alacritty
-    ./zsh
-    ./tmux
-    ./fonts
-    ./nvim
-    ./python
-    ./rust
+    ./features/common
+    ./features/hyprland
+    ./features/alacritty
+    ./features/zsh
+    ./features/tmux
+    ./features/fonts
+    ./features/nvim
+    ./features/python
+    ./features/rust
   ];
 
   nixpkgs = {
@@ -56,21 +57,11 @@
       androidStudioPackages.canary
     ];
     sessionPath = [
-      "$HOME/.local/bin"
       "$HOME/go/bin"
     ];
   };
 
   programs = { # user program configuration
-    exa.enable = true; # ls replacement
-    zoxide = { # cd replacement
-      enable = true;
-      enableZshIntegration = true;
-    };
-    bat = { # cat replacement
-      enable = true;
-      config.theme = "TwoDark";
-    };
     firefox = { # browser
       enable = true;
       # profiles.svl = {
@@ -133,8 +124,6 @@
       };
     };
     vscode.enable = true;
-
-    home-manager.enable = true;
   };
 
   qt = {
@@ -153,10 +142,4 @@
       indicator = true;
     };
   };
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "22.11";
 }

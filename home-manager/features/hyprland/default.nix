@@ -36,7 +36,7 @@
     '';
   };
     
-  xdg.configFile."hypr/keymap.xkb".source = ../keymap.xkb;
+  xdg.configFile."hypr/keymap.xkb".source = ../keymap/keymap.xkb;
 
   wayland.windowManager.hyprland = {
     enable = true;

@@ -59,16 +59,8 @@
     homeConfigurations = {
       "lukas@pop-os" = lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [
-            {
-              home = {
-                username = "lukas";
-                homeDirectory = "/home/lukas";
-              };
-            }
-            ./home-manager/common
-          ];
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [ ./home/work.nix ];
       };
     };
   };

@@ -5,6 +5,9 @@
 
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
+    ./features/tmux
+    ./features/zsh
+    ./features/nvim
   ];
 
   nixpkgs = {
@@ -33,10 +36,24 @@
 
   home.sessionPath = [
     "$HOME/.local/bin"
-    "$HOME/go/bin"
+  ];
+
+  home.packages = with pkgs; [
+    ripgrep
+    fd
   ];
 
   programs = { # user program configuration
+    exa.enable = true; # ls replacement
+    zoxide = { # cd replacement
+      enable = true;
+      enableZshIntegration = true;
+    };
+    bat = { # cat replacement
+      enable = true;
+      config.theme = "TwoDark";
+    };
+
     home-manager.enable = true;
   };
 

@@ -12,6 +12,7 @@
 
     nixvim.url = github:pta2002/nixvim;
     hyprland.url = "github:hyprwm/Hyprland";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     # hardware.url = "github:nixos/nixos-hardware";
   };
 

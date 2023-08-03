@@ -2,6 +2,12 @@
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
   ];
+  nixpkgs.overlays = [
+    inputs.neovim-nightly-overlay.overlay
+  ];
+  home.packages = with pkgs; [
+    neovim-nightly
+  ];
   programs.nixvim = {
     enable = true;
     colorschemes.tokyonight = {

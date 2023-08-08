@@ -6,7 +6,7 @@ vim.opt.rtp:prepend(lazypath)
 
 local api = vim.api
 
-require('lazy').setup {
+require('lazy').setup("plugins")
 	-- "nvim-lua/plenary.nvim",
 	-- "folke/tokyonight.nvim",
 	-- "ggandor/leap.nvim",
@@ -88,7 +88,6 @@ require('lazy').setup {
 
 	-- -- notetaking
 	-- "renerocksai/telekasten.nvim",
-}
 
 -- return packer.startup(function(use)
 -- 	for _, plug in ipairs(plugins) do

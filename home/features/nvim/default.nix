@@ -8,5 +8,5 @@
   home.packages = with pkgs; [
     neovim-nightly
   ];
-  xdg.configFile.nvim.source = ./config;
+  # xdg.configFile.nvim.source = ./config;
 }

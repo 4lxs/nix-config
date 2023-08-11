@@ -22,6 +22,7 @@
     ];
 
     extraConfig = '' # copied directly to tmux.conf
+      set-option -g default-shell ~/.nix-profile/bin/zsh
       # look-and-feel
       set-option -g message-style fg=colour7 # message infos
       set-option -g pane-active-border-style fg=colour7 # split pane border

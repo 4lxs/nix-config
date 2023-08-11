@@ -10,7 +10,6 @@
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixvim.url = github:pta2002/nixvim;
     hyprland.url = "github:hyprwm/Hyprland";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     # hardware.url = "github:nixos/nixos-hardware";

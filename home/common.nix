@@ -8,6 +8,7 @@
     ./features/tmux
     ./features/zsh
     ./features/nvim
+    ./features/fonts
   ];
 
   nixpkgs = {

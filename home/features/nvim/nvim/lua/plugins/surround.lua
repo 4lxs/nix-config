@@ -4,6 +4,7 @@ return {
     mappings = {
       add = "ys",
       delete = "ds",
+      replace = "cs",
     },
   },
 }

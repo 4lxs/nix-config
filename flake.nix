@@ -41,15 +41,6 @@
       nixos = lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
         modules = [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.svl.home = {
-              username = "svl";
-              homeDirectory = "/home/svl";
-            };
-          }
           ./nixos/configuration.nix
         ];
       };
@@ -57,10 +48,15 @@
 
     # 'home-manager switch --flake .#your-username@your-hostname'
     homeConfigurations = {
-      "lukas@pop-os" = lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+      "svl@nixos" = lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
         extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ ./home/work.nix ];
+        modules = [ ./home/svl.nix ];
+      };
+      "lukas@pop-os" = lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [ ./home/lukas.nix ];
       };
     };
   };

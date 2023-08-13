@@ -4,7 +4,7 @@ return {
     lazy = true,
     opts = {
       style = "night",
-      -- transparent = true
+      transparent = true
     },
   },
 }

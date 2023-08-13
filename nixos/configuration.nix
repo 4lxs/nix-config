@@ -15,14 +15,6 @@
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  home-manager = {
-    extraSpecialArgs = { inherit inputs outputs; };
-    users = {
-      # Import your home-manager configuration
-      svl = import ../home-manager/home.nix;
-    };
-  };
-
   programs.dconf.enable = true;
   programs.zsh.enable = true;
   programs.kdeconnect.enable = true;
@@ -163,6 +155,10 @@
       passwordAuthentication = false;
     };
   };
+
+  services.udisks2.enable = true;
+
+  services.ntp.enable = true;
 
   virtualisation.docker.enable = true;
 

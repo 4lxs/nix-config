@@ -6,6 +6,7 @@ let
         pandas
         numpy
         matplotlib
+        pynvim
     ];
 in {
     home.packages = with pkgs; [

@@ -6,7 +6,7 @@
     # Or modules exported from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModules.default
 
-    ./features/common
+    ./common.nix
     ./features/hyprland
     ./features/alacritty
     ./features/zsh
@@ -69,13 +69,6 @@
       #     bitwarden
       #   ];
       # };
-    };
-    git = { # version control
-      enable = true;
-      extraConfig = {
-        user.email = "svensek.luka@pm.me";
-        user.name = "Svl";
-      };
     };
     go.enable = true;
     zathura = {

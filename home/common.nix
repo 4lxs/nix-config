@@ -9,6 +9,7 @@
     ./features/zsh
     ./features/nvim
     ./features/fonts
+    ./features/git
   ];
 
   nixpkgs = {
@@ -42,6 +43,8 @@
   home.packages = with pkgs; [
     ripgrep
     fd
+    unzip
+    wget
   ];
 
   programs = { # user program configuration

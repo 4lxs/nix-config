@@ -3,7 +3,7 @@ return {
   opts = {
     ensure_installed = {
       "golangci-lint",
-      "stylua",
+      "shfmt",
     },
   },
 }

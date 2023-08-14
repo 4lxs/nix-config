@@ -1,6 +1,5 @@
-{ inputs, lib, config, pkgs, ... }: { # virtualization support
-  programs.dconf.enable = true;
-
+{ config, pkgs, ... }: { # virtualization support
+  # TODO: don't use svl when it's supposed to be system-agnostic feature
   users.users.svl.extraGroups = [
     "kvm"
     "libvirtd"
@@ -24,12 +23,14 @@
 
   environment.systemPackages = with pkgs; [
     virt-manager
-    virt-viewer
+    # virt-viewer
     spice
     spice-gtk
     spice-protocol
-    win-virtio
-    win-spice
+    # win-virtio
+    # win-spice
+    libguestfs
+    guestfs-tools
   ];
 
   virtualisation = { # virt-manager
@@ -44,4 +45,5 @@
     spiceUSBRedirection.enable = true;
   };
   services.spice-vdagentd.enable = true;
+  programs.dconf.enable = true;
 }

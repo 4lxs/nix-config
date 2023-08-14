@@ -11,11 +11,10 @@
     # ./users.nix
 
     # Import your generated (nixos-generate-config) hardware configuration
-    ./hardware-configuration.nix
-    inputs.home-manager.nixosModules.home-manager
+    ./svl-hardware-configuration.nix
+    ./features/vm.nix
   ];
 
-  programs.dconf.enable = true;
   programs.zsh.enable = true;
   programs.kdeconnect.enable = true;
 
@@ -37,26 +36,17 @@
       #   });
       # })
     ];
-    # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
     };
   };
 
   nix = {
-    # This will add each flake input as a registry
-    # To make nix3 commands consistent with your flake
     registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-
-    # This will additionally add your inputs to the system's legacy channels
-    # Making legacy nix commands consistent as well, awesome!
     nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
 
     settings = {
-      # Enable flakes and new 'nix' command
       experimental-features = "nix-command flakes";
-      # Deduplicate and optimize nix store
       auto-optimise-store = true;
     };
     gc = {
@@ -66,7 +56,7 @@
   };
 
   networking = {
-    hostName = "nixos"; # net
+    hostName = "nixos";
     networkmanager.enable = true;
   };
   programs.nm-applet.enable = true;
@@ -111,7 +101,6 @@
   users.users = {
     svl = {
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
-      # Be sure to change it (using passwd) after rebooting!
       initialPassword = "00000";
       isNormalUser = true;
       extraGroups = [ "wheel" "docker" "networkmanager" "audio" ];
@@ -144,17 +133,6 @@
     enable = true;
   };
 
-  # This setups a SSH server. Very important if you're setting up a headless system.
-  # Feel free to remove if you don't need it.
-  services.openssh = {
-    enable = false;
-    settings = {
-      # Forbid root login through SSH.
-      permitRootLogin = "no";
-      # Use keys only. Remove if you want to SSH using password (not recommended)
-      passwordAuthentication = false;
-    };
-  };
 
   services.udisks2.enable = true;
 

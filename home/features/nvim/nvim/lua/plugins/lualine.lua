@@ -1,3 +1,13 @@
+local function get_output(cmd)
+  local handle = io.popen(cmd)
+  if handle == nil then
+    return ""
+  end
+  local result = handle:read("*a")
+  handle:close()
+  return string.gsub(result, "%s+", "")
+end
+
 return {
   {
     "nvim-lualine/lualine.nvim",
@@ -12,7 +22,15 @@ return {
           -- disabled_filetypes = { statusline = { "dashboard", "alpha" } },
         },
         sections = {
-          lualine_a = { "mode" },
+          lualine_a = {
+            {
+              "mode",
+              fmt = function(_)
+                return get_output('tmux display-message -p "#S"')
+              end,
+              color = { gui = "bold" },
+            },
+          },
           lualine_b = {
             {
               "diagnostics",
@@ -60,17 +78,21 @@ return {
               cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
               color = Util.fg("Debug"),
             },
-            { require("lazy.status").updates, separator = 'f', cond = require("lazy.status").has_updates, color = Util.fg("Special") },
+            {
+              require("lazy.status").updates,
+              separator = "f",
+              cond = require("lazy.status").has_updates,
+              color = Util.fg("Special"),
+            },
           },
           lualine_y = {
             { "progress", separator = " ", padding = { left = 1, right = 0 } },
             { "location", padding = { left = 0, right = 1 } },
           },
-          lualine_z = {
-          },
+          lualine_z = {},
         },
         extensions = { "neo-tree", "lazy" },
       }
-    end
-  }
+    end,
+  },
 }

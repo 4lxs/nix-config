@@ -15,6 +15,7 @@
     ./features/nvim
     ./features/python
     ./features/rust
+    ./features/hacking
   ];
 
   nixpkgs = {

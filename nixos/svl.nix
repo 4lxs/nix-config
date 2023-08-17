@@ -13,6 +13,7 @@
     # Import your generated (nixos-generate-config) hardware configuration
     ./svl-hardware-configuration.nix
     ./features/vm.nix
+    # ./features/hax
   ];
 
   programs.zsh.enable = true;
@@ -138,7 +139,10 @@
 
   services.ntp.enable = true;
 
-  virtualisation.docker.enable = true;
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = false;
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "22.11";

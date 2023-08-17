@@ -21,21 +21,27 @@
   # };
 
 
+  #boot.kernelParams = [
+  #  "cgroup_enable=freezer"
+  #];
+
   environment.systemPackages = with pkgs; [
     virt-manager
-    # virt-viewer
+    virt-viewer
     spice
     spice-gtk
     spice-protocol
-    # win-virtio
-    # win-spice
+    win-virtio
+    win-spice
+    gnome.adwaita-icon-theme
     libguestfs
     guestfs-tools
   ];
 
-  virtualisation = { # virt-manager
+  virtualisation = {
     libvirtd = {
       enable = true;
+      onBoot = "ignore";
       qemu = {
         swtpm.enable = true;
         ovmf.enable = true;

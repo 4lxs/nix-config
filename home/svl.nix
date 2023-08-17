@@ -1,20 +1,9 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
   imports = [
-    # If you want to use modules your own flake exports (from modules/home-manager):
-    # outputs.homeManagerModules.example
-
-    # Or modules exported from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModules.default
-
     ./common.nix
     ./features/hyprland
     ./features/alacritty
-    ./features/zsh
-    ./features/tmux
-    ./features/fonts
-    ./features/nvim
     ./features/python
-    ./features/rust
   ];
 
   nixpkgs = {

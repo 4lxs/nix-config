@@ -1,5 +1,6 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
     imports = [
+        ./features/alacritty
         ./common.nix
     ];
 

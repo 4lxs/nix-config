@@ -4,6 +4,8 @@
     ./features/hyprland
     ./features/alacritty
     ./features/python
+    ./features/rust
+    ./features/hacking
   ];
 
   nixpkgs = {

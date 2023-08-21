@@ -45,7 +45,6 @@
     fd
     unzip
     wget
-    gcc
   ];
 
   programs = { # user program configuration

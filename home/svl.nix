@@ -44,6 +44,7 @@
       stig
       qbittorrent
       androidStudioPackages.canary
+      gcc
     ];
     sessionPath = [
       "$HOME/go/bin"

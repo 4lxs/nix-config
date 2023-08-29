@@ -7,7 +7,7 @@
   xdg.configFile."tmux/gitmux.conf".source = ./gitmux.conf;
   programs.tmux = {
     enable = true;
-    mouse = false;
+    mouse = true;
     baseIndex = 1;
 
     plugins = with pkgs; [

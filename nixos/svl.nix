@@ -59,6 +59,10 @@
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
+    extraHosts = ''
+      10.10.11.227 keeper.htb
+      10.10.11.227 tickets.keeper.htb
+    '';
   };
   programs.nm-applet.enable = true;
 
@@ -86,7 +90,8 @@
         efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
       };
       # systemd-boot.enable = true;
-      grub = { # setup bootloader
+      grub = {
+        # setup bootloader
         enable = true;
         efiSupport = true;
         device = "nodev";
@@ -118,12 +123,12 @@
   security.polkit.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
-      enable = true;
-      alsa.enable = true;
-      alsa.support32Bit = true;
-      pulse.enable = true;
-      # jack.enable = true;
-    };
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # jack.enable = true;
+  };
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
   environment.systemPackages = with pkgs; [

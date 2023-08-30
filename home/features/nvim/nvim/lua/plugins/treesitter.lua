@@ -24,6 +24,11 @@ return {
           },
         },
       },
+      context_commentstring = {
+        config = {
+          cpp = '//%s',
+        },
+      },
     },
   },
 }

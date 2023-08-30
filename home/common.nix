@@ -45,15 +45,17 @@
     fd
     unzip
     wget
+    xdg-utils
   ];
 
-  programs = { # user program configuration
-    exa.enable = true; # ls replacement
-    zoxide = { # cd replacement
+  programs = {
+    # user program configuration
+    exa.enable = true;
+    zoxide = {
       enable = true;
       enableZshIntegration = true;
     };
-    bat = { # cat replacement
+    bat = {
       enable = true;
       config.theme = "TwoDark";
     };
@@ -61,10 +63,11 @@
     home-manager.enable = true;
   };
 
-  dconf.settings = { # Needed for virtualization
+  # Needed for virtualization
+  dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {
-      autoconnect = ["qemu:///system"];
-      uris = ["qemu:///system"];
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
     };
   };
 

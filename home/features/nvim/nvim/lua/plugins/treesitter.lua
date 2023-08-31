@@ -2,6 +2,10 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
+      indent = {
+        enable = true,
+        disable = { "cpp" },
+      },
       textobjects = {
         move = {
           enable = true,
@@ -26,7 +30,7 @@ return {
       },
       context_commentstring = {
         config = {
-          cpp = '//%s',
+          cpp = "//%s",
         },
       },
     },

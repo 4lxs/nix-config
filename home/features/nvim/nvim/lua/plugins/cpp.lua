@@ -1,13 +1,5 @@
 return {
   {
-    "jakemason/ouroboros",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    ft = { "c", "cpp" },
-    keys = {
-      { "go", "<cmd>Ouroboros<CR>" },
-    },
-  },
-  {
     "neovim/nvim-lspconfig",
     opts = {
       autoformat = false, -- TODO: figure out per filetype

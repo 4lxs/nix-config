@@ -16,48 +16,49 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }@inputs:
-  let
-    inherit (self) outputs;
-    lib = nixpkgs.lib // home-manager.lib;
-    forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
-    pkgsFor = nixpkgs.legacyPackages;
-  in rec {
-    packages = forAllSystems (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in import ./pkgs { inherit pkgs; }
-    );
-    # Devshell for bootstrapping
-    # Acessible through 'nix develop'
-    devShells = forAllSystems (system:
-      let pkgs = nixpkgs.legacyPackages.${system};
-      in import ./shell.nix { inherit pkgs; }
-    );
-    overlays = import ./overlays { inherit inputs; };
-    nixosModules = import ./modules/nixos;
-    homeManagerModules = import ./modules/home-manager;
+    let
+      inherit (self) outputs;
+      lib = nixpkgs.lib // home-manager.lib;
+      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" ];
+      pkgsFor = nixpkgs.legacyPackages;
+    in
+    rec {
+      packages = forAllSystems (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in import ./pkgs { inherit pkgs; }
+      );
+      # Devshell for bootstrapping
+      # Acessible through 'nix develop'
+      devShells = forAllSystems (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in import ./shell.nix { inherit pkgs; }
+      );
+      overlays = import ./overlays { inherit inputs; };
+      nixosModules = import ./modules/nixos;
+      homeManagerModules = import ./modules/home-manager;
 
-    # 'nixos-rebuild --flake .#your-hostname'
-    nixosConfigurations = {
-      nixos = lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [
-          ./nixos/svl.nix
-        ];
+      # 'nixos-rebuild --flake .#your-hostname'
+      nixosConfigurations = {
+        nixos = lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./nixos/svl.nix
+          ];
+        };
+      };
+
+      # 'home-manager switch --flake .#your-username@your-hostname'
+      homeConfigurations = {
+        "svl@nixos" = lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [ ./home/svl.nix ];
+        };
+        "lukas@pop-os" = lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+          modules = [ ./home/lukas.nix ];
+        };
       };
     };
-
-    # 'home-manager switch --flake .#your-username@your-hostname'
-    homeConfigurations = {
-      "svl@nixos" = lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ ./home/svl.nix ];
-      };
-      "lukas@pop-os" = lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ ./home/lukas.nix ];
-      };
-    };
-  };
 }

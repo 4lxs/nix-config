@@ -10,6 +10,7 @@
     ./features/nvim
     ./features/fonts
     ./features/git
+    ./features/rust
   ];
 
   nixpkgs = {

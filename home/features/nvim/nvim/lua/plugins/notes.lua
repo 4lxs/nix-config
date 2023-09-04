@@ -1,6 +1,19 @@
 return {
   {
+    "folke/which-key.nvim",
+    opts = {
+      defaults = {
+        ["<leader>n"] = { name = "+notes" },
+      },
+    },
+  },
+  {
     "nvim-neorg/neorg",
+    keys = {
+      { "<leader>nn", "<cmd>Neorg index<cr>", desc = "default" },
+      { "<leader>nm", "<cmd>Neorg workspace math<cr>", desc = "math" },
+      { "<leader>nr", "<cmd>Neorg workspace maldev<cr>", desc = "redteam" },
+    },
     build = ":Neorg sync-parsers",
     dependencies = {
       "nvim-lua/plenary.nvim",

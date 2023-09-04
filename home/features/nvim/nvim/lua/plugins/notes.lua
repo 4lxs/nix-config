@@ -17,7 +17,6 @@ return {
     build = ":Neorg sync-parsers",
     dependencies = {
       "nvim-lua/plenary.nvim",
-      { dir = "~/Projects/neorg-split" },
     },
     opts = {
       load = {
@@ -29,6 +28,7 @@ return {
               math = "~/Documents/notes/meth",
               maldev = "~/Documents/notes/maldev",
               brain = "~/Documents/notes/brain",
+              work = "~/Documents/notes/work",
             },
             default_workspace = "brain",
           },
@@ -38,7 +38,6 @@ return {
             engine = "nvim-cmp",
           },
         },
-        ["external.split"] = {},
       },
     },
   },

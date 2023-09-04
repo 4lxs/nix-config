@@ -2,6 +2,10 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
+      indent = {
+        enable = true,
+        disable = { "cpp" },
+      },
       textobjects = {
         move = {
           enable = true,
@@ -22,6 +26,11 @@ return {
             ["[F"] = { query = "@function.outer", desc = "Previous function end" },
             ["[C"] = { query = "@class.outer", desc = "Previous class end" },
           },
+        },
+      },
+      context_commentstring = {
+        config = {
+          cpp = "//%s",
         },
       },
     },

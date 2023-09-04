@@ -59,6 +59,11 @@
       enable = true;
       config.theme = "TwoDark";
     };
+    direnv = {
+      enable = true;
+      enableFishIntegration = true;
+      nix-direnv.enable = true;
+    };
 
     home-manager.enable = true;
   };

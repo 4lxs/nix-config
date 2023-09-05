@@ -48,9 +48,6 @@
       androidStudioPackages.canary
       gcc
     ];
-    sessionPath = [
-      "$HOME/go/bin"
-    ];
   };
 
   programs = { # user program configuration
@@ -62,7 +59,6 @@
       #   ];
       # };
     };
-    go.enable = true;
     zathura = {
       enable = true;
       options = {

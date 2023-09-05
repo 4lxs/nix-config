@@ -20,6 +20,17 @@ return {
     opts = {
       style = "night",
       transparent = true,
+      on_highlights = function(highlights, colors)
+        highlights.DiffAdd = {
+          fg = colors.green
+        }
+        highlights.DiffChange = {
+          fg = colors.orange
+        }
+        highlights.DiffDelete = {
+          fg = colors.red
+        }
+      end,
     },
   },
 }

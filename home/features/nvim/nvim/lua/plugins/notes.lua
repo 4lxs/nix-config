@@ -10,9 +10,10 @@ return {
   {
     "nvim-neorg/neorg",
     keys = {
-      { "<leader>nn", "<cmd>Neorg index<cr>", desc = "default" },
+      { "<leader>nn", "<cmd>Neorg workspace brain<cr>", desc = "brain" },
       { "<leader>nm", "<cmd>Neorg workspace math<cr>", desc = "math" },
       { "<leader>nr", "<cmd>Neorg workspace maldev<cr>", desc = "redteam" },
+      { "<leader>nw", "<cmd>Neorg workspace work<cr>", desc = "redteam" },
     },
     build = ":Neorg sync-parsers",
     dependencies = {

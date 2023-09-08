@@ -1,8 +1,15 @@
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  pattern = { "cpp" },
+  callback = function()
+    vim.bo.commentstring = "//%s"
+    vim.b.autoformat = false
+  end,
+})
+
 return {
   {
     "neovim/nvim-lspconfig",
     opts = {
-      autoformat = false, -- TODO: figure out per filetype
       servers = {
         ccls = {
           init_options = {

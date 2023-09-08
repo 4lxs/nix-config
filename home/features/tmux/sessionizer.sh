@@ -1,54 +1,62 @@
 #!/usr/bin/env bash
 
 __fzfcmd() {
-  [ -n "$TMUX_PANE" ] && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "$FZF_TMUX_OPTS" ]; } &&
-    echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-40%}} -- " || echo "fzf"
+	[ -n "$TMUX_PANE" ] && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "$FZF_TMUX_OPTS" ]; } &&
+		echo "fzf-tmux ${FZF_TMUX_OPTS:--d${FZF_TMUX_HEIGHT:-40%}} -- " || echo "fzf"
 }
 
-# Parse optional argument
-if [ "$1" ]; then
-  # Argument is given
-  eval "$(zoxide init bash)"
-  RESULT=$(z $@ && pwd)
-else
-  # No argument is given. Use FZF
-  RESULT=$((tmux list-sessions -F "#{session_name}: #{session_windows} window(s)\
-#{?session_grouped, (group ,}#{session_group}#{?session_grouped,),}\
-#{?session_attached, (attached),}"; zoxide query -l) | $(__fzfcmd) --reverse)
-  if [ -z "$RESULT" ]; then
-    exit 0
-  fi
-fi
+sessions=()
+IFS=$'\n'
 
-# for i in ~/code/* ~/Projects/*; do
-#   echo $i
-# done
-#
-# RESULT=$(
-#   (tmux list-sessions -F "#{session_name}: #{session_windows} window(s) {?session_grouped, (group ,}#{session_group}#{?session_grouped,),} {?session_attached, (attached),}"
-#   ; 
-#   ; zoxide query -l
-#   ) | $(__fzfcmd) --reverse)
-# if [ -z "$RESULT" ]; then
-#   exit 0
-# fi
+for codedir in $(echo "$HOME/code/;$HOME/Projects/" | tr ";" "\n" | xargs -i{} find "{}" -maxdepth 1 -mindepth 1 -type d); do
+	if [ "$(git -C "$codedir" rev-parse --is-bare-repository --quiet 2>/dev/null)" = "true" ]; then
+		sessions+=("$(git -C "$codedir" branch -r | tr -d " " | sed -e "s/^origin\///" | xargs printf "worktree: %s @ $codedir\n")")
+	else
+		sessions+=("code: $codedir")
+	fi
+done
 
-# Get or create session
-if [[ $RESULT == *":"* ]]; then
-  # RESULT comes from list-sessions
-  SESSION=$(echo $RESULT | awk '{print $1}')
-  SESSION=${SESSION//:/}
-else
-  # RESULT is a path
-  SESSION=$(basename "$RESULT" | tr . - | tr ' ' - | tr ':' - | tr '[:upper:]' '[:lower:]')
-  if ! tmux has-session -t=$SESSION 2> /dev/null; then
-    tmux new-session -d -s $SESSION -c "$RESULT"
-  fi
-fi
+RESULT=$(
+	(
+		tmux list-sessions -F 'session: #{session_name}: #{session_windows} window(s) #{?session_grouped, (group ,}#{session_group}#{?session_grouped,),} #{?session_attached, (attached),}'
+		printf "%s\n" ${sessions[@]}
+	) | $(__fzfcmd) --reverse
+)
+
+TYPE="${RESULT%%:*}"
+VAL="${RESULT#*: }"
+echo "type: '$TYPE'"
+echo "val: '$VAL'"
+case "$TYPE" in
+session)
+	SESSION="${VAL%%:*}"
+	;;
+worktree)
+	WT="${VAL%% @*}"
+	DIR="${VAL##* @ }"
+	[ ! -d "$WT" ] && git -C "$DIR" worktree add "$WT"
+	DIR+="/$WT"
+	SESSION="$WT"
+	;;
+code) ;&
+path)
+	SESSION=$(basename "$VAL" | tr . - | tr ' ' - | tr ':' - | tr '[:upper:]' '[:lower:]')
+	DIR=$VAL
+	;;
+*)
+	echo Nothing selected
+	;;
+esac
+
+echo "using: '$SESSION' '$DIR'"
+[ -n "$DIR" ] && [ ! $(tmux has-session -t="$SESSION" >/dev/null) ] && tmux new-session -d -s "$SESSION" -c "$DIR"
+
+[ -z "$SESSION" ] && exit 0
+echo "session: '$SESSION'"
 
 # Attach to session
 if [ -z "$TMUX" ]; then
-  tmux attach -t $SESSION
+	tmux attach -t $SESSION
 else
-  tmux switch-client -t $SESSION
+	tmux switch-client -t $SESSION
 fi

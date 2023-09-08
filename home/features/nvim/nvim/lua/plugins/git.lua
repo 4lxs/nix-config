@@ -14,6 +14,8 @@ return {
       { "<leader>gl", "<cmd>Gread<cr>", desc = "git reset" },
       { "<leader>gb", "<cmd>Git blame<cr>", desc = "git blame" },
       { "<leader>gB", "<cmd>Gitsigns toggle_current_line_blame<cr>", desc = "toggle current line blame" },
+      { "gh", "<cmd>diffget //2<cr>", desc = "Git our change in 3-way conflict" },
+      { "gl", "<cmd>diffget //3<cr>", desc = "Git their change in 3-way conflict" },
     },
   },
   {

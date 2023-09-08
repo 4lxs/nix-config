@@ -10,15 +10,15 @@ IFS=$'\n'
 
 for codedir in $(echo "$HOME/code/;$HOME/Projects/" | tr ";" "\n" | xargs -i{} find "{}" -maxdepth 1 -mindepth 1 -type d); do
 	if [ "$(git -C "$codedir" rev-parse --is-bare-repository --quiet 2>/dev/null)" = "true" ]; then
-		sessions+=("$(git -C "$codedir" branch -r | tr -d " " | sed -e "s/^origin\///" | xargs printf "worktree: %s @ $codedir\n")")
+		sessions+=("$(git -C "$codedir" branch -r | tr -d " " | sed -e "s/^origin\///" | xargs printf "w: %s @ $codedir\n")")
 	else
-		sessions+=("code: $codedir")
+		sessions+=("c: $codedir")
 	fi
 done
 
 RESULT=$(
 	(
-		tmux list-sessions -F 'session: #{session_name}: #{session_windows} window(s) #{?session_grouped, (group ,}#{session_group}#{?session_grouped,),} #{?session_attached, (attached),}'
+		tmux list-sessions -F 's: #{session_name}: #{session_windows} window(s) #{?session_grouped, (group ,}#{session_group}#{?session_grouped,),} #{?session_attached, (attached),}'
 		printf "%s\n" ${sessions[@]}
 	) | $(__fzfcmd) --reverse
 )
@@ -28,18 +28,18 @@ VAL="${RESULT#*: }"
 echo "type: '$TYPE'"
 echo "val: '$VAL'"
 case "$TYPE" in
-session)
+s)
 	SESSION="${VAL%%:*}"
 	;;
-worktree)
+w)
 	WT="${VAL%% @*}"
 	DIR="${VAL##* @ }"
 	[ ! -d "$WT" ] && git -C "$DIR" worktree add "$WT"
 	DIR+="/$WT"
 	SESSION="$WT"
 	;;
-code) ;&
-path)
+c) ;&
+p)
 	SESSION=$(basename "$VAL" | tr . - | tr ' ' - | tr ':' - | tr '[:upper:]' '[:lower:]')
 	DIR=$VAL
 	;;

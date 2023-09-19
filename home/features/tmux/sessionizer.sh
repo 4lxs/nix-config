@@ -35,8 +35,8 @@ w)
 	WT="${VAL%% @*}"
 	DIR="${VAL##* @ }"
 	[ ! -d "$WT" ] && git -C "$DIR" worktree add "$WT"
+	SESSION="$(basename $DIR)/$WT"
 	DIR+="/$WT"
-	SESSION="$WT"
 	;;
 c) ;&
 p)

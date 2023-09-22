@@ -1,4 +1,5 @@
-{ inputs, lib, config, pkgs, ... }: { # zsh config
+{ inputs, lib, config, pkgs, ... }: {
+  # zsh config
   programs.zsh = {
     enable = true;
     autocd = true;
@@ -8,6 +9,7 @@
     defaultKeymap = "viins";
     dotDir = ".config/zsh";
     history = {
+      share = false;
       expireDuplicatesFirst = true;
       save = 100000000;
       size = 1000000000;
@@ -78,16 +80,16 @@
           rev = "86d55972f5cb65d545389fe0306e617b68328982";
           sha256 = "1c2xx9bkkvyy0c6aq9vv3fjw7snlm0m5bjygfk5391qgjpvchd29";
         };
-      } /*
-      {
-        name = "zsh-syntax-highlighting";
-        src = pkgs.fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-syntax-highlighting";
-          rev = "754cefe0181a7acd42fdcb357a67d0217291ac47";
-          sha256 = "kWgPe7QJljERzcv4bYbHteNJIxCehaTu4xU9r64gUM4=";
-        };
-      } */
+      }
+      # {
+      #   name = "zsh-syntax-highlighting";
+      #   src = pkgs.fetchFromGitHub {
+      #     owner = "zsh-users";
+      #     repo = "zsh-syntax-highlighting";
+      #     rev = "754cefe0181a7acd42fdcb357a67d0217291ac47";
+      #     sha256 = "kWgPe7QJljERzcv4bYbHteNJIxCehaTu4xU9r64gUM4=";
+      #   };
+      # }
       {
         name = "nix-shell";
         src = pkgs.fetchFromGitHub {

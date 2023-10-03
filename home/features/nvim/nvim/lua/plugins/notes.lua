@@ -13,7 +13,8 @@ return {
       { "<leader>nn", "<cmd>Neorg workspace brain<cr>", desc = "brain" },
       { "<leader>nm", "<cmd>Neorg workspace math<cr>", desc = "math" },
       { "<leader>nr", "<cmd>Neorg workspace maldev<cr>", desc = "redteam" },
-      { "<leader>nw", "<cmd>Neorg workspace work<cr>", desc = "redteam" },
+      { "<leader>nw", "<cmd>Neorg workspace work<cr>", desc = "work" },
+      { "<leader>ns", "<cmd>Neorg workspace school<cr>", desc = "school" },
     },
     build = ":Neorg sync-parsers",
     dependencies = {
@@ -30,6 +31,7 @@ return {
               maldev = "~/Documents/notes/maldev",
               brain = "~/Documents/notes/brain",
               work = "~/Documents/notes/work",
+              school = "~/Documents/notes/school",
             },
             default_workspace = "brain",
           },

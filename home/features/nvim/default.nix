@@ -1,19 +1,19 @@
 { inputs, lib, config, pkgs, ... }: {
   nixpkgs.overlays = [
-    inputs.neovim-nightly-overlay.overlay
+    #   inputs.neovim-nightly-overlay.overlay
   ];
   home.packages = with pkgs; [
     nodejs_20
     stylua
     lua-language-server
     rnix-lsp
-    nixd
+    # nixd
     nil
     statix
   ];
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-nightly;
+    #     package = pkgs.neovim-nightly;
   };
   # xdg.configFile.nvim.source = ./config;
 }

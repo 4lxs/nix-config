@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ... }: {
+{ pkgs, ... }: {
   # alacritty config
   programs.alacritty = {
     enable = true;
@@ -21,17 +21,17 @@
         args = [ "new" "-AsMain" ];
       };
 
-      key_bindings = [
-        { key = 1; mods = "Control"; chars = "\x14\x30"; }
-        { key = 2; mods = "Control"; chars = "\x14\x31"; }
-        { key = 3; mods = "Control"; chars = "\x14\x32"; }
-        { key = 4; mods = "Control"; chars = "\x14\x33"; }
-        { key = 5; mods = "Control"; chars = "\x14\x34"; }
-        { key = 6; mods = "Control"; chars = "\x14\x35"; }
-        { key = 7; mods = "Control"; chars = "\x14\x36"; }
-        { key = 8; mods = "Control"; chars = "\x14\x37"; }
-        { key = 9; mods = "Control"; chars = "\x14\x38"; }
-      ];
+      #      key_bindings = [
+      #        { key = 1; mods = "Control"; chars = "\x14\x30"; }
+      #        { key = 2; mods = "Control"; chars = "\x14\x31"; }
+      #        { key = 3; mods = "Control"; chars = "\x14\x32"; }
+      #        { key = 4; mods = "Control"; chars = "\x14\x33"; }
+      #        { key = 5; mods = "Control"; chars = "\x14\x34"; }
+      #        { key = 6; mods = "Control"; chars = "\x14\x35"; }
+      #        { key = 7; mods = "Control"; chars = "\x14\x36"; }
+      #        { key = 8; mods = "Control"; chars = "\x14\x37"; }
+      #        { key = 9; mods = "Control"; chars = "\x14\x38"; }
+      #      ];
 
       colors = {
         primary = {

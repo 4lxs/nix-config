@@ -21,7 +21,7 @@
     let
       inherit (self) outputs;
       lib = nixpkgs.lib // home-manager.lib;
-      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "x86_64-darwin" ];
+      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-darwin" ];
       pkgsFor = nixpkgs.legacyPackages;
     in
     rec {
@@ -65,8 +65,8 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/lukas.nix ];
         };
-        "luka@luka-mac" = lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-darwin;
+        "lukas@ls-darwin" = lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/luka-mac.nix ];
         };

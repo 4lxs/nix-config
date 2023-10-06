@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }:
+let
+  wtclonescript = pkgs.writeScriptBin "wt-clone.sh" (lib.readFile ./wt-clone.sh);
+in
+{
   programs = {
     lazygit = {
       enable = true;
@@ -18,7 +22,8 @@
         };
       };
     };
-    git = { # version control
+    git = {
+      # version control
       enable = true;
       delta = {
         enable = true;
@@ -34,6 +39,9 @@
         merge.tool = "nvimdiff";
         merge.conflictstyle = "diff3";
         diff.colorMoved = "default";
+      };
+      aliases = {
+        wt-clone = "!sh ${wtclonescript}/bin/wt-clone.sh";
       };
     };
   };

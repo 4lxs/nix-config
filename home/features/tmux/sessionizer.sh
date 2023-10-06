@@ -8,7 +8,7 @@ __fzfcmd() {
 sessions=()
 IFS=$'\n'
 
-for codedir in $(echo "$HOME/code/;$HOME/Projects/" | tr ";" "\n" | xargs -i{} find "{}" -maxdepth 1 -mindepth 1 -type d); do
+for codedir in $(echo "$HOME/code/;$HOME/Projects/" | tr ";" "\n" | xargs -I{} find "{}" -maxdepth 1 -mindepth 1 -type d); do
 	if [ "$(git -C "$codedir" rev-parse --is-bare-repository --quiet 2>/dev/null)" = "true" ]; then
 		sessions+=("$(git -C "$codedir" branch -r | tr -d " " | sed -e "s/^origin\///" | xargs printf "w: $(basename "$codedir")/%s @ $codedir\n")")
 	else
@@ -40,8 +40,7 @@ w)
 	SESSION="$(basename $DIR)/$WT"
 	DIR+="/$WT"
 	;;
-c) ;&
-p)
+c | p)
 	SESSION=$(basename "$VAL" | tr . - | tr ' ' - | tr ':' - | tr '[:upper:]' '[:lower:]')
 	DIR=$VAL
 	;;

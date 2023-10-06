@@ -17,7 +17,7 @@
     # hardware.url = "github:nixos/nixos-hardware";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nix-darwin, ... }@inputs:
     let
       inherit (self) outputs;
       lib = nixpkgs.lib // home-manager.lib;
@@ -44,14 +44,14 @@
         nixos = lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            ./nixos/svl.nix
+            ./host/svl.nix
           ];
         };
       };
 
-#      darwinConfigurations."luka-mac" = nix-darwin.lib.darwinSystem {
-#        modules = [ ./darwin/luka-mac.nix ];
-#      };
+      darwinConfigurations."lsdarwin" = nix-darwin.lib.darwinSystem {
+        modules = [ ./host/lsdarwin.nix ];
+      };
 
       # 'home-manager switch --flake .#your-username@your-hostname'
       homeConfigurations = {
@@ -65,7 +65,7 @@
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/lukas.nix ];
         };
-        "lukas@ls-darwin" = lib.homeManagerConfiguration {
+        "lukas@lsdarwin" = lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/luka-mac.nix ];

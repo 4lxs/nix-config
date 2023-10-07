@@ -44,13 +44,24 @@
         nixos = lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           modules = [
-            ./host/svl.nix
+            ./hosts/svl.nix
           ];
         };
       };
 
-      darwinConfigurations."lsdarwin" = nix-darwin.lib.darwinSystem {
-        modules = [ ./host/lsdarwin.nix ];
+      darwinConfigurations = {
+        lsdarwin = nix-darwin.lib.darwinSystem {
+          modules = [
+            ./hosts/lsdarwin.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.lukas = import ./home/luka-mac.nix;
+              home-manager.extraSpecialArgs = { inherit inputs outputs; };
+            }
+          ];
+        };
       };
 
       # 'home-manager switch --flake .#your-username@your-hostname'
@@ -64,11 +75,6 @@
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
           modules = [ ./home/lukas.nix ];
-        };
-        "lukas@lsdarwin" = lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/luka-mac.nix ];
         };
       };
     };

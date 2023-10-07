@@ -1,9 +1,12 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{ pkgs, ... }: {
+  imports = [
+    ./features/darwin-keyboard
+  ];
 
   services.nix-daemon.enable = true;
   nix.package = pkgs.nixUnstable;
-  imports = [
-  ];
+
+  programs.zsh.enable = true;
 
   homebrew = {
     enable = true;
@@ -11,6 +14,8 @@
       "brave-browser"
     ];
   };
+
+  users.users."lukas".home = "/Users/lukas/";
 
   nixpkgs = {
     hostPlatform = "aarch64-darwin";

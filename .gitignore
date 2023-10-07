@@ -1,2 +1,3 @@
 *.code-workspace
 home/features/nvim/nvim/lazy-lock.json
+.DS_Store

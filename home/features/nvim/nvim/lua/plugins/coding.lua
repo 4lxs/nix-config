@@ -133,4 +133,20 @@ return {
       },
     },
   },
+
+  -- python
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        pylsp = {
+          plugins = {
+            rope_autoimport = {
+              enabled = true,
+            },
+          },
+        },
+      },
+    },
+  },
 }

@@ -1,7 +1,4 @@
-{ inputs, lib, config, pkgs, ... }: {
-  nixpkgs.overlays = [
-    #   inputs.neovim-nightly-overlay.overlay
-  ];
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     nodejs_20
     stylua
@@ -13,7 +10,7 @@
   ];
   programs.neovim = {
     enable = true;
-    #     package = pkgs.neovim-nightly;
+    # package = pkgs.neovim-nightly; # WARN: doesn't work on arm
   };
   # xdg.configFile.nvim.source = ./config;
 }

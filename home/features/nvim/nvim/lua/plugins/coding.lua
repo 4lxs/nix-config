@@ -124,16 +124,6 @@ return {
     },
   },
 
-  -- markdown (if html is a programming language, then so is markdown)
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        marksman = {},
-      },
-    },
-  },
-
   -- python
   {
     "neovim/nvim-lspconfig",
@@ -149,4 +139,31 @@ return {
       },
     },
   },
+
+  -- TODO: null-ls to efm
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   opts = {
+  --     servers = {
+  --       efm = {
+  --         init_options = {
+  --           documentFormatting = true,
+  --           documentRangeFormatting = true,
+  --           hover = true,
+  --           documentSymbol = true,
+  --           codeAction = true,
+  --           completion = true,
+  --         },
+  --         settings = {
+  --           rootMarkers = { ".git/", ".envrc", ".clang-format" },
+  --           languages = {
+  --             lua = {
+  --               { formatCommand = "lua-format -i", formatStdin = true },
+  --             },
+  --           },
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 }

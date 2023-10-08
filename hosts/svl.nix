@@ -1,68 +1,14 @@
 { inputs, outputs, lib, config, pkgs, ... }: {
   imports = [
-    # If you want to use modules your own flake exports (from modules/nixos):
-    # outputs.nixosModules.example
-
-    # Or modules from other flakes (such as nixos-hardware):
-    # inputs.hardware.nixosModules.common-cpu-amd
-    # inputs.hardware.nixosModules.common-ssd
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-
-    # Import your generated (nixos-generate-config) hardware configuration
+    ./common.nix
     ./svl-hardware-configuration.nix
     ./features/vm.nix
     # ./features/hax
   ];
 
-  programs.zsh.enable = true;
-  programs.kdeconnect.enable = true;
-
-  nixpkgs = {
-    # You can add overlays here
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.stable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    config = {
-      allowUnfree = true;
-    };
-  };
-
-  nix = {
-    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
-
-    settings = {
-      experimental-features = "nix-command flakes";
-      auto-optimise-store = true;
-    };
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 7d";
-    };
-  };
-
   networking = {
     hostName = "nixos";
     networkmanager.enable = true;
-    extraHosts = ''
-      10.10.11.227 keeper.htb
-      10.10.11.227 tickets.keeper.htb
-    '';
   };
   programs.nm-applet.enable = true;
 
@@ -101,9 +47,6 @@
   };
 
   users.defaultUserShell = pkgs.zsh;
-  environment.shells = [ pkgs.zsh ];
-  # environment.binsh = "${pkgs.dash}/bin/dash";
-
   users.users = {
     svl = {
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
@@ -112,6 +55,8 @@
       extraGroups = [ "wheel" "docker" "networkmanager" "audio" ];
     };
   };
+
+  programs.kdeconnect.enable = true;
 
   console.useXkbConfig = true; # console use same layout as xkb
   # auto upgrade system

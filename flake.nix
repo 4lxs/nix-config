@@ -13,7 +13,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland.url = "github:hyprwm/Hyprland";
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
     # hardware.url = "github:nixos/nixos-hardware";
   };
 
@@ -49,9 +49,13 @@
         };
       };
 
+      # initialize: nix run nix-darwin -- switch --flake .
+      # 'nix-darwin switch --flake .#hostname'
       darwinConfigurations = {
         lsdarwin = nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit inputs outputs; };
           modules = [
+            ./common
             ./hosts/lsdarwin.nix
             home-manager.darwinModules.home-manager
             {
@@ -66,15 +70,16 @@
 
       # 'home-manager switch --flake .#your-username@your-hostname'
       homeConfigurations = {
+        # TODO: move to nixos configuration
         "svl@nixos" = lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/svl.nix ];
+          modules = [ ./common ./home/svl.nix ];
         };
         "lukas@pop-os" = lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./home/lukas.nix ];
+          modules = [ ./common ./home/lukas.nix ];
         };
       };
     };

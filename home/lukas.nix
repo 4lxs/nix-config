@@ -1,11 +1,11 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
-    imports = [
-        ./features/alacritty
-        ./common.nix
-    ];
+{ pkgs, ... }: {
+  imports = [
+    ./features/alacritty
+    ./common.nix
+  ];
 
-    home = {
-        username = "lukas";
-        homeDirectory = "/home/lukas";
-    };
+  home = {
+    username = "lukas";
+    homeDirectory = "/home/lukas";
+  };
 }

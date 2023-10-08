@@ -1,68 +1,93 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, outputs, ... }: {
   imports = [
-    ./features/darwin-keyboard
+    ./common.nix
   ];
 
-  services.nix-daemon.enable = true;
-  nix.package = pkgs.nixUnstable;
+  nixpkgs.hostPlatform = "aarch64-darwin";
 
-  programs.zsh.enable = true;
+  services.nix-daemon.enable = true;
+  # nix.package = pkgs.nixUnstable;
 
   homebrew = {
     enable = true;
     casks = [
       "brave-browser"
+      "amethyst"
     ];
   };
 
   users.users."lukas".home = "/Users/lukas/";
 
-  nixpkgs = {
-    hostPlatform = "aarch64-darwin";
-    #
-    #    # You can add overlays here
-    #    overlays = [
-    #      # Add overlays your own flake exports (from overlays and pkgs dir):
-    #      outputs.overlays.additions
-    #      outputs.overlays.modifications
-    #      outputs.overlays.stable-packages
-    #
-    #      # You can also add overlays exported from other flakes:
-    #      # neovim-nightly-overlay.overlays.default
-    #
-    #      # Or define it inline, for example:
-    #      # (final: prev: {
-    #      #   hi = final.hello.overrideAttrs (oldAttrs: {
-    #      #     patches = [ ./change-hello-to-hi.patch ];
-    #      #   });
-    #      # })
-    #    ];
-    config = {
-      allowUnfree = true;
+  time.timeZone = "Europe/Ljubljana";
+
+  system = {
+    stateVersion = 4;
+
+    defaults = {
+      LaunchServices = {
+        LSQuarantine = false;
+      };
+
+      NSGlobalDomain = {
+        AppleShowAllExtensions = true;
+        ApplePressAndHoldEnabled = false;
+
+        KeyRepeat = 2;
+
+        InitialKeyRepeat = 15;
+
+        "com.apple.mouse.tapBehavior" = 1;
+        "com.apple.sound.beep.volume" = 0.0;
+        "com.apple.sound.beep.feedback" = 0;
+
+        "com.apple.swipescrolldirection" = false;
+      };
+
+      dock = {
+        autohide = true;
+        show-recents = false;
+        launchanim = true;
+        mouse-over-hilite-stack = true;
+        orientation = "bottom";
+        tilesize = 48;
+        mru-spaces = false;
+      };
+
+      finder = {
+        _FXShowPosixPathInTitle = false;
+      };
+
+      trackpad = {
+        Clicking = true;
+      };
+    };
+
+    keyboard = {
+      enableKeyMapping = true;
+      remapCapsLockToEscape = true;
+      userKeyMapping = [
+        {
+          HIDKeyboardModifierMappingSrc = 30064771296; # lctl
+          HIDKeyboardModifierMappingDst = 30064771299; # lcmd
+        }
+        {
+          HIDKeyboardModifierMappingSrc = 30064771299; # lcmd
+          HIDKeyboardModifierMappingDst = 30064771296; # lctl
+        }
+        {
+          HIDKeyboardModifierMappingSrc = 30064771303; # rcmd
+          HIDKeyboardModifierMappingDst = 30064771302; # ropt
+        }
+        {
+          HIDKeyboardModifierMappingSrc = 30064771302; # ropt
+          HIDKeyboardModifierMappingDst = 30064771303; # rcmd
+        }
+      ];
     };
   };
-  #
-  nix = {
-    #    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
-    #    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
-    #
-    settings = {
-      experimental-features = "nix-command flakes";
-      auto-optimise-store = true;
-    };
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 7d";
-    };
-  };
-  #
-  #  # localization
-  #  time.timeZone = "Europe/Ljubljana";
-  #
-  #  users.defaultUserShell = pkgs.zsh;
-  #  environment.shells = [ pkgs.zsh ];
-  #  # environment.binsh = "${pkgs.dash}/bin/dash";
-  #
-  #  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  #  system.stateVersion = "22.11";
+
+  # Following line should allow us to avoid a logout/login cycle
+  system.activationScripts.postUserActivation.text = ''
+    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  '';
 }

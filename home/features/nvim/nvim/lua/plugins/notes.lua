@@ -53,4 +53,25 @@ return {
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "neorg" } }))
     end,
   },
+
+  -- markdown
+  -- {
+  --   "iamcco/markdown-preview.nvim",
+  -- },
+  {
+    "preservim/vim-markdown",
+    dependencies = "godlygeek/tabular",
+  },
+  {
+    "lukas-reineke/headlines.nvim",
+    dependencies = "nvim-treesitter/nvim-treesitter",
+    config = true, -- or `opts = {}`
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    ft = { "markdown" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+  },
 }

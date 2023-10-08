@@ -248,6 +248,10 @@ return {
     end,
   },
 
+  {
+    "dhruvasagar/vim-table-mode",
+  },
+
   --#region disabled
   {
     "nvim-neo-tree/neo-tree.nvim",

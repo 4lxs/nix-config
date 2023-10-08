@@ -123,4 +123,14 @@ return {
       },
     },
   },
+
+  -- markdown (if html is a programming language, then so is markdown)
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        marksman = {},
+      },
+    },
+  },
 }

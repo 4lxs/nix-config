@@ -13,6 +13,7 @@
     casks = [
       "brave-browser"
       "amethyst"
+      "inkscape"
     ];
   };
 

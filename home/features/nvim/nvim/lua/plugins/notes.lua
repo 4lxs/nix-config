@@ -1,4 +1,4 @@
-local notesDir = vim.fn.expand("~/Documents/notes")
+local notesDir = vim.fn.expand("~/Projects/notes")
 
 -- keybinds
 return {
@@ -26,6 +26,15 @@ return {
       },
     },
   },
+  -- {
+  --   "4lxs/markim.nvim",
+  --   dir = "~/Projects/markim.nvim",
+  --   dev = true,
+  --   opts = {},
+  -- },
+  -- { -- WARN: testing only. not updated to .10 yet
+  --   "nvim-treesitter/playground",
+  -- },
   {
     "preservim/vim-markdown",
     dependencies = "godlygeek/tabular",

@@ -4,3 +4,8 @@
 
 vim.keymap.set("n", "go", "<cmd>e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>", { desc = "Switch source/header" })
 vim.keymap.set("n", "<tab>", "<cmd>e #<cr>")
+
+vim.keymap.set("n", "<leader>nn", function()
+  local filename = vim.fn.input({ prompt = "Name: " })
+  vim.cmd("edit %:h/" .. filename .. ".md")
+end)

@@ -7,6 +7,7 @@
     ./features/git
     ./features/rust
     ./features/alacritty
+    ./features/python
   ];
 
   home.sessionPath = [

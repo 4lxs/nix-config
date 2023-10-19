@@ -84,6 +84,9 @@
         selection-clipboard = "clipboard";
       };
     };
+    gh = {
+      enable = true;
+    };
 
     home-manager.enable = true;
   };

@@ -241,7 +241,6 @@ return {
   -- harpoon
   {
     "ThePrimeagen/harpoon",
-    enabled = false,
     dependencies = { "nvim-lua/plenary.nvim" },
     -- stylua: ignore
     keys = {

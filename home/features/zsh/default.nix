@@ -9,7 +9,7 @@
     dotDir = ".config/zsh";
     history = {
       share = false;
-      expireDuplicatesFirst = true;
+      ignoreDups = true;
       save = 100000000;
       size = 1000000000;
     };
@@ -37,8 +37,11 @@
     };
 
     initExtra = ''
+      # load work stuff
       [ -f ~/.aliasrc ] && source ~/.aliasrc
       [ -x "$(command -v kubectl)" ] && source <(kubectl completion zsh)
+
+      eval "$(/opt/homebrew/bin/brew shellenv)"
 
       # smart case autocomplete
       zstyle ':completion:*'  matcher-list 'm:{a-z}={A-Z}'

@@ -71,34 +71,38 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        ccls = {
-          init_options = {
-            compilationDatabaseDirectory = "build",
-            cache = {
-              directory = vim.fn.stdpath("cache") .. "/ccls-cache/",
-            },
-            index = {
-              threads = 0,
-            },
-            clang = {
-              excludeArgs = { "-frounding-math" },
-            },
-            -- root_dir = function(fname)
-            --   return require("lspconfig.util").root_pattern(
-            --     "Makefile",
-            --     "configure.ac",
-            --     "configure.in",
-            --     "config.h.in",
-            --     "meson.build",
-            --     "meson_options.txt",
-            --     "build.ninja"
-            --   )(fname) or require("lspconfig.util").root_pattern(
-            --     "compile_commands.json",
-            --     "compile_flags.txt"
-            --   )(fname) or require("lspconfig.util").find_git_ancestor(fname)
-            -- end,
-            single_file_support = true,
-          },
+        -- ccls = {
+        --   init_options = {
+        --     compilationDatabaseDirectory = "build",
+        --     cache = {
+        --       directory = vim.fn.stdpath("cache") .. "/ccls-cache/",
+        --     },
+        --     index = {
+        --       threads = 0,
+        --     },
+        --     clang = {
+        --       excludeArgs = { "-frounding-math" },
+        --     },
+        --     -- root_dir = function(fname)
+        --     --   return require("lspconfig.util").root_pattern(
+        --     --     "Makefile",
+        --     --     "configure.ac",
+        --     --     "configure.in",
+        --     --     "config.h.in",
+        --     --     "meson.build",
+        --     --     "meson_options.txt",
+        --     --     "build.ninja"
+        --     --   )(fname) or require("lspconfig.util").root_pattern(
+        --     --     "compile_commands.json",
+        --     --     "compile_flags.txt"
+        --     --   )(fname) or require("lspconfig.util").find_git_ancestor(fname)
+        --     -- end,
+        --     single_file_support = true,
+        --   },
+        -- },
+        clangd = {
+          cmd = { "clangd", "--log=verbose" },
+          verbose = true,
         },
       },
     },

@@ -23,6 +23,7 @@
     unzip
     wget
     go
+    brave
   ] ++ lib.optionals pkgs.stdenv.isLinux [
     xdg-utils
   ];

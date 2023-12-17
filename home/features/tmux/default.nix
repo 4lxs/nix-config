@@ -16,6 +16,8 @@
       tmuxPlugins.yank
     ];
 
-    extraConfig = (lib.readFile ./tmux.conf);
+    extraConfig = ''
+      set-option -g default-shell ${pkgs.zsh}/bin/zsh
+    '' + (lib.readFile ./tmux.conf);
   };
 }

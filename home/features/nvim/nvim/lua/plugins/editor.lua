@@ -53,8 +53,28 @@ return {
   },
 
   -- explorer
+  -- {
+  --   "tpope/vim-vinegar",
+  -- },
   {
-    "tpope/vim-vinegar",
+    "stevearc/oil.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    keys = {
+      { "-", "<CMD>Oil<CR>", desc = "Open parent directory" },
+    },
+    opts = {},
+  },
+
+  -- search
+  {
+    "folke/flash.nvim",
+    opts = {
+      modes = {
+        search = {
+          enabled = false,
+        },
+      },
+    },
   },
 
   -- Heuristically set buffer options
@@ -278,10 +298,6 @@ return {
   },
   {
     "nvim-pack/nvim-spectre",
-    enabled = false,
-  },
-  {
-    "folke/persistence.nvim",
     enabled = false,
   },
   {

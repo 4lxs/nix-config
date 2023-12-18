@@ -3,8 +3,6 @@
     enable = true;
     autocd = true;
     enableCompletion = false;
-    enableAutosuggestions = true;
-    enableSyntaxHighlighting = true;
     defaultKeymap = "viins";
     dotDir = ".config/zsh";
     history = {
@@ -48,6 +46,7 @@
       # tab to menu
       # bindkey '\t' menu-select "$terminfo[kcbt]" menu-select
       # bindkey -M menuselect '\t' menu-complete "$terminfo[kcbt]" reverse-menu-complete
+      zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
     '';
 
     plugins = [
@@ -120,6 +119,24 @@
           repo = "zsh-autocomplete";
           rev = "afc5afd15fe093bfd96faa521abe0255334c85b0";
           sha256 = "npflZ7sr2yTeLQZIpozgxShq3zbIB5WMIZwMv8rkLJg=";
+        };
+      }
+      {
+        name = "zsh-autosuggestions";
+        src = pkgs.fetchFromGitHub {
+          owner = "zsh-users";
+          repo = "zsh-autosuggestions";
+          rev = "c3d4e576c9c86eac62884bd47c01f6faed043fc5";
+          sha256 = "2nKTlIG/2jmCNSgbXFlShBjs9c1NghWaPMMEssHzW84=";
+        };
+      }
+      {
+        name = "zsh-syntax-highlighting";
+        src = pkgs.fetchFromGitHub {
+          owner = "zsh-users";
+          repo = "zsh-syntax-highlighting";
+          rev = "1e82d8c83efa8b9fd0c7d1b9baffeb47d6cff960";
+          sha256 = "2nKTlIG/2jmCNSgbXFlShBjs9c1NghWaPMMEssHzW84=";
         };
       }
     ];

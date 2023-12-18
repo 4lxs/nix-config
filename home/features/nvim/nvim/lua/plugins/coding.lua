@@ -143,6 +143,17 @@ return {
     },
   },
 
+  -- htmx
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        htmx = {},
+        html = {},
+      },
+    },
+  },
+
   -- TODO: null-ls to efm
   -- {
   --   "neovim/nvim-lspconfig",

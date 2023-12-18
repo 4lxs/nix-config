@@ -101,8 +101,7 @@ return {
         --   },
         -- },
         clangd = {
-          cmd = { "clangd", "--log=verbose" },
-          verbose = true,
+          cmd = { "clangd" },
         },
       },
     },

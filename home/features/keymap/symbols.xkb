@@ -4,7 +4,7 @@ xkb_symbols "svlayout" {
 
   name[Group1]="Custom keymap";
 
-  include "ctrl(swap_lalt_lctl)"
+  // include "ctrl(swap_lalt_lctl)"
   include "capslock(escape_shifted_capslock)"
 
   key <TLDE> { [ grave, asciitilde, asciitilde ] };

@@ -101,7 +101,11 @@ return {
         --   },
         -- },
         clangd = {
-          cmd = { "clangd" },
+          cmd = { "clangd", "--header-insertion=never" },
+          root_dir = function(fname)
+            return require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname)
+              or require("lspconfig.util").find_git_ancestor(fname)
+          end,
         },
       },
     },

@@ -43,7 +43,8 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   callback = function(p)
     vim.bo.commentstring = "//%s"
     vim.b.autoformat = false
-    vim.keymap.set("i", ";", ";<cmd>lua M.comma()<cr>", { buffer = p.buf })
-    vim.keymap.set("i", "}", "}<cmd>lua M.format_node()<cr>", { buffer = p.buf })
+    vim.keymap.set("i", ";<cr>", "<end>;<cr>", { buffer = p.buf })
+    -- vim.keymap.set("i", ";", ";<cmd>lua M.comma()<cr>", { buffer = p.buf })
+    -- vim.keymap.set("i", "}", "}<cmd>lua M.format_node()<cr>", { buffer = p.buf })
   end,
 })

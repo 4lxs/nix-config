@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, ... }:
+{ pkgs, ... }:
 let
   python-packages = ps: with ps; [
     jupyter
@@ -7,6 +7,10 @@ let
     numpy
     matplotlib
     pynvim
+    python-dotenv
+    requests
+    pynvim
+    prompt-toolkit
   ];
 in
 {

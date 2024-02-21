@@ -1,4 +1,16 @@
 return {
+  -- competitest
+  {
+    "xeluxee/competitest.nvim",
+    dependencies = "MunifTanjim/nui.nvim",
+    opts = {
+      received_problems_path = "$(CWD)/$(PROBLEM)/solution.$(FEXT)",
+      compile_command = {
+        cpp = { exec = "g++", args = { "-std=c++17", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
+      },
+    },
+  },
+
   -- mason TODO: to be removed (use nix shell instead)
   {
     "williamboman/mason.nvim",
@@ -85,6 +97,17 @@ return {
             fallback()
           end
         end, { "i", "s" }),
+        ["<CR>"] = cmp.mapping({
+          i = function(fallback)
+            if cmp.visible() and cmp.get_active_entry() then
+              cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+            else
+              fallback()
+            end
+          end,
+          s = cmp.mapping.confirm({ select = true }),
+          c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+        }),
       })
     end,
   },
@@ -195,6 +218,13 @@ return {
     },
   },
 
+  --#region disabled
+
+  {
+    "rafamadriz/friendly-snippets",
+    enabled = false,
+  },
+
   -- TODO: null-ls to efm
   -- {
   --   "neovim/nvim-lspconfig",
@@ -221,4 +251,6 @@ return {
   --     },
   --   },
   -- },
+
+  --#endregion
 }

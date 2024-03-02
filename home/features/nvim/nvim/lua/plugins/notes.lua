@@ -13,6 +13,9 @@ return {
     opts = {
       defaults = {
         ["<leader>n"] = { name = "+notes" },
+        ["<leader>cc"] = { name = "+copilot" },
+        ["<leader>ct"] = { name = "+competitest" },
+        ["<leader>v"] = { name = "+vim config" },
       },
     },
   },

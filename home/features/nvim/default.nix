@@ -10,7 +10,7 @@
   ];
   programs.neovim = {
     enable = true;
-    # package = pkgs.neovim-nightly; # WARN: doesn't work on arm
+    package = pkgs.neovim-nightly; # WARN: doesn't work on arm
   };
   # xdg.configFile.nvim.source = ./config;
 }

@@ -1,10 +1,11 @@
 # common between all setups (home-manager and nixos/nix-darwin)
-{ outputs, ... }: {
+{ inputs, outputs, ... }: {
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.stable-packages
+      inputs.neovim-nightly-overlay.overlay
     ];
     config = {
       allowUnfree = true;

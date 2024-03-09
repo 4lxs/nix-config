@@ -12,6 +12,8 @@
     nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
     hyprland.url = "github:hyprwm/Hyprland";
 
     # hardware.url = "github:nixos/nixos-hardware";

@@ -161,7 +161,17 @@ return {
         --   },
         -- },
         clangd = {
-          cmd = { "clangd", "--header-insertion=never" },
+          cmd = {
+            "clangd",
+            "--header-insertion=never",
+            "--background-index",
+            "--clang-tidy",
+            "--all-scopes-completion",
+            "--completion-style=detailed",
+            "--function-arg-placeholders",
+            "--fallback-style=llvm",
+            "-j=6",
+          },
           root_dir = function(fname)
             return require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(fname)
               or require("lspconfig.util").find_git_ancestor(fname)
@@ -175,6 +185,14 @@ return {
     opts = {
       cmake_build_directory = "build",
       cmake_kits_path = vim.fn.expand("~/code/cmake-kits.json"),
+    },
+  },
+  {
+    "p00f/clangd_extensions.nvim",
+    opts = {
+      inlay_hints = {
+        inline = true,
+      },
     },
   },
 

@@ -11,8 +11,9 @@ return {
       { "<leader>ctd", "<cmd>CompetiTest delete_testcase<cr>", desc = "CompetiTest Delete testcase" },
     },
     opts = {
-      received_problems_path = vim.env.HOME .. "/Projects/cp/working/$(PROBLEM)/solution.$(FEXT)",
+      received_problems_path = vim.env.HOME .. "/Projects/cp/problems/$(JUDGE)/$(CONTEST)/$(PROBLEM)/main.$(FEXT)",
       template_file = vim.env.HOME .. "/Projects/cp/templates/template.$(FEXT)",
+      evaluate_template_modifiers = true,
       compile_command = {
         cpp = {
           exec = "g++",

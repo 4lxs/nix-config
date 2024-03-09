@@ -8,6 +8,7 @@
     ./features/rust
     ./features/alacritty
     ./features/python
+    ./features/newsboat
   ];
 
   home.sessionPath = [

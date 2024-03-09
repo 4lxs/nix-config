@@ -3,22 +3,51 @@ return {
   {
     "xeluxee/competitest.nvim",
     dependencies = "MunifTanjim/nui.nvim",
+    keys = {
+      { "<leader>ctr", "<cmd>CompetiTest receive problem<cr>", desc = "CompetiTest receive problem" },
+      { "<leader>ctt", "<cmd>CompetiTest run<cr>", desc = "CompetiTest run" },
+      { "<leader>cta", "<cmd>CompetiTest add_testcase<cr>", desc = "CompetiTest Add testcase" },
+      { "<leader>cte", "<cmd>CompetiTest edit_testcase<cr>", desc = "CompetiTest Edit testcase" },
+      { "<leader>ctd", "<cmd>CompetiTest delete_testcase<cr>", desc = "CompetiTest Delete testcase" },
+    },
     opts = {
-      received_problems_path = "$(CWD)/$(PROBLEM)/solution.$(FEXT)",
+      received_problems_path = vim.env.HOME .. "/Projects/cp/working/$(PROBLEM)/solution.$(FEXT)",
+      template_file = vim.env.HOME .. "/Projects/cp/templates/template.$(FEXT)",
       compile_command = {
-        cpp = { exec = "g++", args = { "-std=c++17", "-Wall", "$(FNAME)", "-o", "$(FNOEXT)" } },
+        cpp = {
+          exec = "g++",
+          args = {
+            "-DLOCAL",
+            "$(FNAME)",
+            "-o",
+            "$(FNOEXT)",
+            "-Wall",
+            "-Wextra",
+            "-pedantic",
+            "-std=c++17",
+            "-O2",
+            "-Wshadow",
+            "-Wformat=2",
+            "-Wfloat-equal",
+            "-Wshift-overflow",
+            "-Wcast-qual",
+            "-Wcast-align",
+            "-D_GLIBCXX_DEBUG",
+            "-D_GLIBCXX_DEBUG_PEDANTIC",
+            "-fsanitize=address",
+            "-fsanitize=undefined",
+            "-fno-sanitize-recover",
+            "-fstack-protector",
+          },
+        },
       },
     },
   },
 
-  -- mason TODO: to be removed (use nix shell instead)
   {
-    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
     opts = {
-      ensure_installed = {
-        "golangci-lint",
-        "shfmt",
-      },
+      automatic_installation = false,
     },
   },
 
@@ -196,7 +225,6 @@ return {
     },
   },
 
-  -- nix
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -205,15 +233,9 @@ return {
         nil_ls = {},
         nixd = {},
         rnix = {},
-      },
-    },
-  },
-
-  -- python
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
+        ocamllsp = {
+          mason = false,
+        },
         pylsp = {
           plugins = {
             rope_autoimport = {
@@ -221,15 +243,6 @@ return {
             },
           },
         },
-      },
-    },
-  },
-
-  -- htmx
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
         htmx = {},
         html = {},
       },

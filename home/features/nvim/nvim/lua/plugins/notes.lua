@@ -20,43 +20,43 @@ return {
     },
   },
 
-  -- markdown (if html is a programming language, then so is markdown)
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      inlay_hints = {
-        enabled = true,
-      },
-      servers = {
-        marksman = {},
-      },
-    },
-  },
+  -- -- markdown (if html is a programming language, then so is markdown)
   -- {
-  --   "4lxs/markim.nvim",
-  --   dir = "~/Projects/markim.nvim",
-  --   dev = true,
+  --   "neovim/nvim-lspconfig",
+  --   opts = {
+  --     inlay_hints = {
+  --       enabled = true,
+  --     },
+  --     servers = {
+  --       marksman = {},
+  --     },
+  --   },
+  -- },
+  -- -- {
+  -- --   "4lxs/markim.nvim",
+  -- --   dir = "~/Projects/markim.nvim",
+  -- --   dev = true,
+  -- --   opts = {},
+  -- -- },
+  -- -- { -- WARN: testing only. not updated to .10 yet
+  -- --   "nvim-treesitter/playground",
+  -- -- },
+  -- {
+  --   "preservim/vim-markdown",
+  --   dependencies = "godlygeek/tabular",
+  -- },
+  -- {
+  --   "lukas-reineke/headlines.nvim",
+  --   dependencies = "nvim-treesitter/nvim-treesitter",
   --   opts = {},
   -- },
-  -- { -- WARN: testing only. not updated to .10 yet
-  --   "nvim-treesitter/playground",
+  -- {
+  --   "iamcco/markdown-preview.nvim",
+  --   ft = { "markdown" },
+  --   build = function()
+  --     vim.fn["mkdp#util#install"]()
+  --   end,
   -- },
-  {
-    "preservim/vim-markdown",
-    dependencies = "godlygeek/tabular",
-  },
-  {
-    "lukas-reineke/headlines.nvim",
-    dependencies = "nvim-treesitter/nvim-treesitter",
-    opts = {},
-  },
-  {
-    "iamcco/markdown-preview.nvim",
-    ft = { "markdown" },
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-  },
 
   --#region disabled
   -- {

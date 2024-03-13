@@ -78,14 +78,14 @@ return {
     end,
     event = "VeryLazy",
     keys = {
-      { "<leader>cce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-      { "<leader>cct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
-      { "<leader>ccr", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
-      { "<leader>ccR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
-      { "<leader>ccs", "<cmd>CopilotChatSummarize<cr>", desc = "CopilotChat - Summarize text" },
-      { "<leader>ccS", "<cmd>CopilotChatSpelling<cr>", desc = "CopilotChat - Correct spelling" },
-      { "<leader>ccw", "<cmd>CopilotChatWording<cr>", desc = "CopilotChat - Improve wording" },
-      { "<leader>ccc", ":CopilotChat ", desc = "CopilotChat" },
+      { "<leader>gce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
+      { "<leader>gct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
+      { "<leader>gcr", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
+      { "<leader>gcR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
+      { "<leader>gcs", "<cmd>CopilotChatSummarize<cr>", desc = "CopilotChat - Summarize text" },
+      { "<leader>gcS", "<cmd>CopilotChatSpelling<cr>", desc = "CopilotChat - Correct spelling" },
+      { "<leader>gcw", "<cmd>CopilotChatWording<cr>", desc = "CopilotChat - Improve wording" },
+      { "<leader>gcc", ":CopilotChat ", desc = "CopilotChat" },
     },
   },
 
@@ -148,12 +148,6 @@ return {
     config = function()
       require("log-highlight").setup({})
     end,
-  },
-
-  -- lua
-  {
-    "folke/neoconf.nvim",
-    dependencies = { "folke/neodev.nvim" },
   },
 
   -- cpp
@@ -221,7 +215,11 @@ return {
     "p00f/clangd_extensions.nvim",
     opts = {
       inlay_hints = {
+        enabled = true,
         inline = true,
+      },
+      codelens = {
+        enable = true,
       },
     },
   },

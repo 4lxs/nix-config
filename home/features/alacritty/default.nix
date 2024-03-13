@@ -4,7 +4,7 @@
     enable = true;
     settings = {
       scrolling.history = 0;
-      dynamic_title = true;
+      # dynamic_title = true;
       font = {
         normal.family = "FiraCode Nerd Font Mono";
         size = 12;

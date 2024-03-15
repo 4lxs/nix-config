@@ -3,7 +3,7 @@
     nodejs_20
     stylua
     lua-language-server
-    rnix-lsp
+    # rnix-lsp
     # nixd
     nil
     statix

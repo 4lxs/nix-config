@@ -1,11 +1,5 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
-
 vim.keymap.set("n", "go", "<cmd>e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>", { desc = "Switch source/header" })
-vim.keymap.set("n", "<tab>", "<cmd>e #<cr>")
-
-vim.keymap.set("n", "<leader>nn", function()
-  local filename = vim.fn.input({ prompt = "Name: " })
-  vim.cmd("edit %:h/" .. filename .. ".md")
-end)
+vim.keymap.set("n", "<tab>", "<c-^>")
+vim.keymap.set("i", "<c-x>", "<tab>", { noremap = true })
+vim.keymap.set("x", "<s-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("v", "<s-j>", ":move'>+<CR>gv=gv", { noremap = true, silent = true })

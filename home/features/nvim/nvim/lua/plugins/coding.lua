@@ -78,23 +78,21 @@ return {
     end,
     event = "VeryLazy",
     keys = {
-      { "<leader>gce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
-      { "<leader>gct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
-      { "<leader>gcr", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
-      { "<leader>gcR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
-      { "<leader>gcs", "<cmd>CopilotChatSummarize<cr>", desc = "CopilotChat - Summarize text" },
-      { "<leader>gcS", "<cmd>CopilotChatSpelling<cr>", desc = "CopilotChat - Correct spelling" },
-      { "<leader>gcw", "<cmd>CopilotChatWording<cr>", desc = "CopilotChat - Improve wording" },
-      { "<leader>gcc", ":CopilotChat ", desc = "CopilotChat" },
+      { "<leader>Ce", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
+      { "<leader>Ct", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
+      { "<leader>Cr", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
+      { "<leader>CR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
+      { "<leader>Cs", "<cmd>CopilotChatSummarize<cr>", desc = "CopilotChat - Summarize text" },
+      { "<leader>CS", "<cmd>CopilotChatSpelling<cr>", desc = "CopilotChat - Correct spelling" },
+
+      { "<leader>Cw", "<cmd>CopilotChatWording<cr>", desc = "CopilotChat - Improve wording" },
+      { "<leader>CC", ":CopilotChat ", desc = "CopilotChat" },
     },
   },
 
   -- autocomplete
   {
     "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-emoji",
-    },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
       local has_words_before = function()
@@ -114,8 +112,8 @@ return {
             luasnip.expand_or_jump()
           elseif has_words_before() then
             cmp.complete()
-          else
-            fallback()
+            -- else
+            --   fallback()
           end
         end, { "i", "s" }),
         ["<S-Tab>"] = cmp.mapping(function(fallback)
@@ -123,8 +121,8 @@ return {
             cmp.select_prev_item()
           elseif luasnip.jumpable(-1) then
             luasnip.jump(-1)
-          else
-            fallback()
+            -- else
+            --   fallback()
           end
         end, { "i", "s" }),
         ["<CR>"] = cmp.mapping({

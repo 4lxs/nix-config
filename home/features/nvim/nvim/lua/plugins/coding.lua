@@ -46,6 +46,12 @@ return {
   },
 
   {
+    "williamboman/mason.nvim",
+    opts = {
+      ensure_installed = {},
+    },
+  },
+  {
     "williamboman/mason-lspconfig.nvim",
     opts = {
       automatic_installation = false,
@@ -227,12 +233,8 @@ return {
     opts = {
       servers = {
         statix = {},
-        nil_ls = {},
-        nixd = {},
-        rnix = {},
-        ocamllsp = {
-          mason = false,
-        },
+        nixd = { mason = false },
+        ocamllsp = { mason = false },
         pylsp = {
           plugins = {
             rope_autoimport = {
@@ -240,8 +242,9 @@ return {
             },
           },
         },
-        htmx = {},
-        html = {},
+        htmx = { mason = false },
+        html = { mason = false },
+        marksman = { mason = false },
       },
     },
   },

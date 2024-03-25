@@ -128,7 +128,7 @@
           owner = "zsh-users";
           repo = "zsh-autosuggestions";
           rev = "c3d4e576c9c86eac62884bd47c01f6faed043fc5";
-          sha256 = "2nKTlIG/2jmCNSgbXFlShBjs9c1NghWaPMMEssHzW84=";
+          sha256 = "B+Kz3B7d97CM/3ztpQyVkE6EfMipVF8Y4HJNfSRXHtU=";
         };
       }
       {
@@ -137,7 +137,7 @@
           owner = "zsh-users";
           repo = "zsh-syntax-highlighting";
           rev = "1e82d8c83efa8b9fd0c7d1b9baffeb47d6cff960";
-          sha256 = "2nKTlIG/2jmCNSgbXFlShBjs9c1NghWaPMMEssHzW84=";
+          sha256 = "B+Kz3B7d97CM/3ztpQyVkE6EfMipVF8Y4HJNfSRXHtU=";
         };
       }
     ];

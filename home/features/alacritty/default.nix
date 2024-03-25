@@ -59,7 +59,7 @@
           white = "0xacb0d0";
         };
       };
-      env.TERM = "xterm-256color";
+      env.TERM = "tmux-256color";
     };
   };
 }

@@ -4,7 +4,6 @@
     ];
     programs.waybar = {
         enable = true;
-        package = inputs.hyprland.packages.${pkgs.system}.waybar-hyprland;
         systemd.enable = true;
         style = ./style.css;
         settings = {
@@ -12,7 +11,8 @@
                 layer = "top";
                 modules-left = [
                     "custom/launcher"
-                    "wlr/workspaces"
+                    "hyprland/workspaces"
+                    "hyprland/window"
                 ];
                 modules-center = [];
                 modules-right = [
@@ -30,7 +30,7 @@
                     format = "";
                     on-click = "${pkgs.rofi}/bin/rofi -show drun";
                 };
-                "wlr/workspaces" = {
+                "hyprland/workspaces" = {
                     format = "{icon}";
                     format-icons = {
                         "1" = "";
@@ -43,6 +43,13 @@
                         "1" = []; "2" = []; "3" = []; "4" = []; "5" = [];
                     };
                     on-click = "activate";
+                };
+                "hyprland/window" = {
+                    "rewrite" = {
+                        "(.*) — Mozilla Firefox" = "🌎 $1";
+                        "(.*) - zsh" = "> [$1]";
+                    };
+                    "separate-outputs" = true;
                 };
                 mpris = {
                     format = "{player_icon} {status_icon} {title}";
@@ -115,7 +122,7 @@
                 };
                 "custom/power" = {
                     format = "";
-                    on-click = "poweroff";
+                    on-click = "${pkgs.bash}/bin/bash ~/.config/rofi/powermenu/powermenu.sh";
                 };
             };
         };

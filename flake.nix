@@ -16,14 +16,20 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
+    apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
+    apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
+
+    hyprlock.url = "github:hyprwm/hyprlock";
+    hyprlock.inputs.nixpkgs.follows = "nixpkgs";
+
     # hardware.url = "github:nixos/nixos-hardware";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nix-darwin, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nix-darwin, apple-silicon, ... }@inputs:
     let
       inherit (self) outputs;
       lib = nixpkgs.lib // home-manager.lib;
-      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-darwin" ];
+      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-darwin" "aarch64-linux" ];
       pkgsFor = nixpkgs.legacyPackages;
     in
     rec {
@@ -47,6 +53,21 @@
           specialArgs = { inherit inputs outputs; };
           modules = [
             ./hosts/svl.nix
+          ];
+        };
+
+        mba = lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          modules = [
+            ./hosts/mba/configuration.nix
+            apple-silicon.nixosModules.apple-silicon-support
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.svl = import (./home + "/svl@mba");
+              home-manager.extraSpecialArgs = { inherit inputs outputs; };
+            }
           ];
         };
       };

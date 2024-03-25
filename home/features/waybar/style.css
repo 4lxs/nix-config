@@ -18,6 +18,13 @@ window#waybar.hidden {
     color: white;
 }
 
+#window {
+    background: #1f1f1f;
+    border-radius: 20px;
+    padding: 0 1rem;
+    color: white;
+}
+
 #workspaces button {
     color: white;
     border-radius: 0;
@@ -155,6 +162,7 @@ window#waybar.hidden {
     background: rgba(0, 0, 0, 0.2);
 }
 
+#window,
 #custom-power,
 #custom-launcher,
 #tray {

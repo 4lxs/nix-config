@@ -12,8 +12,6 @@
     nix-darwin.url = "github:LnL7/nix-darwin/master";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-
     hyprland.url = "github:hyprwm/Hyprland";
 
     apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
@@ -21,6 +19,9 @@
 
     hyprlock.url = "github:hyprwm/hyprlock";
     hyprlock.inputs.nixpkgs.follows = "nixpkgs";
+
+    # nvim-config.url = "git+file:///home/svl/Projects/nvim-config";
+    nvim-config.url = "github:4lxs/nvim-config";
 
     # hardware.url = "github:nixos/nixos-hardware";
   };

@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{ inputs, pkgs, ... }: {
   imports = [
     inputs.hyprlock.homeManagerModules.default
 

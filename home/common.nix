@@ -1,8 +1,7 @@
-{ pkgs, lib, ... }: {
+{ pkgs, lib, inputs, ... }: {
   imports = [
     ./features/tmux
     ./features/zsh
-    ./features/nvim
     ./features/fonts
     ./features/git
     ./features/rust
@@ -19,6 +18,7 @@
   ];
 
   home.packages = with pkgs; [
+    inputs.nvim-config.packages.${system}.default
     ripgrep
     fd
     unzip

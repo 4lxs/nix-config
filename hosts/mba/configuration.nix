@@ -1,16 +1,13 @@
-{ config, apple-silicon, lib, pkgs, ... }:
-{
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      # ../features/apple-silicon-support
-      ../common.nix
-      ../../common
-      # ../features/sddm
-      # ../features/vm.nix
-      # ../features/hax
-    ];
+{pkgs, ...}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    # ../features/apple-silicon-support
+    ../common.nix
+    # ../features/sddm
+    # ../features/vm.nix
+    # ../features/hax
+  ];
 
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;
   hardware.asahi.useExperimentalGPUDriver = true;
@@ -26,7 +23,7 @@
   # };
   programs.hyprland = {
     enable = true;
-    xwayland.enable = true;
+    xwayland.enable = false;
   };
 
   # sound.enable = true;
@@ -40,14 +37,12 @@
   #   enableSSHSupport = true;
   # };
 
-
-
   networking = {
     hostName = "mba";
     networkmanager.enable = true;
     hosts = {
-      "192.168.10.70" = [ "gitlab.eba.si" ];
-      "192.168.10.125" = [ "work" ];
+      "192.168.10.70" = ["gitlab.eba.si"];
+      "192.168.10.125" = ["work"];
     };
   };
   programs.nm-applet.enable = true;
@@ -73,7 +68,7 @@
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
       initialPassword = "00000";
       isNormalUser = true;
-      extraGroups = [ "wheel" "docker" "networkmanager" "audio" ];
+      extraGroups = ["wheel" "docker" "networkmanager" "audio"];
     };
   };
 
@@ -109,7 +104,6 @@
     HandlePowerKey=ignore
   '';
 
-
   # services.udisks2.enable = true;
 
   services.ntp.enable = true;
@@ -126,9 +120,6 @@
     displayManager.gdm.enable = true;
   };
 
-
-
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";
 }
-

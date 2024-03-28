@@ -1,4 +1,13 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+let
+  noTmuxEntry = pkgs.makeDesktopItem {
+    name = "Alacritty (no tmux)";
+    desktopName = "Alacritty (no tmux)";
+    exec = "alacritty -c zsh";
+    terminal = "false";
+    mimetype="x-scheme-handler/org-protocol";
+  };
+in {
   # alacritty config
   programs.alacritty = {
     enable = true;

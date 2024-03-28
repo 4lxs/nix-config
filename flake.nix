@@ -1,10 +1,11 @@
 {
-  description = "Svl nixos config";
+  description = "Svl nix config";
 
   inputs = {
-    # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -22,89 +23,100 @@
 
     # nvim-config.url = "git+file:///home/svl/Projects/nvim-config";
     nvim-config.url = "github:4lxs/nvim-config";
-
-    # hardware.url = "github:nixos/nixos-hardware";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, nix-darwin, apple-silicon, ... }@inputs:
-    let
-      inherit (self) outputs;
-      lib = nixpkgs.lib // home-manager.lib;
-      forAllSystems = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-darwin" "aarch64-linux" ];
-      pkgsFor = nixpkgs.legacyPackages;
-    in
-    rec {
-      packages = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./pkgs { inherit pkgs; }
-      );
-      # Devshell for bootstrapping
-      # Acessible through 'nix develop'
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./shell.nix { inherit pkgs; }
-      );
-      overlays = import ./overlays { inherit inputs; };
-      nixosModules = import ./modules/nixos;
-      homeManagerModules = import ./modules/home-manager;
+  outputs = {
+    self,
+    nixpkgs,
+    flake-parts,
+    home-manager,
+    nix-darwin,
+    apple-silicon,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
+    lib = nixpkgs.lib // home-manager.lib;
+    homeConfig = user: host: {
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        users.${user} = import (./home + "/${user}@${host}");
+        extraSpecialArgs = {inherit inputs outputs;};
+      };
+    };
+  in
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      flake = {
+        overlays = import ./overlays {inherit inputs;};
+        nixosModules = import ./modules/nixos;
+        homeManagerModules = import ./modules/home-manager;
 
-      # 'nixos-rebuild --flake .#your-hostname'
-      nixosConfigurations = {
-        nixos = lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/svl.nix
-          ];
+        # 'nixos-rebuild --flake .#your-hostname'
+        nixosConfigurations = {
+          mba = lib.nixosSystem {
+            specialArgs = {inherit inputs outputs;};
+            modules = [
+              ./common
+              ./hosts/mba/configuration.nix
+              apple-silicon.nixosModules.apple-silicon-support
+              # (home-manager.nixosModules.home-manager
+              #   (homeConfig "svl" "mba"))
+              home-manager.nixosModules.home-manager
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users.svl = import (./home + "/svl@mba");
+                  extraSpecialArgs = {inherit inputs outputs;};
+                };
+              }
+            ];
+          };
         };
 
-        mba = lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./hosts/mba/configuration.nix
-            apple-silicon.nixosModules.apple-silicon-support
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.svl = import (./home + "/svl@mba");
-              home-manager.extraSpecialArgs = { inherit inputs outputs; };
-            }
-          ];
+        # initialize: nix run nix-darwin -- switch --flake .
+        # 'nix-darwin switch --flake .#hostname'
+        darwinConfigurations = {
+          lsdarwin = nix-darwin.lib.darwinSystem {
+            specialArgs = {inherit inputs outputs;};
+            modules = [
+              ./common
+              ./hosts/lsdarwin.nix
+              # (home-manager.darwinModules.home-manager
+              #   (homeConfig "lukas" "lsdarwin"))
+              {
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users.lukas = import (./home + "/lukas@lsdarwin");
+                  extraSpecialArgs = {inherit inputs outputs;};
+                };
+              }
+            ];
+          };
+        };
+
+        # 'home-manager switch --flake .#your-username@your-hostname'
+        homeConfigurations = {
+          "lukas@pop-os" = lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+            extraSpecialArgs = {inherit inputs outputs;};
+            modules = [./common ./home/lukas.nix];
+          };
         };
       };
-
-      # initialize: nix run nix-darwin -- switch --flake .
-      # 'nix-darwin switch --flake .#hostname'
-      darwinConfigurations = {
-        lsdarwin = nix-darwin.lib.darwinSystem {
-          specialArgs = { inherit inputs outputs; };
-          modules = [
-            ./common
-            ./hosts/lsdarwin.nix
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.lukas = import ./home/luka-mac.nix;
-              home-manager.extraSpecialArgs = { inherit inputs outputs; };
-            }
-          ];
-        };
-      };
-
-      # 'home-manager switch --flake .#your-username@your-hostname'
-      homeConfigurations = {
-        # TODO: move to nixos configuration
-        "svl@nixos" = lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./common ./home/svl.nix ];
-        };
-        "lukas@pop-os" = lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-          modules = [ ./common ./home/lukas.nix ];
-        };
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+        "aarch64-linux"
+      ];
+      perSystem = {
+        config,
+        pkgs,
+        ...
+      }: {
+        packages = pkgs.callPackage ./pkgs {};
+        devShells = pkgs.callPackage ./shell.nix {};
       };
     };
 }

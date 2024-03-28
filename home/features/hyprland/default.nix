@@ -35,7 +35,7 @@
   xdg.configFile."hypr/keymap.xkb".source = ../keymap/keymap.xkb;
   wayland.windowManager.hyprland = {
     enable = true;
-    xwayland.enable = true;
+    xwayland.enable = false;
     extraConfig = with pkgs; builtins.readFile (substituteAll {
       src = ./hyprland.conf;
       inherit swaybg;

@@ -21,8 +21,8 @@
     hyprlock.url = "github:hyprwm/hyprlock";
     hyprlock.inputs.nixpkgs.follows = "nixpkgs";
 
-    # nvim-config.url = "git+file:///home/svl/Projects/nvim-config";
-    nvim-config.url = "github:4lxs/nvim-config";
+    nvim-config.url = "git+file:///home/svl/Projects/nvim-config";
+    # nvim-config.url = "github:4lxs/nvim-config";
   };
 
   outputs = {

@@ -1,40 +1,64 @@
-{ pkgs, lib, inputs, ... }: {
+{
+  pkgs,
+  lib,
+  inputs,
+  ...
+}: {
   imports = [
     ./features/tmux
     ./features/zsh
     ./features/fonts
     ./features/git
-    ./features/rust
     ./features/alacritty
-    ./features/python
-    ./features/newsboat
+    # ./features/python
+    # ./features/newsboat
   ];
 
-  home.sessionPath = [
-    "$HOME/.local/bin"
-  ] ++ lib.optionals pkgs.stdenv.isDarwin [
-    "/opt/local/bin"
-    "/opt/local/sbin"
-  ];
+  nixpkgs.config = {
+    allowUnfree = true;
+    # Workaround for https://github.com/nix-community/home-manager/issues/2942
+    allowUnfreePredicate = _: true;
+  };
 
-  home.packages = with pkgs; [
-    inputs.nvim-config.packages.${system}.default
-    ripgrep
-    fd
-    unzip
-    wget
-    go
-    firefox
-    telegram-desktop
-    vscode
-    obsidian
-  ] ++ lib.optionals pkgs.stdenv.isLinux [
-    xdg-utils
-    # brave
-  ];
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+    style.name = "adwaita-dark";
+  };
+
+  home = {
+    sessionVariables = {
+      NIXOS_OZONE_WL = "1"; # use wayland in electron apps
+    };
+    sessionPath =
+      [
+        "$HOME/.local/bin"
+      ]
+      ++ lib.optionals pkgs.stdenv.isDarwin [
+        "/opt/local/bin"
+        "/opt/local/sbin"
+      ];
+    packages = with pkgs;
+      [
+        inputs.nvim-config.packages.${system}.default
+        ripgrep
+        fd
+        unzip
+        wget
+        jq
+        firefox
+        telegram-desktop
+        vscode-fhs
+        calibre
+        # obsidian
+      ]
+      ++ lib.optionals pkgs.stdenv.isLinux [
+        xdg-utils
+        # brave
+      ];
+  };
 
   programs = {
-
     eza.enable = true;
     zoxide = {
       enable = true;

@@ -1,4 +1,8 @@
-{ inputs, pkgs, ... }: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
     inputs.hyprlock.homeManagerModules.default
 
@@ -35,11 +39,12 @@
   xdg.configFile."hypr/keymap.xkb".source = ../keymap/keymap.xkb;
   wayland.windowManager.hyprland = {
     enable = true;
-    xwayland.enable = false;
-    extraConfig = with pkgs; builtins.readFile (substituteAll {
-      src = ./hyprland.conf;
-      inherit swaybg;
-      polkit = libsForQt5.polkit-kde-agent;
-    });
+    xwayland.enable = true;
+    extraConfig = with pkgs;
+      builtins.readFile (substituteAll {
+        src = ./hyprland.conf;
+        inherit swaybg;
+        polkit = libsForQt5.polkit-kde-agent;
+      });
   };
 }

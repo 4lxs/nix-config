@@ -1,40 +1,51 @@
-{ pkgs, lib, inputs, ... }: {
+{ pkgs
+, lib
+, inputs
+, ...
+}: {
   imports = [
     ./features/tmux
     ./features/zsh
     ./features/fonts
     ./features/git
-    ./features/rust
     ./features/alacritty
     ./features/python
     ./features/newsboat
   ];
 
-  home.sessionPath = [
-    "$HOME/.local/bin"
-  ] ++ lib.optionals pkgs.stdenv.isDarwin [
-    "/opt/local/bin"
-    "/opt/local/sbin"
-  ];
+  home.sessionPath =
+    [
+      "$HOME/.local/bin"
+    ]
+    ++ lib.optionals pkgs.stdenv.isDarwin [
+      "/opt/local/bin"
+      "/opt/local/sbin"
+    ];
 
-  home.packages = with pkgs; [
-    inputs.nvim-config.packages.${system}.default
-    ripgrep
-    fd
-    unzip
-    wget
-    go
-    firefox
-    telegram-desktop
-    vscode
-    obsidian
-  ] ++ lib.optionals pkgs.stdenv.isLinux [
-    xdg-utils
-    # brave
-  ];
+  home.packages = with pkgs;
+    [
+      inputs.nvim-config.packages.${system}.default
+      ripgrep
+      fd
+
+      telegram-desktop
+      vscode
+      obsidian
+
+      socat
+      jq
+      unzip
+      wget
+      htop
+      obsidian
+      p7zip
+    ]
+    ++ lib.optionals pkgs.stdenv.isLinux [
+      xdg-utils
+      # brave
+    ];
 
   programs = {
-
     eza.enable = true;
     zoxide = {
       enable = true;
@@ -119,7 +130,4 @@
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  # home.stateVersion = "22.11";
-  home.stateVersion = "24.05";
 }

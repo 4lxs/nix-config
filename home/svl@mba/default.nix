@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{pkgs, ...}: {
   imports = [
     ../common.nix
     ../features/hyprland
@@ -10,16 +10,15 @@
     username = "svl";
     homeDirectory = "/home/svl";
     packages = with pkgs; [
-      socat
-      jq
-      shfmt
       mpv
       calibre
       # stig
       # qbittorrent
       # androidStudioPackages.canary
-      gcc
     ];
+
+    # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+    stateVersion = "24.05";
   };
 
   programs = {

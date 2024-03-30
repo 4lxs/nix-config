@@ -101,7 +101,7 @@
           "lukas@pop-os" = lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
             extraSpecialArgs = {inherit inputs outputs;};
-            modules = [./common ./home/lukas.nix];
+            modules = [./common (./home + "/lukas@pop-os")];
           };
         };
       };

@@ -1,8 +1,10 @@
-{ pkgs, lib, ... }:
-let
-  wtclonescript = pkgs.writeScriptBin "wt-clone.sh" (lib.readFile ./wt-clone.sh);
-in
 {
+  pkgs,
+  lib,
+  ...
+}: let
+  wtclonescript = pkgs.writeScriptBin "wt-clone.sh" (lib.readFile ./wt-clone.sh);
+in {
   programs = {
     lazygit = {
       enable = true;
@@ -32,13 +34,14 @@ in
           light = false; # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
         };
       };
+      userEmail = "svensek.luka@pm.me";
+      userName = "Svl";
       extraConfig = {
-        user.email = "svensek.luka@pm.me";
-        user.name = "Svl";
         diff.tool = "nvimdiff";
+        diff.colorMoved = "default";
         merge.tool = "nvimdiff";
         merge.conflictstyle = "diff3";
-        diff.colorMoved = "default";
+        init.defaultBranch = "master";
       };
       aliases = {
         wt-clone = "!sh ${wtclonescript}/bin/wt-clone.sh";

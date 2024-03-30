@@ -41,16 +41,21 @@
     packages = with pkgs;
       [
         inputs.nvim-config.packages.${system}.default
+
+        telegram-desktop
+        vscode-fhs
+        obsidian
+        firefox
+        calibre
+
         ripgrep
         fd
+        socat
         unzip
         wget
         jq
-        firefox
-        telegram-desktop
-        vscode-fhs
-        calibre
-        # obsidian
+        htop
+        p7zip
       ]
       ++ lib.optionals pkgs.stdenv.isLinux [
         xdg-utils
@@ -143,7 +148,4 @@
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  # home.stateVersion = "22.11";
-  home.stateVersion = "24.05";
 }

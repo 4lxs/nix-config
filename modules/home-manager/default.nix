@@ -20,4 +20,6 @@
   common = ./common;
   qt = ./qt;
   shutils = ./shutils;
+  firefox = ./firefox;
+  zathura = ./zathura;
 }

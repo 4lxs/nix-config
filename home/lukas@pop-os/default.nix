@@ -9,12 +9,11 @@
     modules.alacritty
     modules.nixpkgs
     modules.qt
-];
+    modules.shutils
+    modules.zathura
+  ];
 
   home = {
-    username = "lukas";
-    homeDirectory = "/home/lukas";
-
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "22.11";
   };

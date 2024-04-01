@@ -1,6 +1,6 @@
-{...}: {
+{modules, ...}: {
   imports = [
-    ../common.nix
+    modules.common
   ];
 
   # TODO: find out a way to alias applications for spotlight

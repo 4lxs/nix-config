@@ -1,7 +1,21 @@
-# Add your reusable home-manager modules to this directory, on their own file (https://nixos.wiki/wiki/Module).
-# These should be stuff you would like to share with others, not your personal configurations.
-
 {
-  # List your module files here
-  # my-module = import ./my-module.nix;
+  alacritty = ./alacritty;
+  dunst = ./dunst;
+  eww = ./eww;
+  fonts = ./fonts;
+  gammastep = ./gammastep;
+  git = ./git;
+  gnome = ./gnome;
+  gnome-gtk = ./gnome/gtk.nix;
+  hacking = ./hacking;
+  hyprland = ./hyprland;
+  keymap = ./keymap;
+  newsboat = ./newsboat;
+  nvim = ./nvim;
+  python = ./python;
+  rofi = ./rofi;
+  tmux = ./tmux;
+  waybar = ./waybar;
+  zsh = ./zsh;
+  common = ./common;
 }

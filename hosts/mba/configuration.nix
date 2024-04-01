@@ -1,12 +1,11 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  modules,
+  ...
+}: {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    # ../features/apple-silicon-support
-    ../common.nix
-    # ../features/sddm
-    # ../features/vm.nix
-    # ../features/hax
+    modules.common
   ];
 
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;

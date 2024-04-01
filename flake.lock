@@ -771,16 +771,17 @@
         "nixvim": "nixvim"
       },
       "locked": {
-        "dirtyRev": "3624ba3a1c573d44fe71c7d5ebf5f5f34a3d26fb-dirty",
-        "dirtyShortRev": "3624ba3-dirty",
-        "lastModified": 1711533746,
-        "narHash": "sha256-lfLk5mThyyweIJcXIH2iKBMuowq+b/6GFtdUnbDi4Ys=",
+        "lastModified": 1711884568,
+        "narHash": "sha256-fP2epJbaVydNl5NPsQ+Bh92jJTOZkLZziM5C3gLzP8M=",
+        "ref": "refs/heads/master",
+        "rev": "6202f726b1ee84d417a6ec59f5a4787c34859414",
+        "revCount": 10,
         "type": "git",
-        "url": "file:///home/svl/Projects/nvim-config"
+        "url": "file:///home/lukas/Projects/nvim-config"
       },
       "original": {
         "type": "git",
-        "url": "file:///home/svl/Projects/nvim-config"
+        "url": "file:///home/lukas/Projects/nvim-config"
       }
     },
     "pre-commit-hooks": {

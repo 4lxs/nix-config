@@ -54,7 +54,10 @@
         # 'nixos-rebuild --flake .#your-hostname'
         nixosConfigurations = {
           mba = lib.nixosSystem {
-            specialArgs = {inherit inputs outputs;};
+            specialArgs = {
+              inherit inputs outputs;
+              modules = outputs.nixosModules;
+            };
             modules = [
               ./common
               ./hosts/mba/configuration.nix
@@ -67,7 +70,10 @@
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   users.svl = import (./home + "/svl@mba");
-                  extraSpecialArgs = {inherit inputs outputs;};
+                  extraSpecialArgs = {
+                    inherit inputs outputs;
+                    modules = outputs.homeManagerModules;
+                  };
                 };
               }
             ];
@@ -89,7 +95,10 @@
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   users.lukas = import (./home + "/lukas@lsdarwin");
-                  extraSpecialArgs = {inherit inputs outputs;};
+                  extraSpecialArgs = {
+                    inherit inputs outputs;
+                    modules = outputs.homeManagerModules;
+                  };
                 };
               }
             ];
@@ -100,7 +109,10 @@
         homeConfigurations = {
           "lukas@pop-os" = lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.x86_64-linux;
-            extraSpecialArgs = {inherit inputs outputs;};
+            extraSpecialArgs = {
+              inherit inputs outputs;
+              modules = outputs.homeManagerModules;
+            };
             modules = [./common (./home + "/lukas@pop-os")];
           };
         };

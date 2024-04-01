@@ -1,7 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  modules,
+  ...
+}: {
   imports = [
-    ../common.nix
-    ../features/hyprland
+    modules.common
+    modules.hyprland
+    # ../features/python
+    # ../features/hacking
   ];
 
   home = {

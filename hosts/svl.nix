@@ -1,8 +1,12 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{
+  modules,
+  pkgs,
+  ...
+}: {
   imports = [
-    ./common.nix
     ./svl-hardware-configuration.nix
-    ./features/vm.nix
+    modules.common
+    modules.vm
     # ./features/hax
   ];
 
@@ -28,7 +32,7 @@
   };
 
   boot = {
-    supportedFilesystems = [ "ntfs" ];
+    supportedFilesystems = ["ntfs"];
     kernelPackages = pkgs.stable.linuxPackages_latest;
     loader = {
       efi = {
@@ -52,7 +56,7 @@
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
       initialPassword = "00000";
       isNormalUser = true;
-      extraGroups = [ "wheel" "docker" "networkmanager" "audio" ];
+      extraGroups = ["wheel" "docker" "networkmanager" "audio"];
     };
   };
 
@@ -83,7 +87,6 @@
   services.tlp = {
     enable = true;
   };
-
 
   services.udisks2.enable = true;
 

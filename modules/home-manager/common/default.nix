@@ -5,13 +5,13 @@
   ...
 }: {
   imports = [
-    ./features/tmux
-    ./features/zsh
-    ./features/fonts
-    ./features/git
-    ./features/alacritty
-    # ./features/python
-    # ./features/newsboat
+    modules.tmux
+    modules.zsh
+    modules.fonts
+    modules.git
+    modules.alacritty
+    modules.python
+    modules.newsboat
   ];
 
   nixpkgs.config = {

@@ -1,16 +1,17 @@
 {
   inputs,
   pkgs,
+  modules,
   ...
 }: {
   imports = [
     inputs.hyprlock.homeManagerModules.default
 
-    ../dunst
-    ../rofi
+    modules.dunst
+    modules.rofi
+    modules.waybar
+    modules.gnome-gtk
     # ../eww
-    ../waybar
-    ../gnome/gtk.nix
     # ../gammastep
   ];
 

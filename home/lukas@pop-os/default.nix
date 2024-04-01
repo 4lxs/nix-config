@@ -1,6 +1,6 @@
-{
+{modules, ...}: {
   imports = [
-    ../common.nix
+    modules.common
   ];
 
   home = {

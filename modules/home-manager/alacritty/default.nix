@@ -5,7 +5,7 @@ let
     desktopName = "Alacritty (no tmux)";
     exec = "alacritty -c zsh";
     terminal = "false";
-    mimetype="x-scheme-handler/org-protocol";
+    mimetype = "x-scheme-handler/org-protocol";
   };
 in {
   # alacritty config

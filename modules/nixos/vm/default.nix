@@ -1,11 +1,6 @@
 { config, pkgs, ... }: { # virtualization support
   # TODO: don't use svl when it's supposed to be system-agnostic feature
-  users.users.svl.extraGroups = [
-    "kvm"
-    "libvirtd"
-    "qemu-libvirtd"
-  ];
-
+  users.users.svl.extraGroups = [ "kvm" "libvirtd" "qemu-libvirtd" ];
 
   environment.sessionVariables.LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
   # environment.etc = {
@@ -19,7 +14,6 @@
   #     user = "libvirtd";
   #   };
   # };
-
 
   #boot.kernelParams = [
   #  "cgroup_enable=freezer"

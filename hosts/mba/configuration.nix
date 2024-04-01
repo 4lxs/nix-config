@@ -1,12 +1,5 @@
-{
-  pkgs,
-  modules,
-  ...
-}: {
-  imports = [
-    ./hardware-configuration.nix
-    modules.common
-  ];
+{ pkgs, modules, ... }: {
+  imports = [ ./hardware-configuration.nix modules.common ];
 
   hardware.asahi.peripheralFirmwareDirectory = ./firmware;
   hardware.asahi.useExperimentalGPUDriver = true;
@@ -40,8 +33,8 @@
     hostName = "mba";
     networkmanager.enable = true;
     hosts = {
-      "192.168.10.70" = ["gitlab.eba.si"];
-      "192.168.10.125" = ["work"];
+      "192.168.10.70" = [ "gitlab.eba.si" ];
+      "192.168.10.125" = [ "work" ];
     };
   };
   programs.nm-applet.enable = true;
@@ -67,7 +60,7 @@
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
       initialPassword = "00000";
       isNormalUser = true;
-      extraGroups = ["wheel" "docker" "networkmanager" "audio"];
+      extraGroups = [ "wheel" "docker" "networkmanager" "audio" ];
     };
   };
 
@@ -91,9 +84,7 @@
   };
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
-  environment.systemPackages = with pkgs; [
-    pavucontrol
-  ];
+  environment.systemPackages = with pkgs; [ pavucontrol ];
   # services.transmission.enable = true;
   # services.tlp = {
   #   enable = true;

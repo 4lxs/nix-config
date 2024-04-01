@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  inputs,
-  ...
-}: {
+{ pkgs, lib, inputs, ... }: {
   imports = [
     modules.tmux
     modules.zsh
@@ -30,14 +25,10 @@
     sessionVariables = {
       NIXOS_OZONE_WL = "1"; # use wayland in electron apps
     };
-    sessionPath =
-      [
-        "$HOME/.local/bin"
-      ]
-      ++ lib.optionals pkgs.stdenv.isDarwin [
-        "/opt/local/bin"
-        "/opt/local/sbin"
-      ];
+    sessionPath = [ "$HOME/.local/bin" ] ++ lib.optionals pkgs.stdenv.isDarwin [
+      "/opt/local/bin"
+      "/opt/local/sbin"
+    ];
     packages = with pkgs;
       [
         inputs.nvim-config.packages.${system}.default
@@ -56,8 +47,7 @@
         jq
         htop
         p7zip
-      ]
-      ++ lib.optionals pkgs.stdenv.isLinux [
+      ] ++ lib.optionals pkgs.stdenv.isLinux [
         xdg-utils
         # brave
       ];
@@ -123,9 +113,7 @@
         selection-clipboard = "clipboard";
       };
     };
-    gh = {
-      enable = true;
-    };
+    gh = { enable = true; };
     # firefox = {
     #   enable = true;
     #   profiles.svl = {

@@ -25,19 +25,12 @@
     nvim-config.url = "github:4lxs/nvim-config";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-parts,
-    home-manager,
-    nix-darwin,
-    apple-silicon,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-    lib = nixpkgs.lib // home-manager.lib;
-  in
-    flake-parts.lib.mkFlake {inherit inputs;} {
+  outputs = { self, nixpkgs, flake-parts, home-manager, nix-darwin
+    , apple-silicon, ... }@inputs:
+    let
+      inherit (self) outputs;
+      lib = nixpkgs.lib // home-manager.lib;
+    in flake-parts.lib.mkFlake { inherit inputs; } {
       flake = let
         nixosHomeConfig = user: host: {
           home-manager = {
@@ -71,7 +64,7 @@
               inherit inputs outputs;
               modules = outputs.homeManagerModules;
             };
-            modules = [(./home + "/${user}@${host}")];
+            modules = [ (./home + "/${user}@${host}") ];
           };
         };
         darwinConfig = user: host: {
@@ -88,40 +81,28 @@
           };
         };
       in {
-        overlays = import ./overlays {inherit inputs;};
+        overlays = import ./overlays { inherit inputs; };
         commonModules = import ./modules/common;
         nixosModules = import ./modules/nixos // outputs.commonModules;
-        homeManagerModules = import ./modules/home-manager // outputs.commonModules;
+        homeManagerModules = import ./modules/home-manager
+          // outputs.commonModules;
 
         # 'nixos-rebuild --flake .#your-hostname'
-        nixosConfigurations = lib.mkMerge [
-          (nixosConfig "svl" "mba")
-        ];
+        nixosConfigurations = lib.mkMerge [ (nixosConfig "svl" "mba") ];
 
         # initialize: nix run nix-darwin -- switch --flake .
         # 'nix-darwin switch --flake .#hostname'
-        darwinConfigurations = lib.mkMerge [
-          (darwinConfig "lukas" "lsdarwin")
-        ];
+        darwinConfigurations =
+          lib.mkMerge [ (darwinConfig "lukas" "lsdarwin") ];
 
         # 'home-manager switch --flake .#your-username@your-hostname'
-        homeConfigurations = lib.mkMerge [
-          (standaloneHomeConfig "lukas" "pop-os" "x86_64-linux")
-        ];
+        homeConfigurations = lib.mkMerge
+          [ (standaloneHomeConfig "lukas" "pop-os" "x86_64-linux") ];
       };
-      systems = [
-        "x86_64-linux"
-        "aarch64-darwin"
-        "aarch64-linux"
-      ];
-      perSystem = {
-        config,
-        pkgs,
-        system,
-        ...
-      }: {
-        packages = pkgs.callPackage ./pkgs {};
-        devShells = pkgs.callPackage ./shell.nix {};
+      systems = [ "x86_64-linux" "aarch64-darwin" "aarch64-linux" ];
+      perSystem = { config, pkgs, system, ... }: {
+        packages = pkgs.callPackage ./pkgs { };
+        devShells = pkgs.callPackage ./shell.nix { };
         formatter = nixpkgs.legacyPackages.${system}.nixfmt;
       };
     };

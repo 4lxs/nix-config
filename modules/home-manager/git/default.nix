@@ -1,9 +1,7 @@
-{
-  pkgs,
-  lib,
-  ...
-}: let
-  wtclonescript = pkgs.writeScriptBin "wt-clone.sh" (lib.readFile ./wt-clone.sh);
+{ pkgs, lib, ... }:
+let
+  wtclonescript =
+    pkgs.writeScriptBin "wt-clone.sh" (lib.readFile ./wt-clone.sh);
 in {
   programs = {
     lazygit = {
@@ -31,7 +29,8 @@ in {
         enable = true;
         options = {
           navigate = true; # use n and N to move between diff sections
-          light = false; # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+          light =
+            false; # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
         };
       };
       userEmail = "svensek.luka@pm.me";
@@ -43,9 +42,7 @@ in {
         merge.conflictstyle = "diff3";
         init.defaultBranch = "master";
       };
-      aliases = {
-        wt-clone = "!sh ${wtclonescript}/bin/wt-clone.sh";
-      };
+      aliases = { wt-clone = "!sh ${wtclonescript}/bin/wt-clone.sh"; };
     };
   };
 }

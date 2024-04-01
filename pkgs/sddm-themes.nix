@@ -1,5 +1,5 @@
-{ lib, stdenv, fetchFromGitHub, pkgs ? import <nixpkgs> {}, themeConfig ? { } }:
-{
+{ lib, stdenv, fetchFromGitHub, pkgs ? import <nixpkgs> { }, themeConfig ? { }
+}: {
   sugar-dark = stdenv.mkDerivation rec {
     pname = "sddm-sugar-dark-theme";
     version = "1.2";
@@ -11,10 +11,10 @@
       cp -aR $src $out/share/sddm/themes/sugar-dark
     '';
     postFixup = ''
-        mkdir -p $out/nix-support
+      mkdir -p $out/nix-support
 
-        echo ${pkgs.libsForQt5.qt5.qtgraphicaleffects} >> $out/nix-support/propagated-user-env-packages
-      '';
+      echo ${pkgs.libsForQt5.qt5.qtgraphicaleffects} >> $out/nix-support/propagated-user-env-packages
+    '';
 
     src = fetchFromGitHub {
       owner = "MarianArlt";

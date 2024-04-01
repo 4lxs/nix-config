@@ -1,7 +1,5 @@
-{modules, ...}: {
-  imports = [
-    modules.common
-  ];
+{ modules, ... }: {
+  imports = [ modules.common ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
@@ -10,11 +8,7 @@
 
   homebrew = {
     enable = true;
-    casks = [
-      "brave-browser"
-      "amethyst"
-      "inkscape"
-    ];
+    casks = [ "brave-browser" "amethyst" "inkscape" ];
   };
 
   users.users."lukas".home = "/Users/lukas/";
@@ -25,9 +19,7 @@
     stateVersion = 4;
 
     defaults = {
-      LaunchServices = {
-        LSQuarantine = false;
-      };
+      LaunchServices = { LSQuarantine = false; };
 
       NSGlobalDomain = {
         AppleShowAllExtensions = true;
@@ -54,13 +46,9 @@
         mru-spaces = false;
       };
 
-      finder = {
-        _FXShowPosixPathInTitle = false;
-      };
+      finder = { _FXShowPosixPathInTitle = false; };
 
-      trackpad = {
-        Clicking = true;
-      };
+      trackpad = { Clicking = true; };
     };
 
     keyboard = {

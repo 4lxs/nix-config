@@ -1,8 +1,4 @@
-{
-  pkgs,
-  modules,
-  ...
-}: {
+{ pkgs, modules, ... }: {
   imports = [
     modules.common
     modules.hyprland

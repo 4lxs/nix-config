@@ -1,5 +1,1 @@
-{ ... }: {
-  containers.hax = {
-    config = ./configuration.nix;
-  };
-}
+{ ... }: { containers.hax = { config = ./configuration.nix; }; }

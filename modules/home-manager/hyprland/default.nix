@@ -1,9 +1,4 @@
-{
-  inputs,
-  pkgs,
-  modules,
-  ...
-}: {
+{ inputs, pkgs, modules, ... }: {
   imports = [
     inputs.hyprlock.homeManagerModules.default
 
@@ -28,11 +23,7 @@
 
   programs.hyprlock = {
     enable = true;
-    backgrounds = [
-      {
-        path = "${./background.png}";
-      }
-    ];
+    backgrounds = [{ path = "${./background.png}"; }];
   };
 
   home.file.".local/bin/cliphist-rofi".source = ./scripts/cliphist-rofi;

@@ -1,7 +1,5 @@
-{modules, ...}: {
-  imports = [
-    modules.common
-  ];
+{ modules, ... }: {
+  imports = [ modules.common ];
 
   # TODO: find out a way to alias applications for spotlight
 

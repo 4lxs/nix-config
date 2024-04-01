@@ -1,8 +1,5 @@
-{modules, ...}: {
-  imports = [
-    modules.common
-    modules.nixpkgs
-  ];
+{ modules, ... }: {
+  imports = [ modules.common modules.nixpkgs ];
 
   home = {
     username = "lukas";

@@ -1,4 +1,5 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   python-packages = ps:
     with ps; [
       jupyter
@@ -12,8 +13,4 @@
       pynvim
       prompt-toolkit
     ];
-in {
-  home.packages = with pkgs; [
-    (python311.withPackages python-packages)
-  ];
-}
+in { home.packages = with pkgs; [ (python311.withPackages python-packages) ]; }

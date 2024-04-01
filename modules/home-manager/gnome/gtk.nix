@@ -1,25 +1,23 @@
 { inputs, lib, config, pkgs, ... }: # gnome configuration
 let
-  material-gtk-theme = with pkgs; stdenv.mkDerivation rec {
-    name = "Material-GTK-Themes";
+  material-gtk-theme = with pkgs;
+    stdenv.mkDerivation rec {
+      name = "Material-GTK-Themes";
 
-    buildInputs = [
-      gnome.gnome-themes-extra
-      gtk-engine-murrine
-    ];
+      buildInputs = [ gnome.gnome-themes-extra gtk-engine-murrine ];
 
-    src = fetchFromGitHub {
-      owner = "Fausto-Korpsvart";
-      repo = name;
-      rev = "4d828d5d85bff3307a228c837b9f4fa165a7c30a";
-      sha256 = "2E+ZRnvqzzS986J0ckrV73J1YqMUodj8bVXVStxcfUg=";
+      src = fetchFromGitHub {
+        owner = "Fausto-Korpsvart";
+        repo = name;
+        rev = "4d828d5d85bff3307a228c837b9f4fa165a7c30a";
+        sha256 = "2E+ZRnvqzzS986J0ckrV73J1YqMUodj8bVXVStxcfUg=";
+      };
+
+      installPhase = ''
+        mkdir -p $out/share/themes
+        mv themes/* $out/share/themes
+      '';
     };
-
-    installPhase = ''
-      mkdir -p $out/share/themes
-      mv themes/* $out/share/themes
-    '';
-  };
 in {
   gtk = {
     enable = true;
@@ -54,7 +52,5 @@ in {
 
   home.sessionVariables.GTK_THEME = "Material-Palenight-BL";
 
-  home.packages = with pkgs; [
-    material-gtk-theme
-  ];
+  home.packages = with pkgs; [ material-gtk-theme ];
 }

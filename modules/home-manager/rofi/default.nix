@@ -1,18 +1,15 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{ pkgs, lib, ... }: {
   # TODO: this is ugly
   xdg.configFile."rofi/powermenu" = {
     source = ./powermenu;
     recursive = true;
   };
-  home.packages = with pkgs; [
-    # (pkgs.writeShellScriptBin "launcher.sh" ''
-    #   rofi -show drun -theme "${./launcher/theme.rasi}"
-    # '')
-  ];
+  home.packages = with pkgs;
+    [
+      # (pkgs.writeShellScriptBin "launcher.sh" ''
+      #   rofi -show drun -theme "${./launcher/theme.rasi}"
+      # '')
+    ];
   programs.rofi = {
     enable = true;
     package = pkgs.rofi-wayland;
@@ -26,8 +23,6 @@
       display-window = "󰣆 ";
       display-combi = "󰕘 ";
     };
-    plugins = with pkgs; [
-      rofi-blocks
-    ];
+    plugins = with pkgs; [ rofi-blocks ];
   };
 }

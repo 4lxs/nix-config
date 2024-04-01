@@ -21,8 +21,8 @@
     hyprlock.url = "github:hyprwm/hyprlock";
     hyprlock.inputs.nixpkgs.follows = "nixpkgs";
 
-    nvim-config.url = "git+file:///home/svl/Projects/nvim-config";
-    # nvim-config.url = "github:4lxs/nvim-config";
+    # nvim-config.url = "git+file:///home/svl/Projects/nvim-config";
+    nvim-config.url = "github:4lxs/nvim-config";
   };
 
   outputs = {
@@ -36,86 +36,78 @@
   } @ inputs: let
     inherit (self) outputs;
     lib = nixpkgs.lib // home-manager.lib;
-    homeConfig = user: host: {
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        users.${user} = import (./home + "/${user}@${host}");
-        extraSpecialArgs = {inherit inputs outputs;};
-      };
-    };
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
-      flake = {
-        overlays = import ./overlays {inherit inputs;};
-        nixosModules = import ./modules/nixos;
-        homeManagerModules = import ./modules/home-manager;
-
-        # 'nixos-rebuild --flake .#your-hostname'
-        nixosConfigurations = {
-          mba = lib.nixosSystem {
+      flake = let
+        nixosHomeConfig = user: host: {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.${user} = import (./home + "/${user}@${host}");
+            extraSpecialArgs = {
+              inherit inputs outputs;
+              modules = outputs.homeManagerModules;
+            };
+          };
+        };
+        nixosConfig = user: host: {
+          "${host}" = lib.nixosSystem {
             specialArgs = {
               inherit inputs outputs;
               modules = outputs.nixosModules;
             };
             modules = [
-              ./common
-              ./hosts/mba/configuration.nix
+              ./hosts/${host}/configuration.nix
               apple-silicon.nixosModules.apple-silicon-support
-              # (home-manager.nixosModules.home-manager
-              #   (homeConfig "svl" "mba"))
-              home-manager.nixosModules.home-manager
-              {
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  users.svl = import (./home + "/svl@mba");
-                  extraSpecialArgs = {
-                    inherit inputs outputs;
-                    modules = outputs.homeManagerModules;
-                  };
-                };
-              }
+              (home-manager.nixosModules.home-manager
+                (nixosHomeConfig "${user}" "${host}"))
             ];
           };
         };
-
-        # initialize: nix run nix-darwin -- switch --flake .
-        # 'nix-darwin switch --flake .#hostname'
-        darwinConfigurations = {
-          lsdarwin = nix-darwin.lib.darwinSystem {
-            specialArgs = {inherit inputs outputs;};
-            modules = [
-              ./common
-              ./hosts/lsdarwin.nix
-              # (home-manager.darwinModules.home-manager
-              #   (homeConfig "lukas" "lsdarwin"))
-              {
-                home-manager = {
-                  useGlobalPkgs = true;
-                  useUserPackages = true;
-                  users.lukas = import (./home + "/lukas@lsdarwin");
-                  extraSpecialArgs = {
-                    inherit inputs outputs;
-                    modules = outputs.homeManagerModules;
-                  };
-                };
-              }
-            ];
-          };
-        };
-
-        # 'home-manager switch --flake .#your-username@your-hostname'
-        homeConfigurations = {
-          "lukas@pop-os" = lib.homeManagerConfiguration {
-            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        standaloneHomeConfig = user: host: system: {
+          "${user}@${host}" = lib.homeManagerConfiguration {
+            pkgs = nixpkgs.legacyPackages.${system};
             extraSpecialArgs = {
               inherit inputs outputs;
               modules = outputs.homeManagerModules;
             };
-            modules = [./common (./home + "/lukas@pop-os")];
+            modules = [(./home + "/${user}@${host}")];
           };
         };
+        darwinConfig = user: host: {
+          "${host}" = nix-darwin.lib.darwinSystem {
+            specialArgs = {
+              inherit inputs outputs;
+              modules = outputs.nixosModules;
+            };
+            modules = [
+              ./hosts/${host}/configuration.nix
+              (home-manager.darwinModules.home-manager
+                (nixosHomeConfig "${user}" "${host}"))
+            ];
+          };
+        };
+      in {
+        overlays = import ./overlays {inherit inputs;};
+        commonModules = import ./modules/common;
+        nixosModules = import ./modules/nixos // outputs.commonModules;
+        homeManagerModules = import ./modules/home-manager // outputs.commonModules;
+
+        # 'nixos-rebuild --flake .#your-hostname'
+        nixosConfigurations = lib.mkMerge [
+          (nixosConfig "svl" "mba")
+        ];
+
+        # initialize: nix run nix-darwin -- switch --flake .
+        # 'nix-darwin switch --flake .#hostname'
+        darwinConfigurations = lib.mkMerge [
+          (darwinConfig "lukas" "lsdarwin")
+        ];
+
+        # 'home-manager switch --flake .#your-username@your-hostname'
+        homeConfigurations = lib.mkMerge [
+          (standaloneHomeConfig "lukas" "pop-os" "x86_64-linux")
+        ];
       };
       systems = [
         "x86_64-linux"

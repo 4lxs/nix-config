@@ -1,4 +1,3 @@
-# common between all setups (home-manager and nixos/nix-darwin)
 {outputs, ...}: {
   nixpkgs = {
     overlays = [

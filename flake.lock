@@ -773,15 +773,15 @@
       "locked": {
         "lastModified": 1711884568,
         "narHash": "sha256-fP2epJbaVydNl5NPsQ+Bh92jJTOZkLZziM5C3gLzP8M=",
-        "ref": "refs/heads/master",
+        "owner": "4lxs",
+        "repo": "nvim-config",
         "rev": "6202f726b1ee84d417a6ec59f5a4787c34859414",
-        "revCount": 10,
-        "type": "git",
-        "url": "file:///home/lukas/Projects/nvim-config"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///home/lukas/Projects/nvim-config"
+        "owner": "4lxs",
+        "repo": "nvim-config",
+        "type": "github"
       }
     },
     "pre-commit-hooks": {

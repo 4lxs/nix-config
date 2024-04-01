@@ -1,6 +1,7 @@
 {modules, ...}: {
   imports = [
     modules.common
+    modules.nixpkgs
   ];
 
   home = {

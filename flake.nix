@@ -117,10 +117,12 @@
       perSystem = {
         config,
         pkgs,
+        system,
         ...
       }: {
         packages = pkgs.callPackage ./pkgs {};
         devShells = pkgs.callPackage ./shell.nix {};
+        formatter = nixpkgs.legacyPackages.${system}.nixfmt;
       };
     };
 }

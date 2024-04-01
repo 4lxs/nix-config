@@ -18,4 +18,6 @@
   waybar = ./waybar;
   zsh = ./zsh;
   common = ./common;
+  qt = ./qt;
+  shutils = ./shutils;
 }

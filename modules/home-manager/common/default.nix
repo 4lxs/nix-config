@@ -1,30 +1,5 @@
-{ pkgs, lib, inputs, ... }: {
-  imports = [
-    modules.tmux
-    modules.zsh
-    modules.fonts
-    modules.git
-    modules.alacritty
-    modules.python
-    modules.newsboat
-  ];
-
-  nixpkgs.config = {
-    allowUnfree = true;
-    # Workaround for https://github.com/nix-community/home-manager/issues/2942
-    allowUnfreePredicate = _: true;
-  };
-
-  qt = {
-    enable = true;
-    platformTheme = "gtk";
-    style.name = "adwaita-dark";
-  };
-
+{ pkgs, lib, inputs, modules, ... }: {
   home = {
-    sessionVariables = {
-      NIXOS_OZONE_WL = "1"; # use wayland in electron apps
-    };
     sessionPath = [ "$HOME/.local/bin" ] ++ lib.optionals pkgs.stdenv.isDarwin [
       "/opt/local/bin"
       "/opt/local/sbin"
@@ -38,18 +13,6 @@
         obsidian
         firefox
         calibre
-
-        ripgrep
-        fd
-        socat
-        unzip
-        wget
-        jq
-        htop
-        p7zip
-      ] ++ lib.optionals pkgs.stdenv.isLinux [
-        xdg-utils
-        # brave
       ];
   };
 

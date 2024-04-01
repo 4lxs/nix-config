@@ -1,5 +1,15 @@
 { modules, ... }: {
-  imports = [ modules.common modules.nixpkgs ];
+  imports = [
+    modules.common
+    modules.nixpkgs
+    modules.tmux
+    modules.zsh
+    modules.fonts
+    modules.git
+    modules.alacritty
+    modules.nixpkgs
+    modules.qt
+];
 
   home = {
     username = "lukas";

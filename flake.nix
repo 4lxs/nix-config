@@ -51,9 +51,8 @@
             };
             modules = [
               ./hosts/${host}/configuration.nix
-              apple-silicon.nixosModules.apple-silicon-support
-              (home-manager.nixosModules.home-manager
-                (nixosHomeConfig "${user}" "${host}"))
+              home-manager.nixosModules.home-manager
+              (nixosHomeConfig "${user}" "${host}")
             ];
           };
         };

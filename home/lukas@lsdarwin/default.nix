@@ -1,5 +1,15 @@
 { modules, ... }: {
-  imports = [ modules.common ];
+  imports = [
+    modules.common
+    modules.nixpkgs
+    modules.tmux
+    modules.zsh
+    modules.fonts
+    modules.git
+    modules.alacritty
+    modules.nixpkgs
+    modules.qt
+];
 
   # TODO: find out a way to alias applications for spotlight
 

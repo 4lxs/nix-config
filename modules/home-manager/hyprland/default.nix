@@ -26,6 +26,21 @@
     backgrounds = [{ path = "${./background.png}"; }];
   };
 
+  services = {
+    # udiskie.enable = true;
+    playerctld.enable = true;
+    blueman-applet.enable = true;
+    mpris-proxy.enable = true;
+    # kdeconnect = {
+    #   enable = true;
+    #   indicator = true;
+    # };
+    syncthing = {
+      enable = true;
+      tray.enable = true;
+    };
+  };
+
   home.file.".local/bin/cliphist-rofi".source = ./scripts/cliphist-rofi;
 
   xdg.configFile."hypr/keymap.xkb".source = ../keymap/keymap.xkb;

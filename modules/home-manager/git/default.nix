@@ -33,7 +33,7 @@ in {
             false; # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
         };
       };
-      userEmail = "svensek.luka@pm.me";
+      userEmail = "66408983+4lxs@users.noreply.github.com";
       userName = "Svl";
       extraConfig = {
         diff.tool = "nvimdiff";

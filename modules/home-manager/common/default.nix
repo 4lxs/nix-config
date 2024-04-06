@@ -1,11 +1,11 @@
-{ pkgs, lib, inputs, svl_config, ... }: {
+{ pkgs, lib, host_config, ... }: {
   home = {
     sessionPath = [ "$HOME/.local/bin" ] ++ lib.optionals pkgs.stdenv.isDarwin [
       "/opt/local/bin"
       "/opt/local/sbin"
     ];
-    username = "${svl_config.user}";
-    homeDirectory = "/home/${svl_config.user}";
+    username = "${host_config.user}";
+    homeDirectory = "/home/${host_config.user}";
   };
 
   programs.home-manager.enable = true;

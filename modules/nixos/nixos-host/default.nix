@@ -1,4 +1,4 @@
-{ pkgs, svl_config, ... }: {
+{ pkgs, host_config, ... }: {
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = false;
@@ -13,7 +13,7 @@
   # };
 
   networking = {
-    hostName = svl_config.host;
+    hostName = host_config.host;
     networkmanager.enable = true;
     hosts = {
       "192.168.10.70" = [ "gitlab.eba.si" ];
@@ -40,7 +40,7 @@
   users = {
     defaultUserShell = pkgs.zsh;
     users = {
-      "${svl_config.user}" = {
+      "${host_config.user}" = {
         # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
         initialPassword = "00000";
         isNormalUser = true;

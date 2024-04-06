@@ -40,7 +40,7 @@
             extraSpecialArgs = {
               inherit inputs outputs;
               modules = outputs.homeManagerModules;
-              svl_config = { inherit user host; };
+              host_config = { inherit user host; }; # ... ignore me
             };
           };
         };
@@ -49,7 +49,7 @@
             specialArgs = {
               inherit inputs outputs;
               modules = outputs.nixosModules;
-              svl_config = { inherit user host; };
+              host_config = { inherit user host; }; # ... ignore me
             };
             modules = [
               ./hosts/${host}/configuration.nix
@@ -65,7 +65,7 @@
             extraSpecialArgs = {
               inherit inputs outputs;
               modules = outputs.homeManagerModules;
-              svl_config = { inherit user host; };
+              host_config = { inherit user host; }; # ... ignore me
             };
             modules = [ (./home + "/${user}@${host}") ];
           };
@@ -75,6 +75,7 @@
             specialArgs = {
               inherit inputs outputs;
               modules = outputs.nixosModules;
+              host_config = { inherit user host; }; # ... ignore me
             };
             modules = [
               ./hosts/${host}/configuration.nix

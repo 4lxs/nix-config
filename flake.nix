@@ -21,8 +21,10 @@
     hyprlock.url = "github:hyprwm/hyprlock";
     hyprlock.inputs.nixpkgs.follows = "nixpkgs";
 
-    # nvim-config.url = "git+file:///home/svl/Projects/nvim-config";
-    nvim-config.url = "github:4lxs/nvim-config";
+    nvim-config.url = "git+file:///home/svl/Projects/nvim-config";
+    # nvim-config.url = "github:4lxs/nvim-config";
+
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = { self, nixpkgs, flake-parts, home-manager, nix-darwin
@@ -36,7 +38,12 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            users.${user} = import (./home + "/${user}@${host}");
+            users.${user} = {
+              imports = [
+                ./modules/home-manager/modules.nix
+                (./home + "/${user}@${host}")
+              ];
+            };
             extraSpecialArgs = {
               inherit inputs outputs;
               modules = outputs.homeManagerModules;

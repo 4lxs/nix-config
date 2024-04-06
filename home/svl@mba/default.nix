@@ -13,6 +13,8 @@
     modules.zathura
   ];
 
+  cfg = { nixColors.enable = true; };
+
   home = {
     packages = with pkgs; [ vscode-fhs obsidian calibre ];
 

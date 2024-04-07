@@ -1,4 +1,4 @@
-{ pkgs, modules, ... }: {
+{ pkgs, modules, config, ... }: {
   imports = [
     modules.common
     modules.tmux
@@ -14,6 +14,7 @@
   ];
 
   cfg = { nixColors.enable = true; };
+  xdg.userDirs.download = "${config.home.homeDirectory}/Downloads/Limbo";
 
   home = {
     packages = with pkgs; [ vscode-fhs obsidian calibre ];

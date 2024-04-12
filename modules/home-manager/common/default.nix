@@ -1,12 +1,39 @@
-{ pkgs, lib, host_config, inputs, ... }: {
+{
+  pkgs,
+  config,
+  lib,
+  host_config,
+  inputs,
+  ...
+}:
+{
   imports = [ inputs.nur.nixosModules.nur ];
   home = {
-    sessionPath = [ "$HOME/.local/bin" ] ++ lib.optionals pkgs.stdenv.isDarwin [
-      "/opt/local/bin"
-      "/opt/local/sbin"
-    ];
+    sessionPath =
+      [ "$HOME/.local/bin" ]
+      ++ lib.optionals pkgs.stdenv.isDarwin [
+        "/opt/local/bin"
+        "/opt/local/sbin"
+      ];
     username = "${host_config.user}";
     homeDirectory = "/home/${host_config.user}";
+  };
+
+  services.ssh-agent.enable = true;
+  programs.ssh = {
+    enable = true;
+    addKeysToAgent = "confirm";
+  };
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+    };
+  };
+  xdg.userDirs = {
+    createDirectories = true;
+    download = "${config.home.homeDirectory}/Downloads/Limbo";
   };
 
   programs.home-manager.enable = true;

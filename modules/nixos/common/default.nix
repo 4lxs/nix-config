@@ -1,5 +1,6 @@
 # common between all hosts (nixos and nix-darwin)
-{ pkgs, modules, ... }: {
+{ pkgs, modules, ... }:
+{
   imports = [ modules.nixpkgs ];
   nix = {
     #    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
@@ -10,7 +11,9 @@
       # may slow down builds. instead, we use nix.optimise.automatic
       # auto-optimise-store = true;
     };
-    optimise = { automatic = true; };
+    optimise = {
+      automatic = true;
+    };
     gc = {
       automatic = true;
       options = "--delete-older-than 7d";
@@ -22,8 +25,19 @@
     enable = true;
     enableCompletion = false;
   };
+
+  # security.pam.enableSSHAgentAuth = true;
+  # programs.ssh.startAgent = true;
+
+  programs.kdeconnect.enable = true;
+
+  sound.enable = true;
+
   environment = {
-    shells = [ pkgs.zsh pkgs.bash ];
+    shells = [
+      pkgs.zsh
+      pkgs.bash
+    ];
     sessionVariables.NIXOS_OZONE_WL = "1";
     # binsh = "${pkgs.dash}/bin/dash";
   };

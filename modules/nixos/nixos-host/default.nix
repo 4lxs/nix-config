@@ -1,4 +1,5 @@
-{ pkgs, host_config, ... }: {
+{ pkgs, host_config, ... }:
+{
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = false;
@@ -44,12 +45,15 @@
         # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
         initialPassword = "00000";
         isNormalUser = true;
-        extraGroups = [ "wheel" "docker" "networkmanager" "audio" ];
+        extraGroups = [
+          "wheel"
+          "docker"
+          "networkmanager"
+          "audio"
+        ];
       };
     };
   };
-
-  # programs.kdeconnect.enable = true;
 
   console.useXkbConfig = true; # console use same layout as xkb
   # auto upgrade system

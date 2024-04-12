@@ -1,13 +1,15 @@
 { pkgs, config, ... }:
 let
   noTmuxEntry = pkgs.makeDesktopItem {
-    name = "Alacritty (no tmux)";
+    name = "alacritty";
     desktopName = "Alacritty (no tmux)";
-    exec = "alacritty -c zsh";
-    terminal = "false";
-    mimetype = "x-scheme-handler/org-protocol";
+    exec = "alacritty -e zsh";
+    icon = "Alacritty";
+    terminal = false;
   };
-in {
+in
+{
+  home.packages = [ noTmuxEntry ];
   # alacritty config
   programs.alacritty = {
     enable = true;
@@ -27,7 +29,10 @@ in {
       cursor.style.shape = "Beam";
       shell = {
         program = "${pkgs.tmux}/bin/tmux";
-        args = [ "new" "-AsMain" ];
+        args = [
+          "new"
+          "-AsMain"
+        ];
       };
 
       #      key_bindings = [
@@ -42,60 +47,65 @@ in {
       #        { key = 9; mods = "Control"; chars = "\x14\x38"; }
       #      ];
 
-      colors = if config.cfg.nixColors.enable then
-        let col = config.colorScheme.palette;
-        in {
-          primary = {
-            background = "0x${col.base00}";
-            foreground = "0x${col.base05}";
+      colors =
+        if config.cfg.nixColors.enable then
+          let
+            col = config.colorScheme.palette;
+          in
+          {
+            primary = {
+              background = "0x${col.base00}";
+              foreground = "0x${col.base05}";
+            };
+            normal = {
+              black = "0x${col.base01}";
+              red = "0x${col.base08}";
+              green = "0x${col.base0B}";
+              yellow = "0x${col.base0A}";
+              blue = "0x${col.base0D}";
+              magenta = "0x${col.base0E}";
+              cyan = "0x${col.base0C}";
+              white = "0x${col.base05}";
+            };
+            bright = {
+              black = "0x${col.base03}";
+              red = "0x${col.base08}";
+              green = "0x${col.base0B}";
+              yellow = "0x${col.base0A}";
+              blue = "0x${col.base0D}";
+              magenta = "0x${col.base0E}";
+              cyan = "0x${col.base0C}";
+              white = "0x${col.base07}";
+            };
+          }
+        else
+          {
+            # tokyonight
+            primary = {
+              background = "0x1a1b26";
+              foreground = "0xa9b1d6";
+            };
+            normal = {
+              black = "0x32344a";
+              red = "0xf7768e";
+              green = "0x9ece6a";
+              yellow = "0xe0af68";
+              blue = "0x7aa2f7";
+              magenta = "0xad8ee6";
+              cyan = "0x449dab";
+              white = "0x787c99";
+            };
+            bright = {
+              black = "0x444b6a";
+              red = "0xff7a93";
+              green = "0xb9f27c";
+              yellow = "0xff9e64";
+              blue = "0x7da6ff";
+              magenta = "0xbb9af7";
+              cyan = "0x0db9d7";
+              white = "0xacb0d0";
+            };
           };
-          normal = {
-            black = "0x${col.base01}";
-            red = "0x${col.base08}";
-            green = "0x${col.base0B}";
-            yellow = "0x${col.base0A}";
-            blue = "0x${col.base0D}";
-            magenta = "0x${col.base0E}";
-            cyan = "0x${col.base0C}";
-            white = "0x${col.base05}";
-          };
-          bright = {
-            black = "0x${col.base03}";
-            red = "0x${col.base08}";
-            green = "0x${col.base0B}";
-            yellow = "0x${col.base0A}";
-            blue = "0x${col.base0D}";
-            magenta = "0x${col.base0E}";
-            cyan = "0x${col.base0C}";
-            white = "0x${col.base07}";
-          };
-        }
-      else { # tokyonight
-        primary = {
-          background = "0x1a1b26";
-          foreground = "0xa9b1d6";
-        };
-        normal = {
-          black = "0x32344a";
-          red = "0xf7768e";
-          green = "0x9ece6a";
-          yellow = "0xe0af68";
-          blue = "0x7aa2f7";
-          magenta = "0xad8ee6";
-          cyan = "0x449dab";
-          white = "0x787c99";
-        };
-        bright = {
-          black = "0x444b6a";
-          red = "0xff7a93";
-          green = "0xb9f27c";
-          yellow = "0xff9e64";
-          blue = "0x7da6ff";
-          magenta = "0xbb9af7";
-          cyan = "0x0db9d7";
-          white = "0xacb0d0";
-        };
-      };
       env.TERM = "tmux-256color";
     };
   };

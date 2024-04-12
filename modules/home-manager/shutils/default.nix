@@ -1,4 +1,5 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }:
+{
   home.packages = with pkgs; [
     inputs.nvim-config.packages.${system}.default
 
@@ -22,7 +23,9 @@
       enable = true;
       config.theme = "TwoDark";
     };
-    gh = { enable = true; };
+    gh = {
+      enable = true;
+    };
     direnv = {
       enable = true;
       nix-direnv.enable = true;

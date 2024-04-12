@@ -1,4 +1,5 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+{
   home.packages = with pkgs; [
     gitmux
     fzf
@@ -16,8 +17,10 @@
       tmuxPlugins.yank
     ];
 
-    extraConfig = ''
-      set-option -g default-shell ${pkgs.zsh}/bin/zsh
-    '' + (lib.readFile ./tmux.conf);
+    extraConfig =
+      ''
+        set-option -g default-shell ${pkgs.zsh}/bin/zsh
+      ''
+      + (lib.readFile ./tmux.conf);
   };
 }

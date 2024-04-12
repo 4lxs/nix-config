@@ -1,4 +1,10 @@
-{ pkgs, modules, config, ... }: {
+{
+  pkgs,
+  modules,
+  config,
+  ...
+}:
+{
   imports = [
     modules.common
     modules.tmux
@@ -13,11 +19,16 @@
     modules.zathura
   ];
 
-  cfg = { nixColors.enable = true; };
-  xdg.userDirs.download = "${config.home.homeDirectory}/Downloads/Limbo";
+  cfg = {
+    nixColors.enable = true;
+  };
 
   home = {
-    packages = with pkgs; [ vscode-fhs obsidian calibre ];
+    packages = with pkgs; [
+      vscode-fhs
+      obsidian
+      calibre
+    ];
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
     stateVersion = "24.05";

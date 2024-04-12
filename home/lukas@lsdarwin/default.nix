@@ -1,4 +1,5 @@
-{ modules, ... }: {
+{ modules, ... }:
+{
   imports = [
     modules.common
     modules.nixpkgs
@@ -9,7 +10,7 @@
     modules.alacritty
     modules.nixpkgs
     modules.qt
-];
+  ];
 
   # TODO: find out a way to alias applications for spotlight
 

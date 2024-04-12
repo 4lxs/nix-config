@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
   # home.packages = with pkgs; [ firefox ];
   programs.firefox = {
     enable = true;
@@ -17,6 +18,8 @@
         sponsorblock
         boring-rss
         canvasblocker
+        bypass-paywalls-clean
+        competitive-companion
       ];
       # results in file in way constantly
       # search = {
@@ -49,7 +52,9 @@
       DisableBuiltinPDFViewer = true;
       NetworkPrediction = false;
       CaptivePortal = false;
-      DNSOverHTTPS = { Enabled = false; };
+      DNSOverHTTPS = {
+        Enabled = false;
+      };
       DisableFirefoxStudies = true;
       DisableTelemetry = true;
       DisablePocket = true;

@@ -1,4 +1,10 @@
-{ inputs, pkgs, modules, ... }: {
+{
+  inputs,
+  pkgs,
+  modules,
+  ...
+}:
+{
   imports = [
     inputs.hyprlock.homeManagerModules.default
 
@@ -23,7 +29,7 @@
 
   programs.hyprlock = {
     enable = true;
-    backgrounds = [{ path = "${./background.png}"; }];
+    backgrounds = [ { path = "${./background.png}"; } ];
   };
 
   services = {
@@ -47,7 +53,8 @@
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-    extraConfig = with pkgs;
+    extraConfig =
+      with pkgs;
       builtins.readFile (substituteAll {
         src = ./hyprland.conf;
         inherit swaybg;

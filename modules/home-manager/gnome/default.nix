@@ -1,4 +1,5 @@
-{ modules, pkgs, ... }: {
+{ modules, pkgs, ... }:
+{
   # gnome configuration
   imports = [ modules.gtk ];
   dconf.settings = {
@@ -53,7 +54,10 @@
       # keyboard layout
       show-all-sources = true;
       # sources = [ ( [ "xkb" "myx" ] ) ];
-      xkb-options = [ "caps:escape_shifted_capslock" "ctrl:swap_lalt_lctl" ];
+      xkb-options = [
+        "caps:escape_shifted_capslock"
+        "ctrl:swap_lalt_lctl"
+      ];
     };
   };
 

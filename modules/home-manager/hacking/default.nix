@@ -1,3 +1,10 @@
-{ pkgs, ... }: {
-  home.packages = with pkgs; [ openvpn nmap gobuster zap metasploit ];
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    openvpn
+    nmap
+    gobuster
+    zap
+    metasploit
+  ];
 }

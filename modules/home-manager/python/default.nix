@@ -1,7 +1,7 @@
 { pkgs, ... }:
 let
-  python-packages = ps:
-    with ps; [
+  python-packages =
+    ps: with ps; [
       jupyter
       ipython
       pandas
@@ -13,4 +13,7 @@ let
       pynvim
       prompt-toolkit
     ];
-in { home.packages = with pkgs; [ (python311.withPackages python-packages) ]; }
+in
+{
+  home.packages = with pkgs; [ (python311.withPackages python-packages) ];
+}

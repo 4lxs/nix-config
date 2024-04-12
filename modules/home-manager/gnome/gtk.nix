@@ -1,10 +1,20 @@
-{ inputs, lib, config, pkgs, ... }: # gnome configuration
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: # gnome configuration
 let
-  material-gtk-theme = with pkgs;
+  material-gtk-theme =
+    with pkgs;
     stdenv.mkDerivation rec {
       name = "Material-GTK-Themes";
 
-      buildInputs = [ gnome.gnome-themes-extra gtk-engine-murrine ];
+      buildInputs = [
+        gnome.gnome-themes-extra
+        gtk-engine-murrine
+      ];
 
       src = fetchFromGitHub {
         owner = "Fausto-Korpsvart";
@@ -18,7 +28,8 @@ let
         mv themes/* $out/share/themes
       '';
     };
-in {
+in
+{
   gtk = {
     enable = true;
 

@@ -1,4 +1,5 @@
-{ modules, pkgs, ... }: {
+{ modules, pkgs, ... }:
+{
   imports = [
     ./svl-hardware-configuration.nix
     modules.common
@@ -52,7 +53,12 @@
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.
       initialPassword = "00000";
       isNormalUser = true;
-      extraGroups = [ "wheel" "docker" "networkmanager" "audio" ];
+      extraGroups = [
+        "wheel"
+        "docker"
+        "networkmanager"
+        "audio"
+      ];
     };
   };
 
@@ -78,7 +84,9 @@
   services.blueman.enable = true;
   environment.systemPackages = with pkgs; [ pavucontrol ];
   services.transmission.enable = true;
-  services.tlp = { enable = true; };
+  services.tlp = {
+    enable = true;
+  };
 
   services.udisks2.enable = true;
 

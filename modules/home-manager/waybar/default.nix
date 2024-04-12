@@ -1,4 +1,12 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+{
   home.packages = with pkgs; [ playerctl ];
   programs.waybar = {
     enable = true;
@@ -7,8 +15,11 @@
     settings = {
       primary = {
         layer = "top";
-        modules-left =
-          [ "custom/launcher" "hyprland/workspaces" "hyprland/window" ];
+        modules-left = [
+          "custom/launcher"
+          "hyprland/workspaces"
+          "hyprland/window"
+        ];
         modules-center = [ ];
         modules-right = [
           "mpris"
@@ -64,7 +75,9 @@
             playing = "⏸";
           };
         };
-        tray = { spacing = 10; };
+        tray = {
+          spacing = 10;
+        };
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
@@ -76,12 +89,34 @@
           format = "{percent}% {icon}";
           on-scroll-up = "${pkgs.brightnessctl}/bin/brightnessctl set 1%+";
           on-scroll-down = "${pkgs.brightnessctl}/bin/brightnessctl set 1%-";
-          format-icons = [ "" "" "" "" "" "" "" "" "" ];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
         battery = {
           format = "{capacity}% {icon}";
           format-charging = "{capacity}% 󰂄";
-          format-icons = [ "󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+          format-icons = [
+            "󰂎"
+            "󰁺"
+            "󰁻"
+            "󰁼"
+            "󰁽"
+            "󰁾"
+            "󰁿"
+            "󰂀"
+            "󰂁"
+            "󰂂"
+            "󰁹"
+          ];
           format-plugged = "{capacity}% ";
           format-time = "{H}h {M}min";
           states = {
@@ -89,7 +124,9 @@
             critical = 5;
           };
         };
-        clock = { format-alt = "{:%Y-%m-%d}"; };
+        clock = {
+          format-alt = "{:%Y-%m-%d}";
+        };
         network = {
           format-alt = "{ifname}: {ipaddr}/{cidr}";
           format-disconnected = "󰖪";
@@ -105,7 +142,11 @@
           format-bluetooth-muted = " {icon}";
           format-icons = {
             car = "";
-            default = [ "" "" "" ];
+            default = [
+              ""
+              ""
+              ""
+            ];
             hands-free = "󱡏";
             headphone = "";
             headset = "󰋎";
@@ -117,8 +158,7 @@
         };
         "custom/power" = {
           format = "";
-          on-click =
-            "${pkgs.bash}/bin/bash ~/.config/rofi/powermenu/powermenu.sh";
+          on-click = "${pkgs.bash}/bin/bash ~/.config/rofi/powermenu/powermenu.sh";
         };
       };
     };

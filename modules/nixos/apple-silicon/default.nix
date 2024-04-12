@@ -1,4 +1,5 @@
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   imports = [ inputs.apple-silicon.nixosModules.apple-silicon-support ];
 
   nixpkgs.overlays = [ inputs.apple-silicon.overlays.apple-silicon-overlay ];

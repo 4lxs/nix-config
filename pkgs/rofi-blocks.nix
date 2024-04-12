@@ -1,5 +1,12 @@
-{ stdenv, fetchFromGitHub, autoreconfHook, pkg-config, rofi-wayland-unwrapped
-, cairo, json-glib, }:
+{
+  stdenv,
+  fetchFromGitHub,
+  autoreconfHook,
+  pkg-config,
+  rofi-wayland-unwrapped,
+  cairo,
+  json-glib,
+}:
 stdenv.mkDerivation rec {
   pname = "rofi-blocks";
   version = "2023-09-27";
@@ -11,9 +18,16 @@ stdenv.mkDerivation rec {
     sha256 = "U955hzd55xiV5XdQ18iUIwNLn2JrvuHsItgUSf6ww58=";
   };
 
-  nativeBuildInputs = [ autoreconfHook pkg-config ];
+  nativeBuildInputs = [
+    autoreconfHook
+    pkg-config
+  ];
 
-  buildInputs = [ rofi-wayland-unwrapped cairo json-glib ];
+  buildInputs = [
+    rofi-wayland-unwrapped
+    cairo
+    json-glib
+  ];
 
   patches = [ ./0001-patch-plugindir-to-output.patch ];
 }

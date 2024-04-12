@@ -55,7 +55,6 @@ user_pref("extensions.pocket.enabled", false);
 user_pref("extensions.shield-recipe-client.api_url", "");
 user_pref("extensions.shield-recipe-client.enabled", false);
 user_pref("extensions.webservice.discoverURL", "");
-user_pref("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.3");
 user_pref("media.autoplay.default", 0);
 user_pref("media.autoplay.enabled", true);
 user_pref("media.eme.enabled", false);

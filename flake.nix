@@ -51,13 +51,13 @@
               useUserPackages = true;
               users.${user} = {
                 imports = [
-                  ./modules/home-manager/modules.nix
+                  ./home/features
                   (./home + "/${user}@${host}")
                 ];
               };
               extraSpecialArgs = {
                 inherit inputs outputs;
-                modules = outputs.homeManagerModules;
+                # modules = outputs.homeManagerModules;
                 host_config = {
                   inherit user host;
                 }; # ... ignore me

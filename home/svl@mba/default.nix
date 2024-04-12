@@ -1,26 +1,8 @@
+{ pkgs, ... }:
 {
-  pkgs,
-  modules,
-  config,
-  ...
-}:
-{
-  imports = [
-    modules.common
-    modules.tmux
-    modules.zsh
-    modules.fonts
-    modules.git
-    modules.alacritty
-    modules.qt
-    modules.hyprland
-    modules.firefox
-    modules.shutils
-    modules.zathura
-  ];
-
   cfg = {
     nixColors.enable = true;
+    hyprland.enable = true;
   };
 
   home = {

@@ -76,6 +76,8 @@
               modules = [
                 ./hosts/${host}/configuration.nix
                 ./hosts/${host}/hardware-configuration.nix
+                ./hosts/features
+                ./nixpkgs
                 home-manager.nixosModules.home-manager
                 (nixosHomeConfig "${user}" "${host}")
               ];
@@ -91,7 +93,10 @@
                   inherit user host;
                 }; # ... ignore me
               };
-              modules = [ (./home + "/${user}@${host}") ];
+              modules = [
+                (./home + "/${user}@${host}")
+                ./nixpkgs
+              ];
             };
           };
           darwinConfig = user: host: {
@@ -105,6 +110,7 @@
               };
               modules = [
                 ./hosts/${host}/configuration.nix
+                ./nixpkgs
                 (home-manager.darwinModules.home-manager (nixosHomeConfig "${user}" "${host}"))
               ];
             };
@@ -112,9 +118,8 @@
         in
         {
           overlays = import ./overlays { inherit inputs; };
-          commonModules = import ./modules/common;
-          nixosModules = import ./modules/nixos // outputs.commonModules;
-          homeManagerModules = import ./modules/home-manager // outputs.commonModules;
+          nixosModules = import ./modules/nixos;
+          homeManagerModules = import ./modules/home-manager;
 
           # 'nixos-rebuild --flake .#your-hostname'
           nixosConfigurations = lib.mkMerge [ (nixosConfig "svl" "mba") ];

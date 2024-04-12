@@ -1,11 +1,9 @@
-{ modules, ... }:
 {
-  imports = [
-    modules.common
-    modules.nixosHost
-    modules.hyprland
-    modules.appleSilicon
-  ];
+  cfg = {
+    nixosHost.enable = true;
+    hyprland.enable = true;
+    appleSilicon.enable = true;
+  };
 
   swapDevices = [
     {

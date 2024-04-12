@@ -1,7 +1,6 @@
 # common between all hosts (nixos and nix-darwin)
-{ pkgs, modules, ... }:
+{ pkgs, ... }:
 {
-  imports = [ modules.nixpkgs ];
   nix = {
     #    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
     #    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;

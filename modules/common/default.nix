@@ -1,1 +1,0 @@
-{ nixpkgs = ./nixpkgs; }

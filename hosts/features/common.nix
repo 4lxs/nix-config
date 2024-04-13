@@ -28,8 +28,6 @@
   # security.pam.enableSSHAgentAuth = true;
   # programs.ssh.startAgent = true;
 
-  programs.kdeconnect.enable = true;
-
   sound.enable = true;
 
   environment = {

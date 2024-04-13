@@ -3,6 +3,7 @@
   cfg = {
     nixColors.enable = true;
     hyprland.enable = true;
+    kdeconnect.enable = true;
   };
 
   home = {

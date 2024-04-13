@@ -62,8 +62,6 @@
     };
   };
 
-  programs.kdeconnect.enable = true;
-
   console.useXkbConfig = true; # console use same layout as xkb
   # auto upgrade system
   system.autoUpgrade.enable = true;

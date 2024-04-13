@@ -12,6 +12,7 @@
     ./gnome.nix
     ./gtk.nix
     ./hyprland
+    ./kdeconnect.nix
     ./newsboat.nix
     ./nix-colors.nix
     ./qt.nix

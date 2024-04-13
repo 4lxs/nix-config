@@ -1,7 +1,7 @@
 { lib, config, ... }:
 {
   options.cfg.zathura = {
-      enable = lib.mkOption {
+    enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
       description = "zathura pdf viewer";

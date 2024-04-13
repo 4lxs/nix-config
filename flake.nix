@@ -58,7 +58,8 @@
               extraSpecialArgs = {
                 inherit inputs outputs;
                 modules = outputs.homeManagerModules;
-                host_config = { # ... ignore me
+                host_config = {
+                  # ... ignore me
                   inherit user host;
                 };
               };
@@ -69,7 +70,8 @@
               specialArgs = {
                 inherit inputs outputs;
                 modules = outputs.nixosModules;
-                host_config = { # ... ignore me
+                host_config = {
+                  # ... ignore me
                   inherit user host;
                 };
               };
@@ -89,7 +91,8 @@
               extraSpecialArgs = {
                 inherit inputs outputs;
                 modules = outputs.homeManagerModules;
-                host_config = { # ... ignore me
+                host_config = {
+                  # ... ignore me
                   inherit user host;
                 };
               };
@@ -105,7 +108,8 @@
               specialArgs = {
                 inherit inputs outputs;
                 modules = outputs.nixosModules;
-                host_config = { # ... ignore me
+                host_config = {
+                  # ... ignore me
                   inherit user host;
                 };
               };

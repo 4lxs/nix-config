@@ -18,6 +18,7 @@
     ./qt.nix
     ./rofi
     ./shutils.nix
+    ./sops.nix
     ./tmux
     ./user-dirs.nix
     ./waybar

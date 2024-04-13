@@ -24,8 +24,8 @@
     nvim-config.url = "github:4lxs/nvim-config";
 
     nix-colors.url = "github:misterio77/nix-colors";
-
     nur.url = "github:nix-community/NUR";
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs =

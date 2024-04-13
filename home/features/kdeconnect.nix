@@ -1,10 +1,12 @@
-{ lib, ... }:
+{ lib, config, ... }:
 {
   options.cfg.kdeconnect = {
     enable = lib.mkEnableOption "enable kdeconnect";
   };
-  kdeconnect = {
-    enable = true;
-    indicator = true;
+  config = lib.mkIf config.cfg.kdeconnect.enable {
+    services.kdeconnect = {
+      enable = true;
+      indicator = true;
+    };
   };
 }

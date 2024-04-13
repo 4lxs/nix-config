@@ -35,7 +35,7 @@
           sponsorblock
           boring-rss
           canvasblocker
-          bypass-paywalls-clean
+          # bypass-paywalls-clean
           competitive-companion
         ];
         # results in file in way constantly

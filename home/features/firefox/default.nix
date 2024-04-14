@@ -22,7 +22,11 @@
       enable = true;
       profiles."${config.cfg.firefox.user}" = {
         name = config.cfg.firefox.user;
-        userChrome = builtins.readFile ./userChrome.css;
+        userChrome =
+          let
+            chromeFiles = builtins.attrNames (builtins.readDir ./chrome);
+          in
+          lib.concatStrings (map (fn: builtins.readFile (./chrome + ("/" + fn))) chromeFiles);
         extensions = with config.nur.repos.rycee.firefox-addons; [
           bitwarden
           sidebery

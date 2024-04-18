@@ -848,11 +848,11 @@
         "nixvim": "nixvim"
       },
       "locked": {
-        "lastModified": 1712912177,
-        "narHash": "sha256-TKmv5erzdlO+Cp7GkxMUbI72KlJlC4vKlm13e9BgzwY=",
+        "lastModified": 1713465857,
+        "narHash": "sha256-T3kjcP74nlbOBcZfvBXIhRHUJMPVgyD11s/yOMkNRo8=",
         "owner": "4lxs",
         "repo": "nvim-config",
-        "rev": "be3c91350a34bfdf078e2c1612e18e8add2f7e29",
+        "rev": "343bf176be62caaa2a03ae13a915672ab7390419",
         "type": "github"
       },
       "original": {

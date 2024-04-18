@@ -64,6 +64,36 @@
           init.defaultBranch = "master";
         };
         aliases = {
+          # https://www.gitalias.com/
+          s = "status";
+          ss = "status -s";
+          a = "add";
+          c = "commit";
+          cv = "commit -v";
+          ca = "commit -av";
+          ci = "commit -p";
+          am = "commit --amend";
+          st = "stash";
+          stp = "stash pop";
+
+          hist = "log --pretty=format:'%C(yellow)%h%Creset %ad | %s%d [%an]' --graph --date=short";
+
+
+          d = "diff";
+
+          p = "pull";
+          P = "push";
+          m = "merge";
+          mc = "merge --continue";
+          ma = "merge --abort";
+          rb = "rebase";
+          rba = "rebase --abort";
+          rbc = "rebase --continue";
+          rbs = "rebase --skip";
+
+          panic = "!tar cvf ../panic.tar *";
+
+
           wt-clone =
             let
               wtclonescript = pkgs.writeScriptBin "wt-clone.sh" (lib.readFile ./wt-clone.sh);

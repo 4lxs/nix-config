@@ -65,34 +65,39 @@
         };
         aliases = {
           # https://www.gitalias.com/
-          s = "status";
-          ss = "status -s";
-          a = "add";
-          c = "commit";
-          cv = "commit -v";
-          ca = "commit -av";
-          ci = "commit -p";
+          c = "commit --verbose";
+          ca = "commit --all --verbose";
+          ci = "commit --patch";
+
           am = "commit --amend";
+          amne = "commit --amend --no-edit";
+
           st = "stash";
           stp = "stash pop";
 
           hist = "log --pretty=format:'%C(yellow)%h%Creset %ad | %s%d [%an]' --graph --date=short";
 
+          ds = "diff --staged";
+          p = "log --patch";
 
-          d = "diff";
+          lfp =
+            "log --first-parent --graph --topo-order --decorate --all --boundary --date=short --abbrev-commit "
+            + "--pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'";
+          lr =
+            "log --reverse --topo-order --decorate --all --boundary --date=short --abbrev-commit "
+            + "--pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'";
 
-          p = "pull";
-          P = "push";
           m = "merge";
           mc = "merge --continue";
           ma = "merge --abort";
+
           rb = "rebase";
+          rbi = "rebase --inteactive";
           rba = "rebase --abort";
           rbc = "rebase --continue";
           rbs = "rebase --skip";
 
           panic = "!tar cvf ../panic.tar *";
-
 
           wt-clone =
             let
@@ -101,6 +106,18 @@
             "!sh ${wtclonescript}/bin/wt-clone.sh";
         };
       };
+    };
+    home.shellAliases = {
+      g = "git";
+      ga = "git add";
+      gs = "git status";
+      gc = "git commit";
+      gp = "git pull";
+      gP = "git push";
+      gd = "git diff";
+      gl =
+        "git log --graph --topo-order --decorate --all --boundary --date=short --abbrev-commit "
+        + "--pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'";
     };
   };
 }

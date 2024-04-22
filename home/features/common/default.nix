@@ -14,6 +14,9 @@
         "/opt/local/bin"
         "/opt/local/sbin"
       ];
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
     username = "${host_config.user}";
     homeDirectory = "/home/${host_config.user}";
   };
@@ -22,6 +25,16 @@
   programs.ssh = {
     enable = true;
     addKeysToAgent = "yes";
+    matchBlocks = {
+      "work" = {
+        hostname = "192.168.10.125";
+        user = "lukas";
+      };
+      "ultra" = {
+        hostname = "svl.aero.usbx.me";
+        user = "svl";
+      };
+    };
   };
 
   xdg.mimeApps.enable = true;

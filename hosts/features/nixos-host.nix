@@ -50,7 +50,7 @@
     };
 
     users = {
-      defaultUserShell = pkgs.zsh;
+      defaultUserShell = pkgs.fish;
       users = {
         "${host_config.user}" = {
           # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.

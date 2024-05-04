@@ -1,8 +1,8 @@
 
 ## TODOs
 
-- [ ] ssh-agent
-- [ ] lock on lid close
+- [ ] lock on lid close, suspend, ...
+- [ ] distributed builds
 
 ### nvim
 

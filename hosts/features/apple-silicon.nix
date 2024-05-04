@@ -20,5 +20,6 @@
     '';
 
     hardware.asahi.useExperimentalGPUDriver = true;
+    hardware.asahi.setupAsahiSound = true;
   };
 }

@@ -20,11 +20,16 @@
   };
   boot.tmp.cleanOnBoot = true;
 
-  programs.zsh = {
+  # programs.zsh = {
+  #   enable = true;
+  #   enableCompletion = false;
+  # };
+
+  programs.fish = {
     enable = true;
-    enableCompletion = false;
   };
 
+  programs.dconf.enable = true;
   # security.pam.enableSSHAgentAuth = true;
   # programs.ssh.startAgent = true;
 
@@ -32,7 +37,7 @@
 
   environment = {
     shells = [
-      pkgs.zsh
+      pkgs.fish
       pkgs.bash
     ];
     sessionVariables.NIXOS_OZONE_WL = "1";

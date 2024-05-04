@@ -27,28 +27,6 @@
         size = 1000000000;
       };
 
-      shellAliases = {
-        vi = "\${EDITOR:-nvim}";
-        vim = "\${EDITOR:-nvim}";
-        emacs = "man nvim";
-
-        ls = "exa -al --color=always --group-directories-first";
-        entar = "tar -acf ";
-        untar = "tar -zxvf ";
-        wget = "wget -c ";
-        grep = "grep --color=auto";
-        cat = "bat";
-
-        ".." = "cd ..";
-        "..." = "cd ../..";
-        "...." = "cd ../../..";
-        "....." = "cd ../../../..";
-        "......" = "cd ../../../../..";
-
-        # apt = "man nix-env";
-        # apt-get = "man nix-env";
-      };
-
       initExtra = ''
         # load work stuff
         [ -f ~/.aliasrc ] && source ~/.aliasrc

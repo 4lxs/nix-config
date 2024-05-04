@@ -11,7 +11,6 @@
     hostName = "nixos";
     networkmanager.enable = true;
   };
-  programs.nm-applet.enable = true;
 
   # localization
   time.timeZone = "Europe/Ljubljana";
@@ -47,7 +46,7 @@
     };
   };
 
-  users.defaultUserShell = pkgs.zsh;
+  users.defaultUserShell = pkgs.fish;
   users.users = {
     svl = {
       # If you do, you can skip setting a root password by passing '--no-root-passwd' to nixos-install.

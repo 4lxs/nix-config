@@ -32,7 +32,6 @@
       eza.enable = true;
       zoxide = {
         enable = true;
-        enableZshIntegration = true;
       };
       bat = {
         enable = true;

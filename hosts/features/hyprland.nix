@@ -5,6 +5,7 @@
   };
 
   config = lib.mkIf config.cfg.hyprland.enable {
+    services.upower.enable = true;
     services.xserver = {
       enable = true;
       displayManager.gdm.enable = true;

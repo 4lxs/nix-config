@@ -18,10 +18,9 @@
     apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
     apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprlock.url = "github:hyprwm/hyprlock";
-    hyprlock.inputs.nixpkgs.follows = "nixpkgs";
-
     nvim-config.url = "github:4lxs/nvim-config";
+
+    dotx.url = "git+file:///home/svl/Projects/dotx";
 
     nix-colors.url = "github:misterio77/nix-colors";
     nur.url = "github:nix-community/NUR";

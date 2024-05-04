@@ -107,17 +107,5 @@
         };
       };
     };
-    home.shellAliases = {
-      g = "git";
-      ga = "git add";
-      gs = "git status";
-      gc = "git commit";
-      gp = "git pull";
-      gP = "git push";
-      gd = "git diff";
-      gl =
-        "git log --graph --topo-order --decorate --all --boundary --date=short --abbrev-commit "
-        + "--pretty=format:'%Cgreen%ad %Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue[%cn]%Creset %Cblue%G?%Creset'";
-    };
   };
 }

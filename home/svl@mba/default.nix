@@ -1,19 +1,10 @@
 {
-  inputs,
   pkgs,
   ...
 }:
 {
-  imports = [ inputs.dotx.homeManagerModules.dotx ];
-
   cfg = {
-    # hyprland.enable = true;
     rofi.enable = true;
-    kdeconnect.enable = true;
-  };
-
-  dotx = {
-    config = "svl";
   };
 
   home = {

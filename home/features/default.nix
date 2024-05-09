@@ -7,7 +7,6 @@
     ./gammastep.nix
     ./git
     ./gnome.nix
-    ./kdeconnect.nix
     ./newsboat.nix
     ./rofi
     ./shutils.nix

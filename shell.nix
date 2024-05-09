@@ -11,10 +11,11 @@
       home-manager
       git
       cargo
+      nixpkgs-fmt
     ];
   };
   dev = pkgs.mkShell {
     NIX_CONFIG = "experimental-features = nix-command flakes";
-    nativeBuildInputs = with pkgs; [ statix ];
+    nativeBuildInputs = with pkgs; [ statix nixpkgs-fmt ];
   };
 }

@@ -1,6 +1,5 @@
 {
   cfg = {
-    nixColors.enable = true;
     alacritty.enable = true;
     sops = {
       enable = true;

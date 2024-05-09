@@ -1,7 +1,13 @@
+{ inputs, ... }:
 {
+  imports = [ inputs.dotx.nixosModules.dotx ];
+
+  dotx = {
+    config = "dotx";
+  };
+
   cfg = {
     nixosHost.enable = true;
-    hyprland.enable = true;
     appleSilicon.enable = true;
   };
 

@@ -1,6 +1,5 @@
-{ inputs, ... }:
-{
-  imports = [ inputs.dotx.nixosModules.dotx ];
+{inputs, ...}: {
+  imports = [inputs.dotx.nixosModules.dotx];
 
   dotx = {
     config = "dotx";

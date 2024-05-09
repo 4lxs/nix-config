@@ -1,5 +1,8 @@
-{ lib, config, ... }:
 {
+  lib,
+  config,
+  ...
+}: {
   options.cfg.ssh = {
     enable = lib.mkEnableOption "enable openssh service";
   };

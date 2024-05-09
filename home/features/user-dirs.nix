@@ -1,5 +1,8 @@
-{ config, lib, ... }:
 {
+  config,
+  lib,
+  ...
+}: {
   options = {
     cfg.userDirs.enable = lib.mkOption {
       type = lib.types.bool;

@@ -3,8 +3,7 @@
   config,
   host_config,
   ...
-}:
-{
+}: {
   options.cfg.firefox = {
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -22,10 +21,9 @@
       enable = true;
       profiles."${config.cfg.firefox.user}" = {
         name = config.cfg.firefox.user;
-        userChrome =
-          let
-            chromeFiles = builtins.attrNames (builtins.readDir ./chrome);
-          in
+        userChrome = let
+          chromeFiles = builtins.attrNames (builtins.readDir ./chrome);
+        in
           lib.concatStrings (map (fn: builtins.readFile (./chrome + ("/" + fn))) chromeFiles);
         extensions = with config.nur.repos.rycee.firefox-addons; [
           bitwarden

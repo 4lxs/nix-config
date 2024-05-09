@@ -4,12 +4,11 @@
   host_config,
   inputs,
   ...
-}:
-{
-  imports = [ inputs.nur.nixosModules.nur ];
+}: {
+  imports = [inputs.nur.nixosModules.nur];
   home = {
     sessionPath =
-      [ "$HOME/.local/bin" ]
+      ["$HOME/.local/bin"]
       ++ lib.optionals pkgs.stdenv.isDarwin [
         "/opt/local/bin"
         "/opt/local/sbin"

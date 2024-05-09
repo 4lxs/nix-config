@@ -4,8 +4,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   options.cfg.shutils = {
     enable = lib.mkOption {
       type = lib.types.bool;

@@ -4,9 +4,8 @@
   config,
   lib,
   ...
-}:
-{
-  imports = [ inputs.sops-nix.homeManagerModules.sops ];
+}: {
+  imports = [inputs.sops-nix.homeManagerModules.sops];
 
   options.cfg.sops = {
     enable = lib.mkEnableOption "Enable sops";
@@ -19,7 +18,7 @@
     };
     secrets = lib.mkOption {
       type = with lib.types; listOf str;
-      default = [ ];
+      default = [];
       description = "additional secrets to get from cfg.sops.file";
     };
   };
@@ -34,20 +33,19 @@
     sops = {
       age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
       defaultSopsFile = config.cfg.sops.file;
-      secrets =
-        let
-          mkSecrets =
-            sopsFile: secrets:
-            lib.mkMerge (
-              map (secret: {
-                "${secret}" = {
-                  path = "%r/${secret}.txt";
-                  inherit sopsFile;
-                };
-              }) secrets
-            );
-        in
-        mkSecrets ../../secrets.yaml [ "wifi/password" ]
+      secrets = let
+        mkSecrets = sopsFile: secrets:
+          lib.mkMerge (
+            map (secret: {
+              "${secret}" = {
+                path = "%r/${secret}.txt";
+                inherit sopsFile;
+              };
+            })
+            secrets
+          );
+      in
+        mkSecrets ../../secrets.yaml ["wifi/password"]
         // mkSecrets config.cfg.sops.file config.cfg.sops.secrets;
     };
 

@@ -29,5 +29,5 @@ stdenv.mkDerivation rec {
     json-glib
   ];
 
-  patches = [ ./0001-patch-plugindir-to-output.patch ];
+  patches = [./0001-patch-plugindir-to-output.patch];
 }

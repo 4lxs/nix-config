@@ -1,6 +1,5 @@
-{ modules, ... }:
-{
-  imports = [ modules.common ];
+{modules, ...}: {
+  imports = [modules.common];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 

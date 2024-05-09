@@ -4,8 +4,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   options.cfg.nixosHost = {
     enable = lib.mkEnableOption "enable nixos host configuration";
   };
@@ -28,8 +27,8 @@
       hostName = host_config.host;
       networkmanager.enable = true;
       hosts = {
-        "192.168.10.70" = [ "gitlab.eba.si" ];
-        "192.168.10.125" = [ "work" ];
+        "192.168.10.70" = ["gitlab.eba.si"];
+        "192.168.10.125" = ["work"];
       };
     };
     programs.nm-applet.enable = true;
@@ -99,7 +98,7 @@
       ntp.enable = true;
     };
     hardware.bluetooth.enable = true;
-    environment.systemPackages = with pkgs; [ pavucontrol ];
+    environment.systemPackages = with pkgs; [pavucontrol];
 
     # virtualisation.docker = {
     #   enable = true;

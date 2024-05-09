@@ -1,5 +1,4 @@
-{ modules, ... }:
-{
+{modules, ...}: {
   imports = [
     modules.common
     modules.nixpkgs

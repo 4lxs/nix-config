@@ -3,8 +3,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   options.cfg.rofi = {
     enable = lib.mkEnableOption "enable rofi launcher";
   };
@@ -33,7 +32,7 @@
         display-window = "󰣆 ";
         display-combi = "󰕘 ";
       };
-      plugins = with pkgs; [ rofi-blocks ];
+      plugins = with pkgs; [rofi-blocks];
     };
   };
 }

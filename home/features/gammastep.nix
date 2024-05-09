@@ -1,5 +1,8 @@
-{ lib, config, ... }:
 {
+  lib,
+  config,
+  ...
+}: {
   options.cfg.gammastep = {
     enable = lib.mkEnableOption "enable gammastep nightshift tool";
   };

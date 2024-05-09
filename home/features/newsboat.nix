@@ -1,5 +1,8 @@
-{ lib, config, ... }:
 {
+  lib,
+  config,
+  ...
+}: {
   options.cfg.newsboat = {
     enable = lib.mkEnableOption "enable newsboat";
   };

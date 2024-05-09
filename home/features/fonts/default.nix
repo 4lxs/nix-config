@@ -3,8 +3,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   options.cfg.fonts = {
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -16,7 +15,7 @@
     fonts.fontconfig.enable = true;
     xdg.dataFile."fonts".source = ./fonts;
     home.packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" ]; })
+      (nerdfonts.override {fonts = ["FiraCode"];})
       # font-awesome
     ];
   };

@@ -3,8 +3,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   options.cfg.zsh = {
     enable = lib.mkOption {
       type = lib.types.bool;

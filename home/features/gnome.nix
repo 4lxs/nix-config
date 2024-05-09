@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-{
+}: {
   options.cfg.gnome = {
     enable = lib.mkEnableOption "enable gnome desktop environment";
   };
@@ -30,7 +29,7 @@
       };
       "org/gnome/desktop/wm/preferences" = {
         # workspaces
-        workspace-names = [ "Main" ];
+        workspace-names = ["Main"];
       };
       "org/gnome/desktop/background" = {
         # FIXME

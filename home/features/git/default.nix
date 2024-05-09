@@ -3,8 +3,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   options.cfg.git = {
     enable = lib.mkOption {
       type = lib.types.bool;
@@ -99,11 +98,9 @@
 
           panic = "!tar cvf ../panic.tar *";
 
-          wt-clone =
-            let
-              wtclonescript = pkgs.writeScriptBin "wt-clone.sh" (lib.readFile ./wt-clone.sh);
-            in
-            "!sh ${wtclonescript}/bin/wt-clone.sh";
+          wt-clone = let
+            wtclonescript = pkgs.writeScriptBin "wt-clone.sh" (lib.readFile ./wt-clone.sh);
+          in "!sh ${wtclonescript}/bin/wt-clone.sh";
         };
       };
     };

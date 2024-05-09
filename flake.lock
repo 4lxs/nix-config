@@ -236,10 +236,10 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "dirtyRev": "00dca733bd11d3e7866cbf0085ef13004a4fa7bb-dirty",
-        "dirtyShortRev": "00dca73-dirty",
-        "lastModified": 1715233290,
-        "narHash": "sha256-x8+9wBYO4TMiPUpIV96w2CS18Mgs0yLqH1Wa872q7u4=",
+        "dirtyRev": "f16bd91ab150ceb0054681d3a34570be0c1b32ab-dirty",
+        "dirtyShortRev": "f16bd91-dirty",
+        "lastModified": 1715270074,
+        "narHash": "sha256-pNW1l78hWkwKwJrJc4U5X2ZTggZJsCHx3CxTFKI3KzY=",
         "type": "git",
         "url": "file:///home/svl/Projects/dotx"
       },

@@ -3,8 +3,7 @@
   config,
   pkgs,
   ...
-}:
-{
+}: {
   options.cfg.vm = {
     enable = lib.mkEnableOption "enable virtual machine support";
   };
@@ -18,7 +17,7 @@
       "qemu-libvirtd"
     ];
 
-    environment.sessionVariables.LIBVIRT_DEFAULT_URI = [ "qemu:///system" ];
+    environment.sessionVariables.LIBVIRT_DEFAULT_URI = ["qemu:///system"];
     # environment.etc = {
     #   "ovmf/edk2-x86_64-secure-code.fd" = {
     #     source = config.virtualisation.libvirtd.qemu.package + "/share/qemu/edk2-x86_64-secure-code.fd";
@@ -55,7 +54,7 @@
         qemu = {
           swtpm.enable = true;
           ovmf.enable = true;
-          ovmf.packages = [ pkgs.OVMFFull.fd ];
+          ovmf.packages = [pkgs.OVMFFull.fd];
         };
       };
       spiceUSBRedirection.enable = true;

@@ -1,5 +1,8 @@
-{ modules, pkgs, ... }:
 {
+  modules,
+  pkgs,
+  ...
+}: {
   imports = [
     ./svl-hardware-configuration.nix
     modules.common
@@ -28,7 +31,7 @@
   };
 
   boot = {
-    supportedFilesystems = [ "ntfs" ];
+    supportedFilesystems = ["ntfs"];
     kernelPackages = pkgs.stable.linuxPackages_latest;
     loader = {
       efi = {
@@ -79,7 +82,7 @@
   };
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
-  environment.systemPackages = with pkgs; [ pavucontrol ];
+  environment.systemPackages = with pkgs; [pavucontrol];
   services.transmission.enable = true;
   services.tlp = {
     enable = true;

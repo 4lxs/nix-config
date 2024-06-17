@@ -3,9 +3,6 @@
     ./common
 
     ./firefox
-    ./fonts
-    ./gammastep.nix
-    ./git
     ./gnome.nix
     ./newsboat.nix
     ./rofi

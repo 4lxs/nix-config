@@ -6,9 +6,15 @@
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+    systems.url = "github:nix-systems/default";
 
-    # home-manager.url = "github:nix-community/home-manager";
-    home-manager.url = "git+file:///home/svl/Projects/home-manager?ref=hyprshade";
+    devshell = {
+      url = "github:numtide/devshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
+
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-darwin.url = "github:LnL7/nix-darwin/master";
@@ -20,11 +26,25 @@
     nvim-config.url = "github:4lxs/nvim-config";
     nvim-config.inputs.nixpkgs.follows = "nixpkgs";
 
-    dotx.url = "git+file:///home/svl/Projects/dotx";
-    dotx.inputs.nixpkgs.follows = "nixpkgs";
-
     nur.url = "github:nix-community/NUR";
     sops-nix.url = "github:Mic92/sops-nix";
+
+    base16.url = "github:SenchoPens/base16.nix";
+    base16-kitty = {
+      url = "github:kdrag0n/base16-kitty";
+      flake = false;
+    };
+
+    ags.url = "github:Aylur/ags";
+    matugen.url = "github:InioX/matugen";
+    astal.url = "github:Aylur/astal";
+    aylur.url = "github:Aylur/dotfiles";
+    anyrun.url = "github:Kirottu/anyrun";
+    anyrun.inputs.nixpkgs.follows = "nixpkgs";
+    end4 = {
+      url = "github:end-4/dots-hyprland";
+      flake = false;
+    };
   };
 
   outputs = {
@@ -34,12 +54,16 @@
     home-manager,
     nix-darwin,
     apple-silicon,
+    systems,
     ...
   } @ inputs: let
     inherit (self) outputs;
     lib = nixpkgs.lib // home-manager.lib;
   in
     flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = import systems;
+      imports = [./flake-modules];
+
       flake = let
         nixosHomeConfig = user: host: {
           home-manager = {
@@ -53,7 +77,7 @@
             };
             extraSpecialArgs = {
               inherit inputs outputs;
-              modules = outputs.homeManagerModules;
+              # modules = outputs.homeManagerModules;
               host_config = {
                 # ... ignore me
                 inherit user host;
@@ -65,7 +89,7 @@
           "${host}" = lib.nixosSystem {
             specialArgs = {
               inherit inputs outputs;
-              modules = outputs.nixosModules;
+              # modules = outputs.nixosModules;
               host_config = {
                 # ... ignore me
                 inherit user host;
@@ -86,7 +110,7 @@
             pkgs = nixpkgs.legacyPackages.${system};
             extraSpecialArgs = {
               inherit inputs outputs;
-              modules = outputs.homeManagerModules;
+              # modules = outputs.homeManagerModules;
               host_config = {
                 # ... ignore me
                 inherit user host;
@@ -103,7 +127,7 @@
           "${host}" = nix-darwin.lib.darwinSystem {
             specialArgs = {
               inherit inputs outputs;
-              modules = outputs.nixosModules;
+              # modules = outputs.nixosModules;
               host_config = {
                 # ... ignore me
                 inherit user host;
@@ -117,9 +141,26 @@
           };
         };
       in {
-        overlays = import ./overlays {inherit inputs;};
-        nixosModules = import ./modules/nixos;
-        homeManagerModules = import ./modules/home-manager;
+        nixosModules.dotx = {
+          imports = [
+            (flake-parts.lib.importApply ./lib inputs)
+            ((import ./dotx/importModules.nix true inputs) "nixos")
+            ./dotx/options
+          ];
+          # TODO: make optional
+          home-manager.sharedModules = [
+            (flake-parts.lib.importApply ./lib inputs)
+            ((import ./dotx/importModules.nix false inputs) "home")
+            (import ./dotx/homeImports.nix inputs)
+          ];
+        };
+        homeManagerModules.dotx = {
+          imports = [
+            (flake-parts.lib.importApply ./lib inputs)
+            ((import ./dotx/importModules.nix true inputs) "home")
+            ./dotx/options
+          ];
+        };
 
         # 'nixos-rebuild --flake .#your-hostname'
         nixosConfigurations = lib.mkMerge [(nixosConfig "svl" "mba")];
@@ -130,21 +171,6 @@
 
         # 'home-manager switch --flake .#your-username@your-hostname'
         homeConfigurations = lib.mkMerge [(standaloneHomeConfig "lukas" "pop-os" "x86_64-linux")];
-      };
-      systems = [
-        "x86_64-linux"
-        "aarch64-darwin"
-        "aarch64-linux"
-      ];
-      perSystem = {
-        config,
-        pkgs,
-        system,
-        ...
-      }: {
-        packages = pkgs.callPackage ./pkgs {};
-        devShells = pkgs.callPackage ./shell.nix {};
-        formatter = pkgs.alejandra;
       };
     };
 }

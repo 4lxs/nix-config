@@ -1,4 +1,4 @@
-{
+{modules, ...}: {
   imports = [
     ./common
 

@@ -30,6 +30,9 @@ in {
         shell = "${pkgs.tmux}/bin/tmux new -AsMain";
         term = "tmux-256color";
         background_opacity = builtins.toString libx.cfg.theme.transparency;
+        confirm_os_window_close = 0;
+        cursor_shape = "beam";
+        scrollback_lines = 0;
       };
       extraConfig = ''
         include ${theme}

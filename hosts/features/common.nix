@@ -17,7 +17,15 @@
       options = "--delete-older-than 7d";
     };
   };
-  boot.tmp.cleanOnBoot = true;
+  boot = {
+    supportedFilesystems = ["ntfs"];
+    tmp.cleanOnBoot = true;
+  };
+  documentation.nixos.enable = false;
+
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
 
   # programs.zsh = {
   #   enable = true;

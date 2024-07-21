@@ -17,12 +17,20 @@
     alacritty.enable = true;
     # shell-help.enable = true;
     kdeconnect.enable = true;
+
+    hack.enable = true;
   };
 
   cfg = {
     nixosHost.enable = true;
     appleSilicon.enable = true;
   };
+
+  xdg.portal = {
+    enable = true;
+    # extraPortals = []; # TODO: hyprland
+  };
+  services.flatpak.enable = true;
 
   # https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-2094933256
   systemd.services."getty@tty1".enable = false;

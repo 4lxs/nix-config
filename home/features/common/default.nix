@@ -36,7 +36,7 @@
     };
   };
 
-  xdg.mimeApps.enable = true;
+  # xdg.mimeApps.enable = true;
 
   programs.home-manager.enable = true;
 

@@ -97,7 +97,10 @@
 
       ntp.enable = true;
     };
-    hardware.bluetooth.enable = true;
+    hardware.bluetooth = {
+      enable = true;
+      settings.General.Experimental = true; # for gnome-bluetooth percentage
+    };
     environment.systemPackages = with pkgs; [pavucontrol];
 
     # virtualisation.docker = {

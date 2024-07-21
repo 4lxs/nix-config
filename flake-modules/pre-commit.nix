@@ -11,7 +11,6 @@
         statix.enable = true;
         alejandra = {
           enable = true;
-          package = config.formatter;
         };
       };
     };

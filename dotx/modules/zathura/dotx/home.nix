@@ -73,8 +73,8 @@ in {
         selection-clipboard = "clipboard";
       };
     };
-    xdg.mimeApps.defaultApplications = {
-      "application/pdf" = ["org.pwmt.zathura.desktop"];
-    };
+    # xdg.mimeApps.defaultApplications = {
+    #   "application/pdf" = ["org.pwmt.zathura.desktop"];
+    # };
   };
 }

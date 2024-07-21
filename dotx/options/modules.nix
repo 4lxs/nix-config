@@ -82,6 +82,8 @@ in
           '';
         };
 
+      hack = mkTarget "hack";
+
       lazygit = mkTarget "lazygit";
     };
   }

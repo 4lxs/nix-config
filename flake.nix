@@ -2,16 +2,16 @@
   description = "Svl nix config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs?rev=e9ee548d90ff586a6471b4ae80ae9cfcbceb3420";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     systems.url = "github:nix-systems/default";
 
-    devshell = {
-      url = "github:numtide/devshell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # devshell = {
+    #   url = "github:numtide/devshell";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
     home-manager.url = "github:nix-community/home-manager";
@@ -24,7 +24,7 @@
     apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
 
     nvim-config.url = "github:4lxs/nvim-config";
-    nvim-config.inputs.nixpkgs.follows = "nixpkgs";
+    # nvim-config.inputs.nixpkgs.follows = "nixpkgs";
 
     nur.url = "github:nix-community/NUR";
     sops-nix.url = "github:Mic92/sops-nix";
@@ -154,13 +154,17 @@
             (import ./dotx/homeImports.nix inputs)
           ];
         };
-        homeManagerModules.dotx = {
-          imports = [
-            (flake-parts.lib.importApply ./lib inputs)
-            ((import ./dotx/importModules.nix true inputs) "home")
-            ./dotx/options
-          ];
-        };
+        homeManagerModules =
+          {
+            dotx = {
+              imports = [
+                (flake-parts.lib.importApply ./lib inputs)
+                ((import ./dotx/importModules.nix true inputs) "home")
+                ./dotx/options
+              ];
+            };
+          }
+          // import ./modules/home-manager;
 
         # 'nixos-rebuild --flake .#your-hostname'
         nixosConfigurations = lib.mkMerge [(nixosConfig "svl" "mba")];

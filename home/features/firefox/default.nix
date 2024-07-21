@@ -25,21 +25,21 @@
           chromeFiles = builtins.attrNames (builtins.readDir ./chrome);
         in
           lib.concatStrings (map (fn: builtins.readFile (./chrome + ("/" + fn))) chromeFiles);
-        extensions = with config.nur.repos.rycee.firefox-addons; [
-          bitwarden
-          sidebery
-          darkreader
-          ublock-origin
-          wikiwand-wikipedia-modernized
-          enhancer-for-youtube
-          floccus
-          dearrow
-          sponsorblock
-          boring-rss
-          canvasblocker
-          # bypass-paywalls-clean
-          competitive-companion
-        ];
+        # extensions = with config.nur.repos.rycee.firefox-addons; [
+        #   bitwarden
+        #   sidebery
+        #   darkreader
+        #   ublock-origin
+        #   wikiwand-wikipedia-modernized
+        #   enhancer-for-youtube
+        #   floccus
+        #   dearrow
+        #   sponsorblock
+        #   boring-rss
+        #   canvasblocker
+        #   # bypass-paywalls-clean
+        #   competitive-companion
+        # ];
         # results in file in way constantly
         # search = {
         #   default = "Brave";
@@ -60,14 +60,14 @@
           "browser.download.dir" = config.xdg.userDirs.download;
           "browser.toolbars.bookmarks.visibility" = "never";
         };
-        # see https://ffprofile.com/
-        extraConfig = builtins.readFile ./prefs.js;
+        # # see https://ffprofile.com/
+        # extraConfig = builtins.readFile ./prefs.js;
       };
       policies = {
         NewTabPage = false;
         DisplayMenuBar = false;
         DisableFormHistory = true;
-        DisableFirefoxAccounts = true;
+        # DisableFirefoxAccounts = true;
         DisableBuiltinPDFViewer = true;
         NetworkPrediction = false;
         CaptivePortal = false;

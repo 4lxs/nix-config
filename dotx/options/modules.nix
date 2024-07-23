@@ -3,15 +3,9 @@
 in
   with libx.options; {
     options.dotx = {
-      ags = {
-        aylur = mkTarget ''
-          ags widgets from [aylur's dotfiles](https://github.com/Aylur/dotfiles)
-        '';
-
-        end4 = mkTarget ''
-          ags widgets from [end4/dots-hyprland](https://github.com/end-4/dots-hyprland)
-        '';
-      };
+      dotx-shell = mkTarget ''
+        ags widgets from [aylur's dotfiles](https://github.com/Aylur/dotfiles)
+      '';
 
       zathura = mkTarget "zathura document viewer";
 
@@ -24,14 +18,7 @@ in
           '';
         };
 
-      configs = {
-        dotx = mkConfig "dotx" ''
-          the default dotx configuration
-        '';
-        end4 = mkConfig "end4" ''
-          [end4/dots-hyprland](https://github.com/end-4/dots-hyprland) configuration
-        '';
-      };
+      anyrun = mkTarget "anyrun";
 
       dunst = mkTarget "dunst notification daemon";
 

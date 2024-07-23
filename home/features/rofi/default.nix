@@ -22,16 +22,16 @@
     programs.rofi = {
       enable = true;
       package = pkgs.rofi-wayland;
-      theme = ./launcher/theme.rasi;
-      font = "FiraCode Nerd Font Medium 12";
-      extraConfig = {
-        modi = "drun,window,combi";
-        show-icons = true;
-        icon-theme = "Papirus";
-        display-drun = "󱃸 ";
-        display-window = "󰣆 ";
-        display-combi = "󰕘 ";
-      };
+      # theme = ./launcher/theme.rasi;
+      # font = "FiraCode Nerd Font Medium 12";
+      # extraConfig = {
+      #   modi = "drun,window,combi";
+      #   show-icons = true;
+      #   icon-theme = "Papirus";
+      #   display-drun = "󱃸 ";
+      #   display-window = "󰣆 ";
+      #   display-combi = "󰕘 ";
+      # };
       plugins = with pkgs; [rofi-blocks];
     };
   };

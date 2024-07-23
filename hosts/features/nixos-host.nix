@@ -10,9 +10,16 @@
   };
 
   config = lib.mkIf config.cfg.nixosHost.enable {
-    boot.loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = false;
+    boot = {
+      loader = {
+        efi.canTouchEfiVariables = false;
+        grub = {
+          efiSupport = true;
+          #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+          device = "nodev";
+        };
+      };
+      plymouth.enable = true;
     };
 
     # Some programs need SUID wrappers, can be configured further or are

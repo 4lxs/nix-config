@@ -36,7 +36,6 @@ with lib; let
           example = "06:00:00";
           description = ''
             time to end the shade in 24-hour "hh:mm:ss" format.
-
             optional if you have more than one shade with startTime
           '';
         };
@@ -111,7 +110,6 @@ in {
       description = ''
         whether to enable the hyprshade systemd service that will apply the
         shade based on the provided schedule.
-
         if you don't provide the schedule, the service may not work
       '';
     };

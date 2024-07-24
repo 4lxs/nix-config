@@ -6,11 +6,13 @@ _inputs: {
 }:
 with lib; let
   libx = config.lib.dotx;
+  ccfg = config.catppuccin.pointerCursor;
+  cursorTheme = "catppuccin-${ccfg.flavor}-${ccfg.accent}-cursors";
 in {
   config = mkIf libx.cfg.gtk.enable {
     gtk = {
       enable = true;
-      # font = libx.cfg.theme.font.sansserif;
+      font = libx.cfg.theme.font.sansserif;
       theme = {
         package = pkgs.adw-gtk3;
         name =
@@ -18,22 +20,23 @@ in {
           then "adw-gtk3-dark"
           else "adw-gtk3";
       };
+      cursorTheme = {
+        name = cursorTheme;
+        size = 24;
+        package = pkgs.catppuccin-cursors;
+      };
       iconTheme = {
         name = "MoreWaita";
         package = pkgs.morewaita-icon-theme;
       };
     };
     home = {
-      # pointerCursor = {
-      #   name = "Qogir";
-      #   size = 24;
-      #   package = pkgs.qogir-icon-theme;
-      #   gtk.enable = true;
-      # };
-      # sessionVariables = {
-      #   XCURSOR_THEME = "Qogir";
-      #   XCURSOR_SIZE = "24";
-      # };
+      pointerCursor = {
+        # name = cursorTheme;
+        size = 24;
+        # package = pkgs.catppuccin-cursors;
+        gtk.enable = true;
+      };
     };
     dconf.settings."org/gnome/desktop/interface" = {
       color-scheme =

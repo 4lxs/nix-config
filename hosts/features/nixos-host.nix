@@ -18,8 +18,35 @@
           #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
           device = "nodev";
         };
+
+        # Hide the OS choice for bootloaders.
+        # It's still possible to open the bootloader list by pressing any key
+        # It will just not appear on screen unless a key is pressed
+        timeout = 0;
       };
-      plymouth.enable = true;
+      initrd.systemd.enable = true;
+      plymouth = {
+        enable = true;
+        theme = "connect";
+        themePackages = with pkgs; [
+          (adi1090x-plymouth-themes.override {
+            selected_themes = ["connect"];
+          })
+        ];
+      };
+
+      # Enable "Silent Boot"
+      consoleLogLevel = 0;
+      initrd.verbose = false;
+      kernelParams = [
+        "quiet"
+        "splash"
+        "boot.shell_on_fail"
+        "loglevel=3"
+        "rd.systemd.show_status=false"
+        "rd.udev.log_level=3"
+        "udev.log_priority=3"
+      ];
     };
 
     # Some programs need SUID wrappers, can be configured further or are
@@ -104,10 +131,7 @@
 
       ntp.enable = true;
     };
-    hardware.bluetooth = {
-      enable = true;
-      settings.General.Experimental = true; # for gnome-bluetooth percentage
-    };
+    hardware.bluetooth.enable = true;
     environment.systemPackages = with pkgs; [pavucontrol];
 
     # virtualisation.docker = {

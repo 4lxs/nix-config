@@ -1,7 +1,5 @@
 {
   self,
-  aylur,
-  matugen,
   dgs,
   ...
 }: {
@@ -13,7 +11,7 @@
   libx = config.lib.dotx;
 in {
   config = lib.mkIf libx.cfg.dotx-shell.enable {
-    home.packages = [dgs.packages.${pkgs.system}.dgs];
+    home.packages = [pkgs.dgs];
 
     programs.astal = {
       enable = true;
@@ -22,7 +20,7 @@ in {
 
     programs.ags = {
       enable = true;
-      configDir = aylur + "/ags";
+      configDir = dgs + "/src";
       extraPackages = [pkgs.accountsservice];
     };
   };

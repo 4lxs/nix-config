@@ -4,7 +4,7 @@ in
   with libx.options; {
     options.dotx = {
       dotx-shell = mkTarget ''
-        ags widgets from [aylur's dotfiles](https://github.com/Aylur/dotfiles)
+        gtk shell widgets
       '';
 
       zathura = mkTarget "zathura document viewer";

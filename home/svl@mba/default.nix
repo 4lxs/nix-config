@@ -47,6 +47,8 @@
       thunderbird
       brave
       okular
+      tracker-miners
+      gnome.dconf-editor
     ];
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

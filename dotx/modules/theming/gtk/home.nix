@@ -6,8 +6,6 @@ _inputs: {
 }:
 with lib; let
   libx = config.lib.dotx;
-  ccfg = config.catppuccin.pointerCursor;
-  cursorTheme = "catppuccin-${ccfg.flavor}-${ccfg.accent}-cursors";
 in {
   config = mkIf libx.cfg.gtk.enable {
     gtk = {
@@ -19,15 +17,18 @@ in {
           if libx.cfg.theme.darkTheme
           then "adw-gtk3-dark"
           else "adw-gtk3";
+        # package = pkgs.catppuccin-gtk;
+        # name = "Catppuccin-Mocha-Compact-Muave-dark";
       };
       cursorTheme = {
-        name = cursorTheme;
+        inherit (config.home.pointerCursor) name package;
         size = 24;
-        package = pkgs.catppuccin-cursors;
       };
       iconTheme = {
         name = "MoreWaita";
         package = pkgs.morewaita-icon-theme;
+        # name = "Papirus-Dark";
+        # package = pkgs.catppuccin-papirus-folders;
       };
     };
     home = {

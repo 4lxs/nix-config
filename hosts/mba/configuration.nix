@@ -43,6 +43,8 @@
     }
   ];
 
+  services.gnome.tracker-miners.enable = true;
+
   # nix = {
   #   buildMachines = [
   #     {

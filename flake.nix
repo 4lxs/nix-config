@@ -36,12 +36,12 @@
     };
 
     catppuccin.url = "github:catppuccin/nix";
+    wallpkgs.url = "github:notashelf/wallpkgs";
 
     ags.url = "github:Aylur/ags";
-    matugen.url = "github:InioX/matugen";
     astal.url = "github:Aylur/astal";
-    aylur.url = "github:Aylur/dotfiles";
     dgs.url = "git+file:///home/svl/Projects/dotx-shell";
+    dgs.inputs.nixpkgs.follows = "nixpkgs";
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
     end4 = {

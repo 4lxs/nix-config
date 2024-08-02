@@ -13,10 +13,7 @@ in {
       font = libx.cfg.theme.font.sansserif;
       theme = {
         package = pkgs.adw-gtk3;
-        name =
-          if libx.cfg.theme.darkTheme
-          then "adw-gtk3-dark"
-          else "adw-gtk3";
+        name = "adw-gtk3-dark";
         # package = pkgs.catppuccin-gtk;
         # name = "Catppuccin-Mocha-Compact-Muave-dark";
       };
@@ -40,10 +37,7 @@ in {
       };
     };
     dconf.settings."org/gnome/desktop/interface" = {
-      color-scheme =
-        if libx.cfg.theme.darkTheme
-        then "prefer-dark"
-        else "prefer-light";
+      color-scheme = "prefer-dark";
     };
   };
 }

@@ -63,5 +63,5 @@ in {
     };
   };
 
-  services.greetd.settings.default_session.command = "${hypr-run}/bin/hypr-run";
+  # services.greetd.settings.default_session.command = "${hypr-run}/bin/hypr-run";
 }

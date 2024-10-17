@@ -1,6 +1,13 @@
 # common between all hosts (nixos and nix-darwin)
-{pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
+  environment.etc."channels/nixpkgs".source = inputs.nixpkgs.outPath;
   nix = {
+    nixPath = ["nixpkgs=/etc/channels/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels"];
+    registry.nixpkgs.flake = inputs.nixpkgs;
     #    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
     #    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
     #

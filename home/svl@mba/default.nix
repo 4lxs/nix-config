@@ -49,6 +49,8 @@
       okular
       tracker-miners
       gnome.dconf-editor
+      feh
+      mpv
     ];
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion

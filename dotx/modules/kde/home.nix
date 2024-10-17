@@ -11,7 +11,6 @@ in {
       enable = true;
       platformTheme.name = "kvantum";
       style.name = "kvantum";
-      style.catppuccin.enable = true;
     };
   };
 }

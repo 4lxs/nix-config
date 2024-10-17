@@ -24,7 +24,11 @@
   cfg = {
     nixosHost.enable = true;
     appleSilicon.enable = true;
+    sddm.enable = true;
   };
+
+  services.xserver.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   xdg.portal = {
     enable = true;

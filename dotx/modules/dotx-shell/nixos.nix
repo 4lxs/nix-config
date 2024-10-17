@@ -43,25 +43,25 @@ in {
 
   hardware.bluetooth.settings.General.Experimental = true; # for gnome-bluetooth percentage
 
-  programs.regreet = {
-    enable = true;
-    settings = {
-      background = {
-        inherit path;
-        fit = "Cover";
-      };
-      GTK = {
-        # cursor_theme_name = "Catppuccin-Mocha-Dark-Cursors";
-        font_name = "Roboto 12";
-        # icon_theme_name = "Papirus-Dark";
-        # theme_name = "Catppuccin-Mocha-Compact-Peach-dark";
-        cursor_theme_name = homeCfg.home.pointerCursor.name;
-        # font_name = libx.cfg.theme.font.sansserif;
-        icon_theme_name = homeCfg.gtk.iconTheme.name;
-        theme_name = homeCfg.gtk.theme.name;
-      };
-    };
-  };
+  # programs.regreet = {
+  #   enable = true;
+  #   settings = {
+  #     background = {
+  #       inherit path;
+  #       fit = "Cover";
+  #     };
+  #     GTK = {
+  #       # cursor_theme_name = "Catppuccin-Mocha-Dark-Cursors";
+  #       font_name = "Roboto 12";
+  #       # icon_theme_name = "Papirus-Dark";
+  #       # theme_name = "Catppuccin-Mocha-Compact-Peach-dark";
+  #       cursor_theme_name = homeCfg.home.pointerCursor.name;
+  #       # font_name = libx.cfg.theme.font.sansserif;
+  #       icon_theme_name = homeCfg.gtk.iconTheme.name;
+  #       theme_name = homeCfg.gtk.theme.name;
+  #     };
+  #   };
+  # };
 
   # services.greetd.settings.default_session.command = "${hypr-run}/bin/hypr-run";
 }

@@ -7,7 +7,7 @@
   }: {
     pre-commit = {
       settings.hooks = {
-        convco.enable = true;
+        # convco.enable = true;
         statix.enable = true;
         alejandra = {
           enable = true;

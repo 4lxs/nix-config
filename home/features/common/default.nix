@@ -5,7 +5,7 @@
   inputs,
   ...
 }: {
-  imports = [inputs.nur.nixosModules.nur];
+  imports = [inputs.nur.modules.homeManager.default];
   home = {
     sessionPath =
       ["$HOME/.local/bin"]
@@ -24,16 +24,16 @@
   programs.ssh = {
     enable = true;
     addKeysToAgent = "yes";
-    matchBlocks = {
-      "work" = {
-        hostname = "192.168.10.125";
-        user = "lukas";
-      };
-      "ultra" = {
-        hostname = "svl.aero.usbx.me";
-        user = "svl";
-      };
-    };
+    # matchBlocks = {
+    #   "work" = {
+    #     hostname = "192.168.10.125";
+    #     user = "lukas";
+    #   };
+    #   "ultra" = {
+    #     hostname = "svl.aero.usbx.me";
+    #     user = "svl";
+    #   };
+    # };
   };
 
   # xdg.mimeApps.enable = true;

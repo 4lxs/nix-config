@@ -41,13 +41,13 @@ in {
       # TODO: overrides
       pkgs.google-fonts # ttf-readex-pro, rubik
 
-      (pkgs.nerdfonts.override
-        {
-          fonts = [
-            "JetBrainsMono" # ttf-jetbrains-mono-nerd
-            "SpaceMono" # ttf-space-mono-nerd
-          ];
-        })
+      # (pkgs.nerdfonts.override
+      #   {
+      #     fonts = [
+      #       "JetBrainsMono" # ttf-jetbrains-mono-nerd
+      #       "SpaceMono" # ttf-space-mono-nerd
+      #     ];
+      #   })
       pkgs.material-symbols # ttf-material-symbols-variable-git
     ];
   };

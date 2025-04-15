@@ -31,6 +31,7 @@
         [ -f ~/.aliasrc ] && source ~/.aliasrc
         [ -x "$(command -v kubectl)" ] && source <(kubectl completion zsh)
         [ -x /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+        [ -f ~/.cargo/env ] && source ~/.cargo/env
 
         # smart case autocomplete
         zstyle ':completion:*'  matcher-list 'm:{a-z}={A-Z}'
@@ -40,6 +41,13 @@
         # bindkey -M menuselect '\t' menu-complete "$terminfo[kcbt]" reverse-menu-complete
         zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
         export PATH="$PATH:/home/lukas/code/onecloud/bin"
+
+        setopt HIST_EXPIRE_DUPS_FIRST
+        setopt HIST_IGNORE_DUPS
+        setopt HIST_IGNORE_ALL_DUPS
+        setopt HIST_IGNORE_SPACE
+        setopt HIST_FIND_NO_DUPS
+        setopt HIST_SAVE_NO_DUPS
       '';
 
       plugins = [

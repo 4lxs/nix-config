@@ -24,12 +24,12 @@ in
           font = rec {
             sansserif = mkDefault {
               name = "FiraCode Nerd Font";
-              package = pkgs.nerdfonts.override {fonts = ["FiraCode"];};
+              package = pkgs.nerdfonts.fira-code;
             };
             serif = sansserif; # not used currently anyways
             monospace = mkDefault {
               name = "FiraCode Nerd Font Mono";
-              package = pkgs.nerdfonts.override {fonts = ["FiraMono"];};
+              package = pkgs.nerdfonts.fira-mono;
             };
             emoji = mkDefault {
               name = "Noto Color Emoji";

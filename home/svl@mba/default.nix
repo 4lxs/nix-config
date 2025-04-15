@@ -4,56 +4,49 @@
   ...
 }: {
   imports = [
-    outputs.homeManagerModules.hyprshade
+    # outputs.homeManagerModules.hyprshade
   ];
-  cfg = {
-    rofi.enable = true;
-  };
-
-  services.hyprshade = {
-    enable = true;
-    schedule = [
-      {
-        name = "blf";
-        startTime = "20:00:00";
-        endTime = "05:00:00";
-      }
-      # {
-      #   name = "color-filter";
-      #   startTime = "08:00:00";
-      #   config = {
-      #     type = "red-green";
-      #     strength = 0.5;
-      #   };
-      # }
-    ];
-    additionalShades = {
-      blf = builtins.readFile ./blue-light-filter.glsl.mustache;
+  dotx = {
+    config = "dotx";
+    user = {
+      name = "svl";
+      email = "66408983+4lxs@users.noreply.github.com";
     };
-    systemd.enable = true;
+
+    git.enable = true;
+    zathura.enable = true;
+    # tmux = {
+    #   enable = true;
+    #   makeTerminalDefault = true;
+    # };
+    zellij.enable = true;
+    # kdeconnect.enable = true;
   };
 
   programs.git.difftastic.enable = true;
   programs.git.delta.enable = pkgs.lib.mkForce false;
+  programs.nix-your-shell.enable = true;
 
   home = {
+    sessionPath = ["/home/svl/.config/emacs/bin" "/home/svl/.ghcup/bin" "/home/svl/.cabal/bin"];
     packages = with pkgs; [
       vscode-fhs
-      obsidian
       calibre
-      gnome.nautilus
-      # taskwarrior
-      keepassxc
       thunderbird
       brave
-      okular
-      tracker-miners
-      gnome.dconf-editor
+      kdePackages.okular
       feh
       mpv
+      helix
+      yazi
+      # emacsGcc
+      clang-tools
+      qmk
+      syncthing
+      obsidian
     ];
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    stateVersion = "24.05";
+    stateVersion = "25.05";
   };
 }

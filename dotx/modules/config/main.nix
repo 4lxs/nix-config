@@ -14,12 +14,12 @@ in
         font = rec {
           sansserif = mkDefault {
             name = "FiraCode Nerd Font";
-            package = pkgs.nerdfonts.override {fonts = ["FiraCode"];};
+            package = pkgs.nerd-fonts.fira-code;
           };
           serif = sansserif; # not used currently anyways
           monospace = mkDefault {
             name = "FiraCode Nerd Font Mono";
-            package = pkgs.nerdfonts.override {fonts = ["FiraMono"];};
+            package = pkgs.nerd-fonts.fira-mono;
           };
           emoji = mkDefault {
             name = "Noto Color Emoji";
@@ -38,22 +38,22 @@ in
         wallpaper = ./wallpaper.png;
       };
 
-      anyrun.enable = true;
+      # anyrun.enable = true;
       git.enable = true;
       zathura.enable = true;
-      fontconfig.enable = true;
-      hyprland.enable = true;
+      # fontconfig.enable = true;
+      # hyprland.enable = true;
       tmux = {
         enable = true;
         makeTerminalDefault = true;
       };
       kitty.enable = true;
-      alacritty.enable = true;
+      # alacritty.enable = true;
       dotx-shell.enable = true;
       fish.enable = true;
-      rofi.enable = true;
-      kde.enable = true;
-      gtk.enable = true;
+      # rofi.enable = true;
+      # kde.enable = true;
+      # gtk.enable = true;
       starship.enable = true;
       shell-help.enable = true;
       kdeconnect.enable = true;

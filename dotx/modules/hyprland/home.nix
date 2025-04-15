@@ -1,6 +1,6 @@
 {
   self,
-  dgs,
+  # dgs,
   ...
 }: {
   config,
@@ -51,7 +51,7 @@ in {
 
       settings = {
         exec-once = [
-          "${pkgs.dgs}/bin/dgs"
+          # "${pkgs.dgs}/bin/dgs"
           "${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1"
         ];
 

@@ -9,7 +9,7 @@ in {
   config = mkIf libx.cfg.kdeconnect.enable {
     services.kdeconnect = {
       enable = true;
-      indicator = true;
+      # indicator = true;
     };
   };
 }

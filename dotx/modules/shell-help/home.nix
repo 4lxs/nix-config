@@ -15,7 +15,7 @@ in {
       vi = "nvim";
       vim = "nvim";
       nvim = "nvim";
-      emacs = "man nvim";
+      # emacs = "man nvim";
 
       # TODO: check if tool exists e.g. [ -x "$(command -v exa)" ]
       ls = "eza -al --color=always --group-directories-first";

@@ -59,6 +59,8 @@ in
           '';
         };
 
+      zellij = mkTarget "zellij";
+
       waybar = mkTarget "waybar";
 
       git =

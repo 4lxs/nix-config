@@ -1,6 +1,7 @@
 {
   pkgs,
   outputs,
+  host_config,
   ...
 }: {
   imports = [
@@ -9,7 +10,7 @@
   dotx = {
     config = "dotx";
     user = {
-      name = "svl";
+      name = host_config.user;
       email = "66408983+4lxs@users.noreply.github.com";
     };
 
@@ -30,7 +31,7 @@
   home = {
     sessionPath = ["/home/svl/.config/emacs/bin" "/home/svl/.ghcup/bin" "/home/svl/.cabal/bin"];
     packages = with pkgs; [
-      vscode-fhs
+      # vscode-fhs
       calibre
       thunderbird
       brave
@@ -43,10 +44,10 @@
       clang-tools
       qmk
       syncthing
-      obsidian
+      # obsidian
     ];
 
     # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-    stateVersion = "25.05";
+    stateVersion = "24.11";
   };
 }

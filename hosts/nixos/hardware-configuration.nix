@@ -8,21 +8,26 @@
   modulesPath,
   ...
 }: {
-  imports = [(modulesPath + "/installer/scan/not-detected.nix")];
+  imports = [
+    (modulesPath + "/installer/scan/not-detected.nix")
+  ];
 
-  boot.initrd.availableKernelModules = ["usb_storage"];
+  boot.initrd.availableKernelModules = ["xhci_pci" "thunderbolt" "vmd" "nvme" "usb_storage" "sd_mod"];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = [];
+  boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/9fbb39d6-92aa-4c36-8356-7b4cf521582e";
+    device = "/dev/disk/by-uuid/dc77bfa4-4071-4a4c-aaa2-3554d94f8b1b";
     fsType = "ext4";
   };
 
+  boot.initrd.luks.devices."luks-f68d39aa-53a5-41e2-bf77-fa2e9a64abfb".device = "/dev/disk/by-uuid/f68d39aa-53a5-41e2-bf77-fa2e9a64abfb";
+
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/B345-151A";
+    device = "/dev/disk/by-uuid/12A2-4F2A";
     fsType = "vfat";
+    options = ["fmask=0077" "dmask=0077"];
   };
 
   swapDevices = [];
@@ -32,7 +37,8 @@
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.wlan0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

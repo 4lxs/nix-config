@@ -68,46 +68,46 @@
       imports = [./flake-modules];
 
       flake = let
-        # nixosHomeConfig = user: host: {
-        #   home-manager = {
-        #     useGlobalPkgs = true;
-        #     useUserPackages = true;
-        #     users.${user} = {
-        #       imports = [
-        #         ./home/features
-        #         (./home + "/${user}@${host}")
-        #       ];
-        #     };
-        #     extraSpecialArgs = {
-        #       inherit inputs outputs;
-        #       # modules = outputs.homeManagerModules;
-        #       host_config = {
-        #         # ... ignore me
-        #         inherit user host;
-        #       };
-        #     };
-        #   };
-        # };
-        # nixosConfig = user: host: {
-        #   "${host}" = lib.nixosSystem {
-        #     specialArgs = {
-        #       inherit inputs outputs;
-        #       # modules = outputs.nixosModules;
-        #       host_config = {
-        #         # ... ignore me
-        #         inherit user host;
-        #       };
-        #     };
-        #     modules = [
-        #       ./hosts/${host}/configuration.nix
-        #       ./hosts/${host}/hardware-configuration.nix
-        #       ./hosts/features
-        #       ./nixpkgs
-        #       home-manager.nixosModules.home-manager
-        #       (nixosHomeConfig "${user}" "${host}")
-        #     ];
-        #   };
-        # };
+        nixosHomeConfig = user: host: {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            users.${user} = {
+              imports = [
+                ./home/features
+                (./home + "/${user}@${host}")
+                outputs.homeManagerModules.dotx
+              ];
+            };
+            extraSpecialArgs = {
+              inherit inputs outputs;
+              host_config = {
+                # ... ignore me
+                inherit user host;
+              };
+            };
+          };
+        };
+        nixosConfig = user: host: {
+          "${host}" = lib.nixosSystem {
+            specialArgs = {
+              inherit inputs outputs;
+              # modules = outputs.nixosModules;
+              host_config = {
+                # ... ignore me
+                inherit user host;
+              };
+            };
+            modules = [
+              ./hosts/${host}/configuration.nix
+              ./hosts/${host}/hardware-configuration.nix
+              ./hosts/features
+              ./nixpkgs
+              home-manager.nixosModules.home-manager
+              (nixosHomeConfig "${user}" "${host}")
+            ];
+          };
+        };
         standaloneHomeConfig = user: host: system: {
           "${user}@${host}" = lib.homeManagerConfiguration {
             pkgs = nixpkgs.legacyPackages.${system};
@@ -170,7 +170,7 @@
           // import ./modules/home-manager;
 
         # 'nixos-rebuild --flake .#your-hostname'
-        # nixosConfigurations = lib.mkMerge [(nixosConfig "svl" "mba")];
+        nixosConfigurations = lib.mkMerge [(nixosConfig "svl" "nixos")];
 
         # initialize: nix run nix-darwin -- switch --flake .
         # 'nix-darwin switch --flake .#hostname'

@@ -5,11 +5,7 @@
   ...
 }: {
   options.cfg.firefox = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "enable firefox browser";
-    };
+    enable = lib.mkEnableOption "enable firefox browser";
     user = lib.mkOption {
       type = lib.types.str;
       default = host_config.user;

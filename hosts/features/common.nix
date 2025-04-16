@@ -4,10 +4,10 @@
   pkgs,
   ...
 }: {
-  environment.etc."channels/nixpkgs".source = inputs.nixpkgs.outPath;
+  # environment.etc."channels/nixpkgs".source = inputs.nixpkgs.outPath;
   nix = {
-    nixPath = ["nixpkgs=/etc/channels/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels"];
-    registry.nixpkgs.flake = inputs.nixpkgs;
+    # nixPath = ["nixpkgs=/etc/channels/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" "/nix/var/nix/profiles/per-user/root/channels"];
+    # registry.nixpkgs.flake = inputs.nixpkgs;
     #    registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
     #    nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
     #
@@ -30,10 +30,6 @@
   };
   documentation.nixos.enable = false;
 
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
-
   # programs.zsh = {
   #   enable = true;
   #   enableCompletion = false;
@@ -47,7 +43,7 @@
   # security.pam.enableSSHAgentAuth = true;
   # programs.ssh.startAgent = true;
 
-  sound.enable = true;
+  # sound.enable = true;
 
   environment = {
     shells = [

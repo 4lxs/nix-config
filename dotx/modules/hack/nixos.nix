@@ -64,10 +64,10 @@ in {
         };
 
         # nixpkgs config
-        nixpkgs.config = {
-          allowUnfree = true;
-          allowInsecurePredicate = p: true;
-        };
+        # nixpkgs.config = {
+        #   allowUnfree = true;
+        #   allowInsecurePredicate = p: true;
+        # };
 
         # services
         services = {

@@ -1,6 +1,8 @@
 {outputs, ...}: {
   imports = [outputs.nixosModules.dotx];
 
+  hez = false;
+
   dotx = {
     config = "dotx";
     user = {

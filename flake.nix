@@ -27,7 +27,10 @@
     # nvim-config.inputs.nixpkgs.follows = "nixpkgs";
 
     nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
+
     sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     base16.url = "github:SenchoPens/base16.nix";
     base16-kitty = {
@@ -74,7 +77,7 @@
             useUserPackages = true;
             users.${user} = {
               imports = [
-                ./home/features
+                # ./home/features
                 (./home + "/${user}@${host}")
                 outputs.homeManagerModules.dotx
               ];
@@ -104,7 +107,7 @@
               ./hosts/features
               ./nixpkgs
               home-manager.nixosModules.home-manager
-              (nixosHomeConfig "${user}" "${host}")
+              (nixosHomeConfig user host)
             ];
           };
         };

@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   ...
@@ -39,12 +40,62 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
+  # Enable automatic login for the user.
+  services.xserver.displayManager.autoLogin.enable = true;
+  services.xserver.displayManager.autoLogin.user = "svl";
+
+  programs.kdeconnect = {
+    enable = true;
+    package = pkgs.gnomeExtensions.gsconnect;
+  };
+
+  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
+
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
 
   services.printing.enable = true;
+  hardware.sensor.iio.enable = true;
+
+  services.fprintd.enable = true;
+  services.fprintd.tod.enable = true;
+  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+
+  services.tailscale.enable = true;
+
+  services.syncthing = {
+    enable = true;
+    user = "svl";
+    dataDir = "/home/svl";
+    openDefaultPorts = true;
+    cert = "${config.sops.secrets."syncthing/cert".path}";
+    key = "${config.sops.secrets."syncthing/key".path}";
+    settings = {
+      devices = {
+        "vps".id = "C3WMR3H-JW2I2BP-UP2PCLW-5KYZWKC-JKBFWOZ-GF3MDIL-LZGIHON-D3DWSQK";
+      };
+    };
+    folders = {
+        "sync" = {
+          id = "default";
+          path = "/home/svl/.local/sync";
+          devices = [ "vps" ];
+          ignorePerms = true;
+        };
+    };
+  };
+  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
+
+
+  imports = [inputs.sops-nix.nixosModules.sops];
+  sops.defaultSopsFile = ../../secrets.yaml;
+  sops.age.keyFile = "/home/svl/.config/sops/age/keys.txt";
+  sops.secrets."syncthing/cert" = {};
+  sops.secrets."syncthing/key" = {};
 
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;

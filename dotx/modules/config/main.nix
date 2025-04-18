@@ -43,10 +43,10 @@ in
       zathura.enable = true;
       # fontconfig.enable = true;
       # hyprland.enable = true;
-      tmux = {
-        enable = true;
-        makeTerminalDefault = true;
-      };
+      # tmux = {
+      #   enable = true;
+      #   makeTerminalDefault = true;
+      # };
       kitty.enable = true;
       # alacritty.enable = true;
       dotx-shell.enable = true;
@@ -55,7 +55,12 @@ in
       # kde.enable = true;
       # gtk.enable = true;
       starship.enable = true;
-      shell-help.enable = true;
+      shell.utils.enable = true;
+      shell.aliases.enable = true;
       kdeconnect.enable = true;
+      firefox = {
+        enable = true;
+        user = config.home.username;
+      };
     };
   }

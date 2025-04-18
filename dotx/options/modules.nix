@@ -40,12 +40,16 @@ in
 
       rofi = mkTarget "rofi";
 
-      shell-help =
-        mkTarget "helpful shell aliases"
-        // {
-          git = mkBool libx.cfg.shell-help.enable ''
-            helpful git aliases
-          '';
+      shell = {
+        utils = mkTarget "better shell utils";
+        aliases =
+          mkTarget "helpful shell aliases" // {
+            git = mkBool libx.cfg.shell.aliases.enable "helpful git aliases";
+          };
+      };
+
+      firefox = mkTarget "firefox browser" // {
+          user = mkStr "firefox profile username";
         };
 
       starship = mkTarget "starship prompt";
@@ -60,6 +64,11 @@ in
         };
 
       zellij = mkTarget "zellij";
+
+      userDirs = mkTarget ''
+        Use my custom directories for user directories.
+        that is Downloads/Limbo for the download directory.
+      '';
 
       waybar = mkTarget "waybar";
 

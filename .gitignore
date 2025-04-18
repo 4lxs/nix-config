@@ -2,3 +2,4 @@
 home/features/nvim/nvim/lazy-lock.json
 .DS_Store
 .direnv/
+/.pre-commit-config.yaml

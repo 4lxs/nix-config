@@ -1,12 +1,12 @@
 {catppuccin, ...}: {pkgs, ...}: {
-  imports = [catppuccin.homeManagerModules.catppuccin];
+  imports = [catppuccin.homeModules.catppuccin];
 
   catppuccin = {
     enable = true;
-    pointerCursor.enable = true;
+    cursors.enable = true;
+    tmux.enable = false;
+    # hyprland.enable = true;
+    gtk.enable = false;
+    gtk.gnomeShellTheme = false;
   };
-  gtk.catppuccin.enable = false;
-  gtk.catppuccin.gnomeShellTheme = false;
-  programs.tmux.catppuccin.enable = false;
-  wayland.windowManager.hyprland.catppuccin.enable = true;
 }

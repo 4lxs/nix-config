@@ -23,8 +23,8 @@
     apple-silicon.url = "github:tpwrules/nixos-apple-silicon";
     apple-silicon.inputs.nixpkgs.follows = "nixpkgs";
 
-    # nvim-config.url = "github:4lxs/nvim-config";
-    # nvim-config.inputs.nixpkgs.follows = "nixpkgs";
+    nvim-config.url = "github:4lxs/nvim-config";
+    nvim-config.inputs.nixpkgs.follows = "nixpkgs";
 
     nur.url = "github:nix-community/NUR";
     nur.inputs.nixpkgs.follows = "nixpkgs";

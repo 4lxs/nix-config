@@ -41,8 +41,8 @@
   services.xserver.desktopManager.gnome.enable = true;
 
   # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "svl";
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "svl";
 
   programs.kdeconnect = {
     enable = true;
@@ -78,18 +78,29 @@
       devices = {
         "vps".id = "C3WMR3H-JW2I2BP-UP2PCLW-5KYZWKC-JKBFWOZ-GF3MDIL-LZGIHON-D3DWSQK";
       };
-    };
-    folders = {
+      folders = {
         "sync" = {
           id = "default";
           path = "/home/svl/.local/sync";
-          devices = [ "vps" ];
+          devices = ["vps"];
           ignorePerms = true;
         };
+        "media" = {
+          id = "or5rx-ggkxr";
+          path = "/home/svl/.local/media";
+          devices = ["vps"];
+          ignorePerms = true;
+        };
+        "zotero-storage" = {
+          id = "6lwpa-cgq7b";
+          path = "/home/svl/Zotero/storage/";
+          devices = ["vps"];
+          ignorePerms = true;
+        };
+      };
     };
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
-
 
   imports = [inputs.sops-nix.nixosModules.sops];
   sops.defaultSopsFile = ../../secrets.yaml;
@@ -97,7 +108,7 @@
   sops.secrets."syncthing/cert" = {};
   sops.secrets."syncthing/key" = {};
 
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

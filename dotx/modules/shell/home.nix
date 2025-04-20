@@ -1,4 +1,4 @@
-_inputs: {
+inputs: {
   config,
   pkgs,
   lib,
@@ -11,8 +11,7 @@ in {
     (mkIf libx.cfg.shell.utils.enable {
       home = {
         packages = with pkgs; [
-          # inputs.nvim-config.packages.${system}.default
-          neovim
+          inputs.nvim-config.packages.${system}.default
 
           ripgrep
           fd

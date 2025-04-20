@@ -51,7 +51,6 @@
     #   makeTerminalDefault = true;
     # };
     # zellij.enable = true;
-    # kdeconnect.enable = true;
     userDirs.enable = true;
   };
 
@@ -62,15 +61,17 @@
   home = {
     username = "${host_config.user}";
     homeDirectory = "/home/${host_config.user}";
-    sessionPath = [
-      "/home/svl/.config/emacs/bin"
-      "/home/svl/.ghcup/bin"
-      "/home/svl/.cabal/bin"
-      "$HOME/.local/bin"
-    ] ++ lib.optionals pkgs.stdenv.isDarwin [
-      "/opt/local/bin"
-      "/opt/local/sbin"
-    ];
+    sessionPath =
+      [
+        "/home/svl/.config/emacs/bin"
+        "/home/svl/.ghcup/bin"
+        "/home/svl/.cabal/bin"
+        "$HOME/.local/bin"
+      ]
+      ++ lib.optionals pkgs.stdenv.isDarwin [
+        "/opt/local/bin"
+        "/opt/local/sbin"
+      ];
     sessionVariables = {
       EDITOR = "nvim";
     };
@@ -90,7 +91,9 @@
       sops
       tridactyl-native
       chezmoi
-      zotero-beta
+      zotero
+      nautilus-python
+      wl-clipboard
 
       clang-tools
       clang

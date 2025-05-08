@@ -1,12 +1,11 @@
-{
+_inputs: {
   lib,
   config,
   ...
-}: {
-  options.cfg.newsboat = {
-    enable = lib.mkEnableOption "enable newsboat";
-  };
-  config = lib.mkIf config.cfg.newsboat.enable {
+}: let
+  libx = config.lib.dotx;
+in {
+  config = lib.mkIf libx.cfg.newsboat.enable {
     programs.newsboat = {
       inherit (config.cfg.newsboat) enable;
       autoReload = true;

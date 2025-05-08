@@ -4,6 +4,11 @@
   pkgs,
   ...
 }: {
+  imports = [
+    inputs.sops-nix.nixosModules.sops
+    inputs.nvim-config.nixosModules.default
+  ];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -61,9 +66,13 @@
   services.printing.enable = true;
   hardware.sensor.iio.enable = true;
 
-  services.fprintd.enable = true;
-  services.fprintd.tod.enable = true;
-  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+  # systemd.services.fprintd = {
+  #   wantedBy = [ "multi-user.target" ];
+  #   serviceConfig.Type = "simple";
+  # };
+  # services.fprintd.enable = true;
+  # # services.fprintd.tod.enable = true;
+  # # services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
   services.tailscale.enable = true;
 
@@ -80,14 +89,8 @@
       };
       folders = {
         "sync" = {
-          id = "default";
+          id = "kedtr-zmmkv";
           path = "/home/svl/.local/sync";
-          devices = ["vps"];
-          ignorePerms = true;
-        };
-        "media" = {
-          id = "or5rx-ggkxr";
-          path = "/home/svl/.local/media";
           devices = ["vps"];
           ignorePerms = true;
         };
@@ -102,11 +105,12 @@
   };
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true"; # Don't create default ~/Sync folder
 
-  imports = [inputs.sops-nix.nixosModules.sops];
   sops.defaultSopsFile = ../../secrets.yaml;
   sops.age.keyFile = "/home/svl/.config/sops/age/keys.txt";
   sops.secrets."syncthing/cert" = {};
   sops.secrets."syncthing/key" = {};
+
+  nvim.enable = true;
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -115,6 +119,23 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+  };
+
+  # ipfs
+  # services.kubo = {
+  #   enable = true;
+  # };
+
+  i18n.inputMethod = {
+    type = "fcitx5";
+    enable = true;
+    fcitx5 = {
+      waylandFrontend = true;
+      addons = with pkgs; [
+        fcitx5-gtk
+        fcitx5-chinese-addons
+      ];
+    };
   };
 
   users.defaultUserShell = pkgs.fish;

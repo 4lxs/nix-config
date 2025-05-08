@@ -94,8 +94,11 @@
       zotero
       nautilus-python
       wl-clipboard
+      anki
 
-      clang-tools
+      wqy_microhei
+      noto-fonts-cjk-sans
+
       clang
     ];
 

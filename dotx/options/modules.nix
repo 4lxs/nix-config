@@ -43,12 +43,15 @@ in
       shell = {
         utils = mkTarget "better shell utils";
         aliases =
-          mkTarget "helpful shell aliases" // {
+          mkTarget "helpful shell aliases"
+          // {
             git = mkBool libx.cfg.shell.aliases.enable "helpful git aliases";
           };
       };
 
-      firefox = mkTarget "firefox browser" // {
+      firefox =
+        mkTarget "firefox browser"
+        // {
           user = mkStr "firefox profile username";
         };
 
@@ -62,6 +65,8 @@ in
             for special cases
           '';
         };
+
+      newsboat = mkTarget "newsboat";
 
       zellij = mkTarget "zellij";
 

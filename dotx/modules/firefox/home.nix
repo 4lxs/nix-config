@@ -4,17 +4,20 @@
   config,
   host_config,
   ...
-}: 
+}:
 with lib; let
   libx = config.lib.dotx;
 in {
   config = lib.mkIf libx.cfg.firefox.enable {
     programs.firefox = {
       enable = true;
-      nativeMessagingHosts = [ pkgs.tridactyl-native ];
+      nativeMessagingHosts = [pkgs.tridactyl-native];
+      profiles.default.id = 1;
+      profiles.default.extensions.force = true;
       profiles."${libx.cfg.firefox.user}" = {
         name = libx.cfg.firefox.user;
 
+        extensions.force = true;
         extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           bitwarden
           tridactyl
@@ -25,7 +28,7 @@ in {
             version = "latest";
             addonId = "magnolia@12.34";
             url = "https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass_paywalls_clean-latest.xpi";
-            sha256 = "sha256-VIcHif8gA+11oL5AsADaHA6qfWT8+S0A8msaYE2ivns=";
+            sha256 = "sha256-x+9+rf0evyVqMkWrabmyktyFiuT5reXN04cVuE2PK7c=";
             meta = with lib; {
               homepage = "https://twitter.com/Magnolia1234B";
               description = "Bypass Paywalls of (custom) news sites";
@@ -56,19 +59,19 @@ in {
         # extraConfig = builtins.readFile ./prefs.js;
       };
       policies = {
-      #   NewTabPage = false;
+        #   NewTabPage = false;
         DisplayMenuBar = false;
         DisableFormHistory = true;
-      #   # DisableFirefoxAccounts = true;
-      #   DisableBuiltinPDFViewer = true;
+        #   # DisableFirefoxAccounts = true;
+        #   DisableBuiltinPDFViewer = true;
         NetworkPrediction = false;
         CaptivePortal = false;
         DNSOverHTTPS.Enabled = false;
         DisableFirefoxStudies = true;
         DisableTelemetry = true;
         DisablePocket = true;
-      #   OverrideFirstRunPage = "";
-      #   OverridePostUpdatePage = "";
+        #   OverrideFirstRunPage = "";
+        #   OverridePostUpdatePage = "";
       };
     };
   };

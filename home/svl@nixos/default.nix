@@ -95,6 +95,8 @@
       nautilus-python
       wl-clipboard
       anki
+      foliate
+      rnote
 
       wqy_microhei
       noto-fonts-cjk-sans
